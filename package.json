@@ -4,7 +4,10 @@
   "private": true,
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "ogamejs": "^1.1.1",
+    "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3"
