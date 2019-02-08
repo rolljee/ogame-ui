@@ -7020,10 +7020,10 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-ogamejs@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ogamejs/-/ogamejs-1.1.1.tgz#fea01812138f1e3ed49bfba1c1d212504a80a7a2"
-  integrity sha512-ee1iwf1aRXxvANNEDL/3+f49N/r3EyDQSRMAQ/7dQ1UiQngJ6SCicIk0PFquw22j6lKhRudd0DB3q9jbvbUSww==
+ogamejs@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ogamejs/-/ogamejs-1.1.2.tgz#e5d09f878580e0c22bdae70f2c6b801916097127"
+  integrity sha512-KycOBygAxHRvo9UMGQ/mnUNHMBrNXkIY1wPgNBaiaHIaJAAKs3cK5wKSytZklYQDqswA93bMc5x1M0DxdbmPSw==
   dependencies:
     winston "^3.1.0"
 

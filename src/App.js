@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
-import Ogame from "ogamejs/src/index";
+import Ogame from "ogamejs";
 
 /**
  * Local import
@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   setDeutSellingState() {
-    const { deut, percentMetal, percentCrystal, rate } = this.props;
+    const { deut, percentMetal, percentCrystal, rate } = this.state;
     const { metal, crystal } = Ogame.sellDeut(
       deut,
       percentMetal,
