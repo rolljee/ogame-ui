@@ -11,8 +11,21 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Loading Bootstrap -->
+  <link href="./dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Loading Flat UI Pro -->
+  <link href="./dist/css/flat-ui-pro.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="js/vendor/html5shiv.js"></script>
+      <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -38,6 +51,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+  <script src="../dist/js/vendor/jquery.min.js"></script>
+  <script src="../dist/js/vendor/video.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="../dist/js/flat-ui-pro.js"></script>
 </body>
 
 </html>

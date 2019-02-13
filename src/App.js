@@ -1,15 +1,7 @@
-/**
- * Npm import
- */
-import React, { Component } from "react";
-import TextField from "@material-ui/core/TextField";
 import Ogame from "ogamejs";
-
-/**
- * Local import
- */
-import AppBar from "./AppBar";
+import React, { Component } from "react";
 import "./App.css";
+import Select from "./components/Select";
 
 class App extends Component {
   constructor() {
@@ -25,7 +17,7 @@ class App extends Component {
     };
   }
 
-  setDeutSellingState() {
+  sellDeut() {
     const { deut, percentMetal, percentCrystal, rate } = this.state;
     const { metal, crystal } = Ogame.sellDeut(
       deut,
@@ -35,13 +27,36 @@ class App extends Component {
     );
     this.setState({ metal, crystal });
   }
+
+  sellMetal() {
+    const { metal, percentDeut, percentCrystal, rate } = this.state;
+    const { crystal, deut } = Ogame.sellMetal(
+      metal,
+      percentDeut,
+      percentCrystal,
+      rate
+    );
+    this.setState({ deut, crystal });
+  }
+
+  sellCrystal() {
+    const { crystal, percentDeut, percentMetal, rate } = this.state;
+    const { metal, deut } = Ogame.sellCrystal(
+      crystal,
+      percentDeut,
+      percentMetal,
+      rate
+    );
+    this.setState({ metal, deut });
+  }
+
   printResult(sell) {
     if (sell === "deut") {
-      this.setDeutSellingState();
+      this.sellDeut();
     } else if (sell === "metal") {
-      // this.setMetalSellingState();
+      this.sellMetal();
     } else if (sell === "crystal") {
-      // this.setCrystalSellingState();
+      this.sellCrystal();
     }
   }
   handleChange = name => event => {
@@ -51,44 +66,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <AppBar />
-        <TextField
-          id="filled-number"
-          label="Deuterium"
-          value={this.state.deut}
-          onChange={this.handleChange("deut")}
-          type="number"
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-          variant="filled"
-        />
-        <TextField
-          id="filled-number"
-          label="Metal"
-          value={this.state.metal}
-          onChange={this.handleChange("metal")}
-          type="number"
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-          variant="filled"
-        />
-        <TextField
-          id="filled-number"
-          label="Crystal"
-          value={this.state.crystal}
-          onChange={this.handleChange("crystal")}
-          type="number"
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-          variant="filled"
-        />
+      <div className="container">
+        <div className="col-xs-12">
+          <Select />
+        </div>
       </div>
     );
   }
