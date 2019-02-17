@@ -25,6 +25,7 @@ class App extends Component {
 
   sellDeut() {
     const { deut, percentMetal, percentCrystal, rate } = this.state;
+    console.log("sellDeut", deut, percentMetal, percentCrystal, rate);
     const { metal, crystal } = Ogame.sellDeut(
       deut,
       percentMetal,
@@ -73,12 +74,15 @@ class App extends Component {
   }
 
   handleResourceChange(e, resource) {
+    const value = Number(e.target.value);
+    console.log(value, resource);
     if (resource === "deut") {
-      this.setState({ deut: Number(e.target.value) });
+      this.setState({ deut: value });
+      console.log(this.state);
     } else if (resource === "metal") {
-      this.setState({ metal: Number(e.target.value) });
+      this.setState({ metal: value });
     } else if (resource === "crystal") {
-      this.setState({ crystal: Number(e.target.value) });
+      this.setState({ crystal: value });
     }
     this.printResult();
   }
