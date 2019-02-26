@@ -25,7 +25,6 @@ class App extends Component {
 
   sellDeut() {
     const { deut, percentMetal, percentCrystal, rate } = this.state;
-    console.log("sellDeut", deut, percentMetal, percentCrystal, rate);
     const { metal, crystal } = Ogame.sellDeut(
       deut,
       percentMetal,
@@ -75,41 +74,56 @@ class App extends Component {
 
   handleResourceChange(e, resource) {
     const value = Number(e.target.value);
-    console.log(value, resource);
     if (resource === "deut") {
-      this.setState({ deut: value });
-      console.log(this.state);
+      this.setState({ deut: value }, this.printResult);
     } else if (resource === "metal") {
-      this.setState({ metal: value });
+      this.setState({ metal: value }, this.printResult);
     } else if (resource === "crystal") {
-      this.setState({ crystal: value });
+      this.setState({ crystal: value }, this.printResult);
     }
-    this.printResult();
   }
 
-  handleRateChange(e, resource) {}
+  handleRateChange(e, resource) {
+    const value = e.target.value;
+    const split = this.state.rate.split(":");
+    let deut = split[2];
+    let metal = split[0];
+    let crystal = split[1];
+    let rate = `${metal}:${crystal}:${deut}`;
+
+    if (resource === "deut") {
+      rate = `${metal}:${crystal}:${value}`;
+    } else if (resource === "metal") {
+      rate = `${value}:${crystal}:${deut}`;
+    } else if (resource === "crystal") {
+      rate = `${metal}:${value}:${deut}`;
+    }
+    console.log(rate);
+    this.setState({ rate }, this.printResult);
+  }
 
   handlePercentChange(e, resource) {
     const value = Number(e.target.value);
     if (resource === "deut") {
-      this.setState({ percentDeut: value });
+      this.setState({ percentDeut: value }, this.printResult);
     } else if (resource === "metal") {
-      this.setState({ percentMetal: value });
+      this.setState({ percentMetal: value }, this.printResult);
     } else if (resource === "crystal") {
-      this.setState({ percentCrystal: value });
+      this.setState({ percentCrystal: value }, this.printResult);
     }
-    this.printResult();
   }
 
   getRate(resource) {
-    const rate = Ogame.parseRate(this.state.rate);
-    const { rateMetal, rateCrystal, rateDeut } = rate;
+    const split = this.state.rate.split(":");
+    let deut = split[2];
+    let metal = split[0];
+    let crystal = split[1];
     if (resource === "deut") {
-      return rateDeut;
+      return deut;
     } else if (resource === "metal") {
-      return rateMetal;
+      return metal;
     } else if (resource === "crystal") {
-      return rateCrystal;
+      return crystal;
     }
   }
 
@@ -146,7 +160,7 @@ class App extends Component {
       selected
     );
     return (
-      <div className="container">
+      <div className="container container-fluid">
         <div className="col-xs-12">
           <div className="text-center">
             <Title />
@@ -181,9 +195,6 @@ class App extends Component {
 
           {/* CHANGE RATES */}
           <div className="col-xs-6">
-            <div className="text-center">
-              <RateText rate={rate} selected={selected} />
-            </div>
             <div className="col-xs-4">
               metal
               <TextInput
@@ -269,7 +280,7 @@ class App extends Component {
           {/* PRINT THE RESULT */}
           <div className="col-xs-12">
             <div className="text-center">
-              <h4>Result</h4>
+              <hr />
               <p>
                 <PrintResult
                   deut={deut}
@@ -277,6 +288,9 @@ class App extends Component {
                   crystal={crystal}
                   selected={selected}
                 />
+              </p>
+              <p>
+                <RateText rate={rate} selected={selected} />
               </p>
             </div>
           </div>

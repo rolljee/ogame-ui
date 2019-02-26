@@ -1,20 +1,21 @@
 import React from "react";
-
-const deutText = rate => `Sell deut at ${rate}`;
-const metalText = rate => `Sell metal at ${rate}`;
-const crystalText = rate => `Sell crystal at ${rate}`;
+import Ogame from "ogamejs";
 
 class RateText extends React.Component {
   render() {
     const { rate, selected } = this.props;
+    const { rateMetal, rateCrystal, rateDeut } = Ogame.parseRate(
+      rate,
+      selected
+    );
     if (selected === "deut") {
-      return <h4>{deutText(rate)}</h4>;
+      return `${rateDeut} deut = ${rateMetal} of metal and ${rateCrystal} crystal`;
     } else if (selected === "metal") {
-      return <h4>{metalText(rate)}</h4>;
+      return `${rateMetal} metal = ${rateDeut} of deut and ${rateCrystal} crystal`;
     } else if (selected === "crystal") {
-      return <h4>{crystalText(rate)}</h4>;
+      return `${rateCrystal} crystal = ${rateDeut} of deut and ${rateMetal} metal`;
     } else {
-      return "Nothing to sell selected";
+      return "Nothing selected";
     }
   }
 }
