@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/ogame-ui/precache-manifest.9eb66dfbc9c098032ea0866fd346c35a.js"
+  "/ogame-ui/precache-manifest.c342d67479864515bec6232477e71d7f.js"
 );
 
 workbox.clientsClaim();

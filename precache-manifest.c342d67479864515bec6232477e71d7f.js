@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/ogame-ui/static/js/runtime~main.65d692c3.js"
   },
   {
-    "revision": "abb8b2b8632cf89c685200f9bc2b4a33",
+    "revision": "dea724bb821c62e5981e9c1bdb1b39c9",
     "url": "/ogame-ui/index.html"
   }
 ];
