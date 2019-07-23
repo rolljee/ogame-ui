@@ -98,7 +98,6 @@ class App extends Component {
 		} else if (resource === 'crystal') {
 			rate = `${metal}:${value}:${deut}`;
 		}
-		console.log(rate);
 		this.setState({ rate }, this.printResult);
 	}
 
@@ -152,6 +151,10 @@ class App extends Component {
 
 	isSelected(value) {
 		return value === this.state.selected;
+	}
+
+	disabledIfNotSelected(resource) {
+		return this.state.selected !== resource;
 	}
 
 	render() {
@@ -254,12 +257,17 @@ class App extends Component {
 					<div className="col-xs-12">
 						<hr />
 						<h4>Resources</h4>
+						<p className="text-center">
+							<RateText rate={rate} selected={selected} />
+						</p>
+
 						<div className="col-xs-4">
 							metal
 							<TextInput
 								value={metal}
 								onChange={e => this.handleResourceChange(e, 'metal')}
 								placeholder="metal"
+								disabled={this.disabledIfNotSelected('metal')}
 							/>
 						</div>
 						<div className="col-xs-4">
@@ -268,6 +276,7 @@ class App extends Component {
 								value={crystal}
 								onChange={e => this.handleResourceChange(e, 'crystal')}
 								placeholder="crystal"
+								disabled={this.disabledIfNotSelected('crystal')}
 							/>
 						</div>
 						<div className="col-xs-4">
@@ -276,6 +285,7 @@ class App extends Component {
 								value={deut}
 								onChange={e => this.handleResourceChange(e, 'deut')}
 								placeholder="deut"
+								disabled={this.disabledIfNotSelected('deut')}
 							/>
 						</div>
 					</div>
@@ -291,9 +301,6 @@ class App extends Component {
 									crystal={crystal}
 									selected={selected}
 								/>
-							</p>
-							<p>
-								<RateText rate={rate} selected={selected} />
 							</p>
 						</div>
 					</div>
