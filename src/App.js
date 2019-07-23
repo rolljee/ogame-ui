@@ -2,11 +2,11 @@ import Ogame from 'ogamejs';
 import React, { Component } from 'react';
 
 /** Components import */
-import Title from './components/Title';
-import RateText from './components/RateText';
-import RadioButton from './components/RadioButton';
-import TextInput from './components/TextInput';
+import NumberIntput from './components/NumberInput';
 import PrintResult from './components/PrintResult';
+import RadioButton from './components/RadioButton';
+import RateText from './components/RateText';
+import Title from './components/Title';
 
 class App extends Component {
 	constructor() {
@@ -101,14 +101,53 @@ class App extends Component {
 		this.setState({ rate }, this.printResult);
 	}
 
+	roundToHundred(percent, modifiedResource) {
+		const currentResource = this.state.selected;
+		if (currentResource === 'deut' && modifiedResource === 'metal') {
+			return {
+				percentCrystal: 100 - percent,
+			};
+		} else if (currentResource === 'deut' && modifiedResource === 'crystal') {
+			return {
+				percentMetal: 100 - percent,
+			};
+		} else if (currentResource === 'metal' && modifiedResource === 'deut') {
+			return {
+				percentCrystal: 100 - percent,
+			};
+		} else if (currentResource === 'metal' && modifiedResource === 'crystal') {
+			return {
+				percentDeut: 100 - percent,
+			};
+		} else if (currentResource === 'crystal' && modifiedResource === 'metal') {
+			return {
+				percentDeut: 100 - percent,
+			};
+		} else if (currentResource === 'crystal' && modifiedResource === 'deut') {
+			return {
+				percentMetal: 100 - percent,
+			};
+		}
+	}
+
 	handlePercentChange(e, resource) {
-		const value = Number(e.target.value);
+		const percent = this.roundValue(Number(e.target.value));
+
 		if (resource === 'deut') {
-			this.setState({ percentDeut: value }, this.printResult);
+			this.setState(
+				{ percentDeut: percent, ...this.roundToHundred(percent, 'deut') },
+				this.printResult,
+			);
 		} else if (resource === 'metal') {
-			this.setState({ percentMetal: value }, this.printResult);
+			this.setState(
+				{ percentMetal: percent, ...this.roundToHundred(percent, 'metal') },
+				this.printResult,
+			);
 		} else if (resource === 'crystal') {
-			this.setState({ percentCrystal: value }, this.printResult);
+			this.setState(
+				{ percentCrystal: percent, ...this.roundToHundred(percent, 'crystal') },
+				this.printResult,
+			);
 		}
 	}
 
@@ -126,34 +165,46 @@ class App extends Component {
 		}
 	}
 
+	roundValue(percent) {
+		if (percent > 100) {
+			return 100;
+		}
+
+		return percent;
+	}
+
 	getPercent(resource) {
 		const { percentCrystal, percentDeut, percentMetal } = this.state;
+		let deut = this.roundValue(percentDeut);
+		let metal = this.roundValue(percentMetal);
+		let crystal = this.roundValue(percentCrystal);
+
 		if (resource === 'deut') {
 			return {
-				percentMetal,
-				percentCrystal,
+				percentCrystal: crystal,
 				percentDeut: 0,
+				percentMetal: metal,
 			};
 		} else if (resource === 'metal') {
 			return {
+				percentCrystal: crystal,
+				percentDeut: deut,
 				percentMetal: 0,
-				percentCrystal,
-				percentDeut,
 			};
 		} else if (resource === 'crystal') {
 			return {
-				percentMetal,
 				percentCrystal: 0,
-				percentDeut,
+				percentDeut: deut,
+				percentMetal: metal,
 			};
 		}
 	}
 
-	isSelected(value) {
+	isCurrentRessource(value) {
 		return value === this.state.selected;
 	}
 
-	disabledIfNotSelected(resource) {
+	isNotCurrentResource(resource) {
 		return this.state.selected !== resource;
 	}
 
@@ -177,21 +228,21 @@ class App extends Component {
 							id="metal"
 							text="metal"
 							value="selected"
-							checked={this.isSelected('metal')}
+							checked={this.isCurrentRessource('metal')}
 							onChange={e => this.handleOnChange(e, 'metal')}
 						/>
 						<RadioButton
 							id="crystal"
 							text="crystal"
 							value="selected"
-							checked={this.isSelected('crystal')}
+							checked={this.isCurrentRessource('crystal')}
 							onChange={e => this.handleOnChange(e, 'crystal')}
 						/>
 						<RadioButton
 							id="deut"
 							text="deut"
 							value="selected"
-							checked={this.isSelected('deut')}
+							checked={this.isCurrentRessource('deut')}
 							onChange={e => this.handleOnChange(e, 'deut')}
 						/>
 					</div>
@@ -200,7 +251,7 @@ class App extends Component {
 					<div className="col-xs-6">
 						<div className="col-xs-4">
 							metal
-							<TextInput
+							<NumberIntput
 								value={this.getRate('metal')}
 								onChange={e => this.handleRateChange(e, 'metal')}
 								placeholder="metal"
@@ -208,7 +259,7 @@ class App extends Component {
 						</div>
 						<div className="col-xs-4">
 							crystal
-							<TextInput
+							<NumberIntput
 								value={this.getRate('crystal')}
 								onChange={e => this.handleRateChange(e, 'crystal')}
 								placeholder="crystal"
@@ -216,7 +267,7 @@ class App extends Component {
 						</div>
 						<div className="col-xs-4">
 							deuterium
-							<TextInput
+							<NumberIntput
 								value={this.getRate('deut')}
 								onChange={e => this.handleRateChange(e, 'deut')}
 								placeholder="deut"
@@ -228,26 +279,32 @@ class App extends Component {
 							<hr />
 							<div className="col-xs-4">
 								%metal
-								<TextInput
+								<NumberIntput
 									value={percentMetal}
 									onChange={e => this.handlePercentChange(e, 'metal')}
 									placeholder="metal"
+									disabled={this.isCurrentRessource('metal')}
+									maxValue="100"
 								/>
 							</div>
 							<div className="col-xs-4">
 								%crystal
-								<TextInput
+								<NumberIntput
 									value={percentCrystal}
 									onChange={e => this.handlePercentChange(e, 'crystal')}
 									placeholder="crystal"
+									disabled={this.isCurrentRessource('crystal')}
+									maxValue="100"
 								/>
 							</div>
 							<div className="col-xs-4">
 								%deut
-								<TextInput
+								<NumberIntput
 									value={percentDeut}
 									onChange={e => this.handlePercentChange(e, 'deut')}
 									placeholder="deut"
+									disabled={this.isCurrentRessource('deut')}
+									maxValue="100"
 								/>
 							</div>
 						</div>
@@ -263,29 +320,29 @@ class App extends Component {
 
 						<div className="col-xs-4">
 							metal
-							<TextInput
+							<NumberIntput
 								value={metal}
 								onChange={e => this.handleResourceChange(e, 'metal')}
 								placeholder="metal"
-								disabled={this.disabledIfNotSelected('metal')}
+								disabled={this.isNotCurrentResource('metal')}
 							/>
 						</div>
 						<div className="col-xs-4">
 							crystal
-							<TextInput
+							<NumberIntput
 								value={crystal}
 								onChange={e => this.handleResourceChange(e, 'crystal')}
 								placeholder="crystal"
-								disabled={this.disabledIfNotSelected('crystal')}
+								disabled={this.isNotCurrentResource('crystal')}
 							/>
 						</div>
 						<div className="col-xs-4">
 							deut
-							<TextInput
+							<NumberIntput
 								value={deut}
 								onChange={e => this.handleResourceChange(e, 'deut')}
 								placeholder="deut"
-								disabled={this.disabledIfNotSelected('deut')}
+								disabled={this.isNotCurrentResource('deut')}
 							/>
 						</div>
 					</div>

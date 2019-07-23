@@ -5,12 +5,14 @@ class TextInput extends React.Component {
 		return (
 			<div className="form-groups">
 				<input
-					type="text"
+					type="number"
 					value={this.props.value}
 					onChange={this.props.onChange}
 					className="form-control input-xs"
 					placeholder={this.props.placeholder}
 					disabled={this.props.disabled ? 'disabled' : ''}
+					min="0"
+					max={this.props.maxValue}
 				/>
 			</div>
 		);
