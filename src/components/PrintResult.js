@@ -7,9 +7,9 @@ class PrintResult extends React.Component {
   render() {
     const { metal, crystal, deut, selected } = this.props;
     let text = "";
-    const deutText = deutText;
-    const metalText = metalText;
-    const crystalText = crystalText;
+    const deutText = this.prettify(deut);
+    const metalText = this.prettify(metal);
+    const crystalText = this.prettify(crystal);
 
     if (selected === "deut") {
       text = `${deutText} deut \n ${metalText} metal \n ${crystalText} crystal`;
