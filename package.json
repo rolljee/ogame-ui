@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
+    "copy-to-clipboard": "^3.2.0",
     "ogamejs": "^1.1.2",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
