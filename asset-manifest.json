@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ogame-ui/static/css/main.54bd859f.chunk.css",
-    "main.js": "/ogame-ui/static/js/main.7c71ddaf.chunk.js",
-    "main.js.map": "/ogame-ui/static/js/main.7c71ddaf.chunk.js.map",
+    "main.js": "/ogame-ui/static/js/main.aaff7056.chunk.js",
+    "main.js.map": "/ogame-ui/static/js/main.aaff7056.chunk.js.map",
     "runtime-main.js": "/ogame-ui/static/js/runtime-main.2d2f71bd.js",
     "runtime-main.js.map": "/ogame-ui/static/js/runtime-main.2d2f71bd.js.map",
     "static/js/2.a7831871.chunk.js": "/ogame-ui/static/js/2.a7831871.chunk.js",
     "static/js/2.a7831871.chunk.js.map": "/ogame-ui/static/js/2.a7831871.chunk.js.map",
     "index.html": "/ogame-ui/index.html",
-    "precache-manifest.cbfa70bfbf241154dfec1d2f45c45422.js": "/ogame-ui/precache-manifest.cbfa70bfbf241154dfec1d2f45c45422.js",
+    "precache-manifest.66958e42043591546eb905f513e413a8.js": "/ogame-ui/precache-manifest.66958e42043591546eb905f513e413a8.js",
     "service-worker.js": "/ogame-ui/service-worker.js",
     "static/css/main.54bd859f.chunk.css.map": "/ogame-ui/static/css/main.54bd859f.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.2d2f71bd.js",
     "static/js/2.a7831871.chunk.js",
     "static/css/main.54bd859f.chunk.css",
-    "static/js/main.7c71ddaf.chunk.js"
+    "static/js/main.aaff7056.chunk.js"
   ]
 }
