@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
     "copy-to-clipboard": "^3.2.0",
     "ogamejs": "^1.1.2",
     "prop-types": "^15.6.2",

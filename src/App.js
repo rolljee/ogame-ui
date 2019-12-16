@@ -1,12 +1,17 @@
 import Ogame from 'ogamejs';
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 /** Components import */
-import NumberIntput from './components/NumberInput';
 import PrintResult from './components/PrintResult';
-import RadioButton from './components/RadioButton';
 import RateText from './components/RateText';
 import Title from './components/Title';
+import Trades from './components/Trades';
+import DefaultRates from './components/DefaultRates';
+import { BACKGROUND, RATES } from './components/constant';
+import RateInputs from './components/RatesInputs';
+import Percents from './components/Percents';
 
 class App extends Component {
 	constructor() {
@@ -19,8 +24,19 @@ class App extends Component {
 			percentMetal: 60,
 			percentCrystal: 40,
 			selected: 'deut',
-			rate: '2:1.5:1',
+			rate: RATES.standard,
+			background: BACKGROUND.dark,
 		};
+
+		this.getActiveRate = this.getActiveRate.bind(this);
+		this.handleRateChange = this.handleRateChange.bind(this);
+		this.handleOnChange = this.handleOnChange.bind(this);
+		this.isCurrentRessource = this.isCurrentRessource.bind(this);
+		this.handlePercentChange = this.handlePercentChange.bind(this);
+		this.isNotCurrentResource = this.isNotCurrentResource.bind(this);
+		this.handleResourceChange = this.handleResourceChange.bind(this);
+		this.setRate = this.setRate.bind(this);
+		this.getRate = this.getRate.bind(this);
 	}
 
 	sellDeut() {
@@ -219,193 +235,86 @@ class App extends Component {
 		return percent;
 	}
 
+	setBackground() {
+		this.setState({
+			background:
+				this.state.background === BACKGROUND.light
+					? BACKGROUND.dark
+					: BACKGROUND.light,
+		});
+	}
+
 	render() {
-		const { metal, crystal, deut, selected, rate } = this.state;
+		const { metal, crystal, deut, selected, rate, background } = this.state;
 		const { percentMetal, percentCrystal, percentDeut } = this.getPercent(
 			selected,
 		);
-
-		const rates = {
-			standard: '2:1.5:1',
-			ally: '1.8:1.4:1',
-			max: '2.5:1.6:1',
-		};
 		return (
-			<div className="container container-fluid">
-				<div className="col-xs-12">
-					<div className="text-center">
-						<Title />
-						<hr />
-					</div>
-
-					{/* SELECT RESSOURCE TO TRADE */}
-					<div className="col-xs-6">
-						<h4>Resources to trade</h4>
-						<RadioButton
-							id="metal"
-							text="metal"
-							value="selected"
-							checked={this.isCurrentRessource('metal')}
-							onChange={e => this.handleOnChange(e, 'metal')}
-						/>
-						<RadioButton
-							id="crystal"
-							text="crystal"
-							value="selected"
-							checked={this.isCurrentRessource('crystal')}
-							onChange={e => this.handleOnChange(e, 'crystal')}
-						/>
-						<RadioButton
-							id="deut"
-							text="deut"
-							value="selected"
-							checked={this.isCurrentRessource('deut')}
-							onChange={e => this.handleOnChange(e, 'deut')}
-						/>
-					</div>
-
-					{/* CHANGE RATES */}
-					<div className="col-xs-6">
-						<div className="col-xs-12">
-							<div className="col-xs-4">
-								<button
-									onClick={() => this.setRate(rates.max)}
-									className={`btn label label-${this.getActiveRate(
-										rates.max,
-									)} clickable`}>
-									{rates.max}
-								</button>
-							</div>
-							<div className="col-xs-4">
-								<button
-									onClick={() => this.setRate(rates.standard)}
-									className={`btn label label-${this.getActiveRate(
-										rates.standard,
-									)} clickable`}>
-									{rates.standard}
-								</button>
-							</div>
-							<div className="col-xs-4">
-								<button
-									onClick={() => this.setRate(rates.ally)}
-									className={`btn label label-${this.getActiveRate(
-										rates.ally,
-									)} clickable`}>
-									{rates.ally}
-								</button>
-							</div>
-						</div>
-						<div className="col-xs-12">
-							<hr />
-							<div className="col-xs-4">
-								metal
-								<NumberIntput
-									value={this.getRate('metal')}
-									onChange={e => this.handleRateChange(e, 'metal')}
-									placeholder="metal"
-								/>
-							</div>
-							<div className="col-xs-4">
-								crystal
-								<NumberIntput
-									value={this.getRate('crystal')}
-									onChange={e => this.handleRateChange(e, 'crystal')}
-									placeholder="crystal"
-								/>
-							</div>
-							<div className="col-xs-4">
-								deuterium
-								<NumberIntput
-									value={this.getRate('deut')}
-									onChange={e => this.handleRateChange(e, 'deut')}
-									placeholder="deut"
-								/>
-							</div>
-						</div>
-
-						{/* CHANGE PERCENT */}
-						<div className="col-xs-12">
-							<hr />
-							<div className="col-xs-4">
-								%metal
-								<NumberIntput
-									value={percentMetal}
-									onChange={e => this.handlePercentChange(e, 'metal')}
-									placeholder="metal"
-									disabled={this.isCurrentRessource('metal')}
-									maxValue="100"
-								/>
-							</div>
-							<div className="col-xs-4">
-								%crystal
-								<NumberIntput
-									value={percentCrystal}
-									onChange={e => this.handlePercentChange(e, 'crystal')}
-									placeholder="crystal"
-									disabled={this.isCurrentRessource('crystal')}
-									maxValue="100"
-								/>
-							</div>
-							<div className="col-xs-4">
-								%deut
-								<NumberIntput
-									value={percentDeut}
-									onChange={e => this.handlePercentChange(e, 'deut')}
-									placeholder="deut"
-									disabled={this.isCurrentRessource('deut')}
-									maxValue="100"
-								/>
-							</div>
-						</div>
-					</div>
-
-					{/* CHANGE RESOURCES TO TRADE */}
-					<div className="col-xs-12">
-						<hr />
-						<h4>Resources</h4>
-						<p className="text-center">
-							<RateText rate={rate} selected={selected} />
-						</p>
-
-						<div className="col-xs-4">
-							metal
-							<NumberIntput
-								value={metal}
-								onChange={e => this.handleResourceChange(e, 'metal')}
-								placeholder="metal"
-								disabled={this.isNotCurrentResource('metal')}
-							/>
-						</div>
-						<div className="col-xs-4">
-							crystal
-							<NumberIntput
-								value={crystal}
-								onChange={e => this.handleResourceChange(e, 'crystal')}
-								placeholder="crystal"
-								disabled={this.isNotCurrentResource('crystal')}
-							/>
-						</div>
-						<div className="col-xs-4">
-							deut
-							<NumberIntput
-								value={deut}
-								onChange={e => this.handleResourceChange(e, 'deut')}
-								placeholder="deut"
-								disabled={this.isNotCurrentResource('deut')}
-							/>
-						</div>
-					</div>
-
-					{/* PRINT THE RESULT */}
+			<div className={`background-${background}`}>
+				<div className="text-right">
+					<FontAwesomeIcon icon={faMoon} onClick={() => this.setBackground()} />
+				</div>
+				<div className="container container-fluid">
 					<div className="col-xs-12">
 						<div className="text-center">
-							<hr />
-							<PrintResult
-								deut={deut}
-								metal={metal}
-								crystal={crystal}
-								selected={selected}
+							<Title />
+						</div>
+
+						<div className="col-xs-6">
+							<Trades
+								isCurrentRessource={this.isCurrentRessource}
+								handleOnChange={this.handleOnChange}
 							/>
+						</div>
+
+						{/* CHANGE RATES */}
+						<div className="col-xs-6">
+							<div className="col-xs-12">
+								<DefaultRates
+									getActiveRate={this.getActiveRate}
+									setRate={this.setRate}
+								/>
+							</div>
+							<div className="col-xs-12">
+								<hr />
+								<RateInputs
+									getRate={this.getRate}
+									handleRateChange={this.handleRateChange}
+								/>
+							</div>
+
+							{/* CHANGE PERCENT */}
+							<div className="col-xs-12">
+								<hr />
+								<Percents
+									handlePercentChange={this.handlePercentChange}
+									isCurrentRessource={this.isCurrentRessource}
+									percentMetal={percentMetal}
+									percentCrystal={percentCrystal}
+									percentDeut={percentDeut}
+								/>
+							</div>
+						</div>
+
+						{/* CHANGE RESOURCES TO TRADE */}
+						<div className="col-xs-12">
+							<h4>Resources</h4>
+							<p className="text-center">
+								<RateText rate={rate} selected={selected} />
+							</p>
+						</div>
+
+						{/* PRINT THE RESULT */}
+						<div className="col-xs-12">
+							<div className="text-center">
+								<hr />
+								<PrintResult
+									deut={deut}
+									metal={metal}
+									crystal={crystal}
+									selected={selected}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
