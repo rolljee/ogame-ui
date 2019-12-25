@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ogame-ui/precache-manifest.db87c0679fa48bf823345fa858b3924c.js"
+  "/ogame-ui/precache-manifest.151e1ba608c1b82d14abfdb4feff6397.js"
 );
 
 self.addEventListener('message', (event) => {
