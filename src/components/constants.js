@@ -3,14 +3,20 @@ export const BACKGROUND = {
 	dark: 'dark',
 };
 
-export const RATES = {
-	standard: '2:1.5:1',
-	ally: '1.8:1.4:1',
-	max: '2.5:1.6:1',
-};
+export const RATES = [
+	{
+		rate: '2.5:1.6:1',
+	},
+	{
+		rate: '2:1.5:1',
+	},
+	{
+		rate: '1.8:1.4:1',
+	},
+];
 
 export const RESOURCES = {
-	deut: 'deut',
 	crystal: 'crystal',
+	deut: 'deut',
 	metal: 'metal',
 };

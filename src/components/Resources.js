@@ -1,39 +1,41 @@
 import React from 'react';
 import NumberIntput from './NumberInput';
+import { RESOURCES } from './constants';
 
 class Resources extends React.Component {
-	render() {
+	constructor(props) {
+		super(props);
+		this.resources = [
+			{
+				displayName: 'Metal',
+				name: RESOURCES.metal,
+			},
+			{
+				displayName: 'Crystal',
+				name: RESOURCES.crystal,
+			},
+			{
+				displayName: 'Deut',
+				name: RESOURCES.deut,
+			},
+		];
+		this.renderResources = this.renderResources.bind(this);
+	}
+	renderResources(resource, index) {
 		return (
-			<React.Fragment>
-				<div className="col-xs-4">
-					metal
-					<NumberIntput
-						value={this.props.metal}
-						onChange={e => this.props.handleResourceChange(e, 'metal')}
-						placeholder="metal"
-						disabled={this.props.isNotCurrentResource('metal')}
-					/>
-				</div>
-				<div className="col-xs-4">
-					crystal
-					<NumberIntput
-						value={this.props.crystal}
-						onChange={e => this.props.handleResourceChange(e, 'crystal')}
-						placeholder="crystal"
-						disabled={this.props.isNotCurrentResource('crystal')}
-					/>
-				</div>
-				<div className="col-xs-4">
-					deut
-					<NumberIntput
-						value={this.props.deut}
-						onChange={e => this.props.handleResourceChange(e, 'deut')}
-						placeholder="deut"
-						disabled={this.props.isNotCurrentResource('deut')}
-					/>
-				</div>
-			</React.Fragment>
+			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
+				<p className={this.props.getTextColor()}>{resource.displayName}</p>
+				<NumberIntput
+					value={this.props[resource.name]}
+					onChange={e => this.props.handleResourceChange(e, resource.name)}
+					placeholder={resource.name}
+					disabled={this.props.isNotCurrentResource(resource.name)}
+				/>
+			</div>
 		);
+	}
+	render() {
+		return this.resources.map((resource, index) => this.renderResources(resource, index));
 	}
 }
 
