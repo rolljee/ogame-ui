@@ -16,8 +16,8 @@ class RateInputs extends React.Component {
 		const current = RESOURCES[resource.id];
 		return (
 			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
-				<p className={this.props.getTextColor()}>{current}</p>
 				<NumberIntput
+					text={current}
 					onChange={e => this.props.handleRateChange(e, current)}
 					placeholder={current}
 					value={this.props.getRate(current)}

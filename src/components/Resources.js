@@ -24,18 +24,20 @@ class Resources extends React.Component {
 	renderResources(resource, index) {
 		return (
 			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
-				<p className={this.props.getTextColor()}>{resource.displayName}</p>
 				<NumberIntput
-					value={this.props[resource.name]}
+					disabled={this.props.isNotCurrentResource(resource.name)}
 					onChange={e => this.props.handleResourceChange(e, resource.name)}
 					placeholder={resource.name}
-					disabled={this.props.isNotCurrentResource(resource.name)}
+					text={resource.displayName}
+					value={this.props[resource.name]}
 				/>
 			</div>
 		);
 	}
 	render() {
-		return this.resources.map((resource, index) => this.renderResources(resource, index));
+		return this.resources.map((resource, index) =>
+			this.renderResources(resource, index),
+		);
 	}
 }
 

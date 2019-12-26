@@ -21,19 +21,19 @@ class PrintResult extends React.Component {
 		return text;
 	}
 	render() {
-		const { metal, crystal, deut, selected, textColor } = this.props;
+		const { metal, crystal, deut, selected } = this.props;
 		const deutText = this.prettify(deut);
 		const metalText = this.prettify(metal);
 		const crystalText = this.prettify(crystal);
 		const text = this.getText(metalText, crystalText, deutText, selected);
 
 		return (
-			<div className={`col-lg-12 ${textColor}`}>
-				<div>deut: {deutText}</div>
-				<div>metal: {metalText}</div>
-				<div>crystal: {crystalText}</div>
-				<CopyButton text={text} />
-			</div>
+			<React.Fragment>
+				deut: {deutText} metal: {metalText} crystal: {crystalText}
+				<div className="margin-top">
+					<CopyButton text={text} />
+				</div>
+			</React.Fragment>
 		);
 	}
 }

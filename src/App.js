@@ -29,8 +29,8 @@ class App extends Component {
 
 		this.getActiveRate = this.getActiveRate.bind(this);
 		this.getRate = this.getRate.bind(this);
-		this.getTextColor = this.getTextColor.bind(this);
 		this.handleOnChange = this.handleOnChange.bind(this);
+		this.getActiveTrade = this.getActiveTrade.bind(this);
 		this.handlePercentChange = this.handlePercentChange.bind(this);
 		this.handleRateChange = this.handleRateChange.bind(this);
 		this.handleResourceChange = this.handleResourceChange.bind(this);
@@ -84,10 +84,8 @@ class App extends Component {
 		}
 	}
 
-	handleOnChange(e, selected) {
-		if (e.target.checked) {
-			this.setState({ selected });
-		}
+	handleOnChange(selected) {
+		this.setState({ selected });
 	}
 
 	handleResourceChange(e, resource) {
@@ -217,6 +215,13 @@ class App extends Component {
 		return isActive ? 'info' : 'default';
 	}
 
+	getActiveTrade(trade) {
+		const { selected } = this.state;
+		const isActive = trade === selected;
+
+		return isActive ? 'info' : 'default';
+	}
+
 	setRate(selectedRate) {
 		this.setState({ rate: selectedRate });
 	}
@@ -246,11 +251,6 @@ class App extends Component {
 				percentMetal: metal,
 			};
 		}
-	}
-
-	getTextColor() {
-		const { background } = this.state;
-		return background === BACKGROUND.dark ? 'text-white' : '';
 	}
 
 	isCurrentRessource(value) {
@@ -285,74 +285,66 @@ class App extends Component {
 		);
 		return (
 			<Layout background={background} setBackground={this.setBackground}>
-				<div className="col-md-6 col-sm-12">
-					<h4 className={`margin-top ${this.getTextColor()}`}>
-						Resource to trade
-					</h4>
-					<Trades
-						isCurrentRessource={this.isCurrentRessource}
-						handleOnChange={this.handleOnChange}
-						getTextColor={this.getTextColor}
-					/>
+				<div className="col-sm-12">
+					<div className="text-center">
+						<h6 className="margin-top text-white">Select ressource</h6>
+						<div className="margin-bottom">
+							<Trades
+								handleOnChange={this.handleOnChange}
+								getActiveTrade={this.getActiveTrade}
+							/>
+						</div>
+					</div>
 				</div>
-
-				<div className="col-md-6 col-sm-12">
-					<div className="col-md-12 col-sm-12">
-						<h4 className={`margin-top ${this.getTextColor()}`}>
-							Default rates
-						</h4>
+				<div className="col-sm-12">
+					<hr />
+					<h6 className="margin-top text-white">Rates</h6>
+					<div className="text-center margin-bottom">
 						<DefaultRates
 							getActiveRate={this.getActiveRate}
 							setRate={this.setRate}
 						/>
 					</div>
-					<div className="col-md-12 col-sm-12">
-						<h4 className={`margin-top ${this.getTextColor()}`}>Rates</h4>
-						<RateInputs
-							getRate={this.getRate}
-							getTextColor={this.getTextColor}
-							handleRateChange={this.handleRateChange}
-						/>
-					</div>
-
-					<div className="col-md-12 col-sm-12">
-						<h4 className={`margin-top ${this.getTextColor()}`}>Percents</h4>
-						<Percents
-							getTextColor={this.getTextColor}
-							handlePercentChange={this.handlePercentChange}
-							isCurrentRessource={this.isCurrentRessource}
-							percentCrystal={percentCrystal}
-							percentDeut={percentDeut}
-							percentMetal={percentMetal}
-						/>
-					</div>
+					<RateInputs
+						getRate={this.getRate}
+						handleRateChange={this.handleRateChange}
+					/>
 				</div>
 
-				<div className="col-md-12">
-					<h4 className={`margin-top ${this.getTextColor()}`}>Resources</h4>
-					<p className={`text-center ${this.getTextColor()}`}>
+				<div className="col-sm-12">
+					<hr />
+					<h6 className="margin-top text-white">Percents</h6>
+					<Percents
+						handlePercentChange={this.handlePercentChange}
+						isCurrentRessource={this.isCurrentRessource}
+						percentCrystal={percentCrystal}
+						percentDeut={percentDeut}
+						percentMetal={percentMetal}
+					/>
+				</div>
+
+				<div className="col-sm-12">
+					<hr />
+					<h6 className="margin-top text-white">Resources</h6>
+					<p className={`text-center text-white`}>
 						<RateText rate={rate} selected={selected} />
 					</p>
 					<Resources
 						crystal={crystal}
 						deut={deut}
-						getTextColor={this.getTextColor}
 						handleResourceChange={this.handleResourceChange}
 						isNotCurrentResource={this.isNotCurrentResource}
 						metal={metal}
 					/>
 				</div>
 
-				<div className="col-md-12">
-					<div className="text-center margin-top">
-						<PrintResult
-							deut={deut}
-							metal={metal}
-							crystal={crystal}
-							selected={selected}
-							textColor={this.getTextColor()}
-						/>
-					</div>
+				<div className={`col-sm-12 margin-top text-white text-center`}>
+					<PrintResult
+						deut={deut}
+						metal={metal}
+						crystal={crystal}
+						selected={selected}
+					/>
 				</div>
 			</Layout>
 		);

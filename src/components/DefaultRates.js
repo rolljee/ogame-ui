@@ -9,13 +9,13 @@ class DefaultRates extends React.Component {
 	renderRates({ rate }, index) {
 		const color = this.props.getActiveRate(rate);
 		return (
-			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
+			<span className="margin-right-sm" key={index}>
 				<button
 					onClick={() => this.props.setRate(rate)}
 					className={`btn label label-${color} clickable`}>
 					{rate}
 				</button>
-			</div>
+			</span>
 		);
 	}
 	render() {

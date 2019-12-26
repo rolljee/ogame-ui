@@ -1,20 +1,23 @@
 import React from 'react';
 
-class TextInput extends React.Component {
+class NumberInput extends React.Component {
 	render() {
 		return (
-			<input
-				className="form-control input-xs"
-				disabled={this.props.disabled ? 'disabled' : ''}
-				max={this.props.maxValue}
-				min="0"
-				onChange={this.props.onChange}
-				placeholder={this.props.placeholder}
-				type="number"
-				value={this.props.value}
-			/>
+			<div className="input-group">
+				<span className="input-group-addon text-white">{this.props.text}</span>
+				<input
+					className="form-control input-xs"
+					disabled={this.props.disabled ? 'disabled' : ''}
+					max={this.props.maxValue}
+					min="0"
+					onChange={this.props.onChange}
+					placeholder={this.props.placeholder}
+					type="number"
+					value={this.props.value}
+				/>
+			</div>
 		);
 	}
 }
 
-export default TextInput;
+export default NumberInput;

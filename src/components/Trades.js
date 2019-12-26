@@ -1,5 +1,4 @@
 import React from 'react';
-import RadioButton from './RadioButton';
 import { RESOURCES } from './constants';
 
 class Trades extends React.Component {
@@ -11,25 +10,22 @@ class Trades extends React.Component {
 			{ id: RESOURCES.deut },
 		];
 	}
-	renderRadio(resource, index) {
+	renderLabel(resource, index) {
 		const current = RESOURCES[resource.id];
+		const color = this.props.getActiveTrade(current);
 		return (
-			<RadioButton
-				key={index}
-				name="selected"
-				text={current}
-				checked={this.props.isCurrentRessource(current)}
-				onChange={e => this.props.handleOnChange(e, current)}
-			/>
+			<span className="margin-right-sm" key={index}>
+				<button
+					onClick={() => this.props.handleOnChange(current)}
+					className={`btn btn-lg label label-${color} clickable`}>
+					{current}
+				</button>
+			</span>
 		);
 	}
 	render() {
-		return (
-			<div className={`col-xs-12 ${this.props.getTextColor()}`}>
-				{this.resources.map((resource, index) =>
-					this.renderRadio(resource, index),
-				)}
-			</div>
+		return this.resources.map((resource, index) =>
+			this.renderLabel(resource, index),
 		);
 	}
 }
