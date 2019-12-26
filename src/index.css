@@ -1,4 +1,6 @@
-html {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -25,16 +27,17 @@ code {
 }
 
 .background-dark {
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url('./images/background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-image: url('./images/background.jpg');
 }
 
 .text-white {
   color: white;
+}
+
+.full-height{
+  height: 100%;
 }

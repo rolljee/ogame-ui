@@ -5,8 +5,9 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons';
 class Layout extends React.Component {
 	render() {
 		return (
-			<div className={`container-fluid background-${this.props.background}`}>
-				<div className="row">
+			<div
+				className={`background-${this.props.background} container-fluid full-height`}>
+				<div className={`background-${this.props.background} row`}>
 					<div className="col-md-12">
 						<div className="text-right">
 							<FontAwesomeIcon
