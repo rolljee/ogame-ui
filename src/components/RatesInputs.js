@@ -6,32 +6,22 @@ class RateInputs extends React.Component {
 	constructor(props) {
 		super(props);
 		this.resources = [
-			{
-				name: RESOURCES.metal,
-				value: this.props.getRate(RESOURCES.metal),
-				onChange: e => this.props.handleRateChange(e, RESOURCES.metal),
-				placeholder: RESOURCES.metal,
-			},
-			{
-				name: RESOURCES.crystal,
-				value: this.props.getRate(RESOURCES.crystal),
-				onChange: e => this.props.handleRateChange(e, RESOURCES.crystal),
-				placeholder: RESOURCES.crystal,
-			},
-			{
-				name: RESOURCES.deut,
-				value: this.props.getRate(RESOURCES.deut),
-				onChange: e => this.props.handleRateChange(e, RESOURCES.deut),
-				placeholder: RESOURCES.deut,
-			},
+			{ id: RESOURCES.metal },
+			{ id: RESOURCES.crystal },
+			{ id: RESOURCES.deut },
 		];
 	}
 
 	renderInput(resource, index) {
+		const current = RESOURCES[resource.id];
 		return (
 			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
-				<p className={this.props.getTextColor()}>{resource.name}</p>
-				<NumberIntput {...resource} />
+				<p className={this.props.getTextColor()}>{current}</p>
+				<NumberIntput
+					onChange={e => this.props.handleRateChange(e, current)}
+					placeholder={current}
+					value={this.props.getRate(current)}
+				/>
 			</div>
 		);
 	}

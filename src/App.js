@@ -286,7 +286,9 @@ class App extends Component {
 		return (
 			<Layout background={background} setBackground={this.setBackground}>
 				<div className="col-md-6 col-sm-12">
-					<h4 className={this.getTextColor()}>Resource to trade</h4>
+					<h4 className={`margin-top ${this.getTextColor()}`}>
+						Resource to trade
+					</h4>
 					<Trades
 						isCurrentRessource={this.isCurrentRessource}
 						handleOnChange={this.handleOnChange}
@@ -296,15 +298,16 @@ class App extends Component {
 
 				<div className="col-md-6 col-sm-12">
 					<div className="col-md-12 col-sm-12">
-						<h4 className={this.getTextColor()}>Default rates</h4>
+						<h4 className={`margin-top ${this.getTextColor()}`}>
+							Default rates
+						</h4>
 						<DefaultRates
 							getActiveRate={this.getActiveRate}
 							setRate={this.setRate}
 						/>
 					</div>
 					<div className="col-md-12 col-sm-12">
-						<hr />
-						<h4 className={this.getTextColor()}>Rates</h4>
+						<h4 className={`margin-top ${this.getTextColor()}`}>Rates</h4>
 						<RateInputs
 							getRate={this.getRate}
 							getTextColor={this.getTextColor}
@@ -313,8 +316,7 @@ class App extends Component {
 					</div>
 
 					<div className="col-md-12 col-sm-12">
-						<hr />
-						<h4 className={this.getTextColor()}>Percents</h4>
+						<h4 className={`margin-top ${this.getTextColor()}`}>Percents</h4>
 						<Percents
 							getTextColor={this.getTextColor}
 							handlePercentChange={this.handlePercentChange}
@@ -327,8 +329,7 @@ class App extends Component {
 				</div>
 
 				<div className="col-md-12">
-					<hr />
-					<h4 className={this.getTextColor()}>Resources</h4>
+					<h4 className={`margin-top ${this.getTextColor()}`}>Resources</h4>
 					<p className={`text-center ${this.getTextColor()}`}>
 						<RateText rate={rate} selected={selected} />
 					</p>
@@ -343,9 +344,7 @@ class App extends Component {
 				</div>
 
 				<div className="col-md-12">
-					<hr />
-					<h4 className={this.getTextColor()}>Results</h4>
-					<div className="text-center">
+					<div className="text-center margin-top">
 						<PrintResult
 							deut={deut}
 							metal={metal}

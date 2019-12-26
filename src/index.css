@@ -16,7 +16,7 @@ code {
 }
 
 .margin-top {
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .background-light {
@@ -37,8 +37,4 @@ code {
 
 .text-white {
   color: white;
-}
-
-#root {
-  height: 100%;
 }
