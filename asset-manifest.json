@@ -1,22 +1,27 @@
 {
   "files": {
-    "main.css": "/ogame-ui/static/css/main.bb99424e.chunk.css",
-    "main.js": "/ogame-ui/static/js/main.53f56f36.chunk.js",
-    "main.js.map": "/ogame-ui/static/js/main.53f56f36.chunk.js.map",
-    "runtime-main.js": "/ogame-ui/static/js/runtime-main.2d2f71bd.js",
-    "runtime-main.js.map": "/ogame-ui/static/js/runtime-main.2d2f71bd.js.map",
-    "static/js/2.b9e35c87.chunk.js": "/ogame-ui/static/js/2.b9e35c87.chunk.js",
-    "static/js/2.b9e35c87.chunk.js.map": "/ogame-ui/static/js/2.b9e35c87.chunk.js.map",
+    "main.css": "/ogame-ui/static/css/main.5963ba14.chunk.css",
+    "main.js": "/ogame-ui/static/js/main.37e94f5e.chunk.js",
+    "main.js.map": "/ogame-ui/static/js/main.37e94f5e.chunk.js.map",
+    "runtime-main.js": "/ogame-ui/static/js/runtime-main.f5c18715.js",
+    "runtime-main.js.map": "/ogame-ui/static/js/runtime-main.f5c18715.js.map",
+    "static/css/2.38052c58.chunk.css": "/ogame-ui/static/css/2.38052c58.chunk.css",
+    "static/js/2.a33294ff.chunk.js": "/ogame-ui/static/js/2.a33294ff.chunk.js",
+    "static/js/2.a33294ff.chunk.js.map": "/ogame-ui/static/js/2.a33294ff.chunk.js.map",
     "index.html": "/ogame-ui/index.html",
-    "precache-manifest.77678aa4bb38c244a221adda8ab40887.js": "/ogame-ui/precache-manifest.77678aa4bb38c244a221adda8ab40887.js",
+    "precache-manifest.d2fda0527ad31d0f77e2fd0bd90cde9a.js": "/ogame-ui/precache-manifest.d2fda0527ad31d0f77e2fd0bd90cde9a.js",
     "service-worker.js": "/ogame-ui/service-worker.js",
-    "static/css/main.bb99424e.chunk.css.map": "/ogame-ui/static/css/main.bb99424e.chunk.css.map",
-    "static/media/index.css": "/ogame-ui/static/media/background.75bdd704.jpg"
+    "static/css/2.38052c58.chunk.css.map": "/ogame-ui/static/css/2.38052c58.chunk.css.map",
+    "static/css/main.5963ba14.chunk.css.map": "/ogame-ui/static/css/main.5963ba14.chunk.css.map",
+    "static/js/2.a33294ff.chunk.js.LICENSE.txt": "/ogame-ui/static/js/2.a33294ff.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/ogame-ui/static/media/background.75bdd704.jpg",
+    "static/media/bootstrap.css": "/ogame-ui/static/media/glyphicons-halflings-regular.fa277232.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.2d2f71bd.js",
-    "static/js/2.b9e35c87.chunk.js",
-    "static/css/main.bb99424e.chunk.css",
-    "static/js/main.53f56f36.chunk.js"
+    "static/js/runtime-main.f5c18715.js",
+    "static/css/2.38052c58.chunk.css",
+    "static/js/2.a33294ff.chunk.js",
+    "static/css/main.5963ba14.chunk.css",
+    "static/js/main.37e94f5e.chunk.js"
   ]
 }
