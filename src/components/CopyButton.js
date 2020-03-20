@@ -13,7 +13,7 @@ class CopyButton extends React.Component {
 
 	render() {
 		return (
-			<button onClick={this.handleOnClick} className="btn btn-inverse">
+			<button onClick={this.handleOnClick} className="btn btn-default">
 				Copy
 			</button>
 		);

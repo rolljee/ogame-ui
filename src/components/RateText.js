@@ -4,7 +4,7 @@ import Ogame from "ogamejs";
 class RateText extends React.Component {
   render() {
     const { rate, selected } = this.props;
-    const { rateMetal, rateCrystal, rateDeut } = Ogame.parseRate(
+    const { rateMetal, rateCrystal, rateDeut } = Ogame.Trader.parseRate(
       rate,
       selected
     );

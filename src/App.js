@@ -43,7 +43,7 @@ class App extends Component {
 
 	sellDeut() {
 		const { deut, percentMetal, percentCrystal, rate } = this.state;
-		const { metal, crystal } = Ogame.sellDeut(
+		const { metal, crystal } = Ogame.Trader.sellDeut(
 			deut,
 			percentMetal,
 			percentCrystal,
@@ -54,7 +54,7 @@ class App extends Component {
 
 	sellMetal() {
 		const { metal, percentDeut, percentCrystal, rate } = this.state;
-		const { crystal, deut } = Ogame.sellMetal(
+		const { crystal, deut } = Ogame.Trader.sellMetal(
 			metal,
 			percentDeut,
 			percentCrystal,
@@ -65,7 +65,7 @@ class App extends Component {
 
 	sellCrystal() {
 		const { crystal, percentDeut, percentMetal, rate } = this.state;
-		const { metal, deut } = Ogame.sellCrystal(
+		const { metal, deut } = Ogame.Trader.sellCrystal(
 			crystal,
 			percentDeut,
 			percentMetal,
