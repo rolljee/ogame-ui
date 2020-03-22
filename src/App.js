@@ -1,7 +1,10 @@
 import Ogame from 'ogamejs';
 import React, { Component } from 'react';
 
-/** Components import */
+/** Bootstrap imports */
+import Col from 'react-bootstrap/Col';
+
+/** Components imports */
 import { BACKGROUND, RESOURCES } from './components/constants';
 import DefaultRates from './components/DefaultRates';
 import Layout from './components/Layout';
@@ -212,14 +215,14 @@ class App extends Component {
 		const { rate } = this.state;
 		const isActive = selectedRate === rate;
 
-		return isActive ? 'info' : 'default';
+		return isActive ? 'primary' : 'light';
 	}
 
 	getActiveTrade(trade) {
 		const { selected } = this.state;
 		const isActive = trade === selected;
 
-		return isActive ? 'info' : 'default';
+		return isActive ? 'primary' : 'light';
 	}
 
 	setRate(selectedRate) {
@@ -285,7 +288,7 @@ class App extends Component {
 		);
 		return (
 			<Layout background={background} setBackground={this.setBackground}>
-				<div className="col-sm-12">
+				<Col xs={12}>
 					<div className="text-center">
 						<h6 className="margin-top text-white">Select ressource</h6>
 						<div className="margin-bottom">
@@ -295,8 +298,8 @@ class App extends Component {
 							/>
 						</div>
 					</div>
-				</div>
-				<div className="col-sm-12">
+				</Col>
+				<Col xs={12}>
 					<hr />
 					<h6 className="margin-top text-white">Rates</h6>
 					<div className="text-center margin-bottom">
@@ -309,9 +312,8 @@ class App extends Component {
 						getRate={this.getRate}
 						handleRateChange={this.handleRateChange}
 					/>
-				</div>
-
-				<div className="col-sm-12">
+				</Col>
+				<Col xs={12}>
 					<hr />
 					<h6 className="margin-top text-white">Percents</h6>
 					<Percents
@@ -321,9 +323,9 @@ class App extends Component {
 						percentDeut={percentDeut}
 						percentMetal={percentMetal}
 					/>
-				</div>
+				</Col>
 
-				<div className="col-sm-12">
+				<Col xs={12}>
 					<hr />
 					<h6 className="margin-top text-white">Resources</h6>
 					<p className={`text-center text-white`}>
@@ -336,16 +338,16 @@ class App extends Component {
 						isNotCurrentResource={this.isNotCurrentResource}
 						metal={metal}
 					/>
-				</div>
+				</Col>
 
-				<div className={`col-sm-12 margin-top text-white text-center`}>
+				<Col xs={12} className="margin-top text-white text-center">
 					<PrintResult
 						deut={deut}
 						metal={metal}
 						crystal={crystal}
 						selected={selected}
 					/>
-				</div>
+				</Col>
 			</Layout>
 		);
 	}

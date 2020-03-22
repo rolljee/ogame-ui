@@ -1,5 +1,7 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import copy from 'copy-to-clipboard';
+
 
 class CopyButton extends React.Component {
 	constructor(props) {
@@ -13,9 +15,7 @@ class CopyButton extends React.Component {
 
 	render() {
 		return (
-			<button onClick={this.handleOnClick} className="btn btn-default">
-				Copy
-			</button>
+			<Button variant="light" onClick={this.handleOnClick}>Copy</Button>
 		);
 	}
 }

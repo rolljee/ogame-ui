@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+
 import { RESOURCES } from './constants';
 
 class Trades extends React.Component {
@@ -14,13 +16,12 @@ class Trades extends React.Component {
 		const current = RESOURCES[resource.id];
 		const color = this.props.getActiveTrade(current);
 		return (
-			<span className="margin-right-sm" key={index}>
-				<button
-					onClick={() => this.props.handleOnChange(current)}
-					className={`btn btn-lg label label-${color} clickable`}>
-					{current}
-				</button>
-			</span>
+			<Button
+				variant={color}
+				onClick={() => this.props.handleOnChange(current)}
+				className={`margin-right-sm`} key={index}>
+				{current}
+			</Button>
 		);
 	}
 	render() {

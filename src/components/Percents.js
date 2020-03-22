@@ -1,4 +1,7 @@
 import React from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import NumberIntput from './NumberInput';
 import { RESOURCES } from './constants';
 
@@ -26,9 +29,9 @@ class Percents extends React.Component {
 			},
 		];
 	}
-	renderRadio({ resource, name, maxValue, percent }, index) {
+	renderInputs({ resource, name, maxValue, percent }, index) {
 		return (
-			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
+			<Col key={index}>
 				<NumberIntput
 					text={name}
 					disabled={this.props.isCurrentRessource(resource)}
@@ -37,12 +40,14 @@ class Percents extends React.Component {
 					placeholder={resource}
 					value={this.props[percent]}
 				/>
-			</div>
+			</Col>
 		);
 	}
 	render() {
-		return this.resources.map((resource, index) =>
-			this.renderRadio(resource, index),
+		return (
+			<Row>
+				{this.resources.map((resource, index) => this.renderInputs(resource, index))}
+			</Row>
 		);
 	}
 }

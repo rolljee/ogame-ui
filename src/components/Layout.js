@@ -1,14 +1,22 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Header from './Header';
 
 class Layout extends React.Component {
 	render() {
-		const { children } = this.props;
 		return (
-			<div className="container-fluid full-height">
-				<div className="container">
-					<div className="col-xs-12">{children}</div>
-				</div>
-			</div>
+			<>
+				<Header />
+				<Container fluid className="full-height">
+					<Container>
+						<Row>
+							<Col xs={12}>{this.props.children}</Col>
+						</Row>
+					</Container>
+				</Container>
+			</>
 		);
 	}
 }
