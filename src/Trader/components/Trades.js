@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { RESOURCES } from './constants';
+import { RESOURCES } from '../../components/constants';
 
 class Trades extends React.Component {
 	constructor(props) {

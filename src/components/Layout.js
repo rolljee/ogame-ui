@@ -12,7 +12,7 @@ class Layout extends React.Component {
 				<Container fluid className="full-height">
 					<Container>
 						<Row>
-							<Col xs={12}>{this.props.children}</Col>
+							<Col>{this.props.children}</Col>
 						</Row>
 					</Container>
 				</Container>

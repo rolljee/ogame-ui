@@ -9,9 +9,9 @@ import RateInputs from './components/RatesInputs';
 import RateText from './components/RateText';
 import Resources from './components/Resources';
 import Trades from './components/Trades';
-import { RESOURCES } from './components/constants';
+import { RESOURCES } from '../components/constants';
 
-export default class Trader extends React.Component {
+class Trader extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -35,7 +35,6 @@ export default class Trader extends React.Component {
 		this.handleResourceChange = this.handleResourceChange.bind(this);
 		this.isCurrentRessource = this.isCurrentRessource.bind(this);
 		this.isNotCurrentResource = this.isNotCurrentResource.bind(this);
-		this.setBackground = this.setBackground.bind(this);
 		this.setRate = this.setRate.bind(this);
 	}
 
@@ -273,7 +272,7 @@ export default class Trader extends React.Component {
 		const { percentMetal, percentCrystal, percentDeut } = this.getPercent(selected);
 		return (
 			<>
-				<Col xs={12}>
+				<Col>
 					<div className="text-center">
 						<h6 className="margin-top text-white">Select ressource</h6>
 						<div className="margin-bottom">
@@ -284,7 +283,7 @@ export default class Trader extends React.Component {
 						</div>
 					</div>
 				</Col>
-				<Col xs={12}>
+				<Col>
 					<hr />
 					<h6 className="margin-top text-white">Rates</h6>
 					<div className="text-center margin-bottom">
@@ -298,7 +297,7 @@ export default class Trader extends React.Component {
 						handleRateChange={this.handleRateChange}
 					/>
 				</Col>
-				<Col xs={12}>
+				<Col>
 					<hr />
 					<h6 className="margin-top text-white">Percents</h6>
 					<Percents
@@ -310,7 +309,7 @@ export default class Trader extends React.Component {
 					/>
 				</Col>
 
-				<Col xs={12}>
+				<Col>
 					<hr />
 					<h6 className="margin-top text-white">Resources</h6>
 					<p className={`text-center text-white`}>
@@ -325,7 +324,7 @@ export default class Trader extends React.Component {
 					/>
 				</Col>
 
-				<Col xs={12} className="margin-top text-white text-center">
+				<Col className="margin-top text-white text-center">
 					<PrintResult
 						deut={deut}
 						metal={metal}
@@ -336,5 +335,6 @@ export default class Trader extends React.Component {
 			</>
 		)
 	}
-
 }
+
+export default Trader;

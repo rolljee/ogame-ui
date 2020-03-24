@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+} from "react-router-dom";
 
-/** Components imports */
 import { BACKGROUND } from './components/constants';
 import Layout from './components/Layout';
+import Home from './Home';
+import Trader from './Trader/Trader';
 
 class App extends Component {
 	constructor(props) {
@@ -11,6 +17,8 @@ class App extends Component {
 		this.state = {
 			background: BACKGROUND.dark,
 		};
+
+		this.setBackground = this.setBackground.bind(this);
 	}
 
 	setBackground() {
@@ -25,7 +33,36 @@ class App extends Component {
 	render() {
 		const { background } = this.state;
 		return (
-			<Layout background={background} setBackground={this.setBackground} />
+			<Layout background={background} setBackground={this.setBackground}>
+				<Router>
+					<Switch>
+						<Route path="/trades">
+							<Trader />
+						</Route>
+						<Route path="/players">
+							{/* <Home /> */}
+						</Route>
+						<Route path="/market">
+							{/* <Home /> */}
+						</Route>
+						<Route path="/mining">
+							{/* <Home /> */}
+						</Route>
+						<Route path="/universes">
+							{/* <Home /> */}
+						</Route>
+						<Route path="/score">
+							{/* <Home /> */}
+						</Route>
+						<Route path="/alliances">
+							{/* <Home /> */}
+						</Route>
+						<Router path="/">
+							<Home />
+						</Router>
+					</Switch>
+				</Router>
+			</Layout >
 		);
 	}
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import CopyButton from './CopyButton';
-import { RESOURCES } from './constants';
+import { RESOURCES } from '../../components/constants';
 
 class PrintResult extends React.Component {
 	prettify(x) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { RATES } from './constants';
+import { RATES } from '../../components/constants';
 
 class DefaultRates extends React.Component {
 	constructor(props) {

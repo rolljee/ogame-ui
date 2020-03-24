@@ -20,3 +20,48 @@ export const RESOURCES = {
 	deut: 'deut',
 	metal: 'metal',
 };
+
+export const ROUTES = [
+	{
+		header: 'Trades',
+		title: 'Trades resources',
+		text: 'Get value of resources to sell your resource',
+		route: 'trades'
+	},
+	{
+		header: 'Players',
+		title: 'Players list',
+		text: 'Get players accross universes',
+		route: 'players'
+	},
+	{
+		header: 'Market',
+		title: 'Market resources calculator',
+		text: 'Get value of ship/resources for the market',
+		route: 'market'
+	},
+	{
+		header: 'Mining',
+		title: 'Building tool',
+		text: 'Get the production/cost of any building',
+		route: 'mining'
+	},
+	{
+		header: 'Universes',
+		title: 'Get universes informations',
+		text: 'Universes list and data',
+		route: 'universes'
+	},
+	{
+		header: 'Scores',
+		title: 'Get scores accross universes',
+		text: 'Scores military/mining etc.',
+		route: 'score'
+	},
+	{
+		header: 'Alliances',
+		title: 'Get alliances informations',
+		text: 'Alliances list and data accross universes',
+		route: 'alliances'
+	},
+]

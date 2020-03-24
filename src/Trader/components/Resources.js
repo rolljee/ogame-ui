@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import NumberIntput from './NumberInput';
-import { RESOURCES } from './constants';
+import { RESOURCES } from '../../components/constants';
 
 class Resources extends React.Component {
 	constructor(props) {
