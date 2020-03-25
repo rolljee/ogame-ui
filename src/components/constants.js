@@ -21,6 +21,15 @@ export const RESOURCES = {
 	metal: 'metal',
 };
 
+export const STATUS = {
+	a: 'active',
+	v: 'vacancy',
+	i: 'inactive',
+	I: 'long inactive',
+	b: 'banned',
+	o: 'outlaw'
+}
+
 export const ROUTES = [
 	{
 		header: 'Trades',

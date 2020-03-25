@@ -9,6 +9,7 @@ import { BACKGROUND } from './components/constants';
 import Layout from './components/Layout';
 import Home from './Home';
 import Trader from './Trader/Trader';
+import Players from './Players/Players';
 
 class App extends Component {
 	constructor(props) {
@@ -40,7 +41,7 @@ class App extends Component {
 							<Trader />
 						</Route>
 						<Route path="/players">
-							{/* <Home /> */}
+							<Players />
 						</Route>
 						<Route path="/market">
 							{/* <Home /> */}
