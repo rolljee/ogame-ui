@@ -1,5 +1,5 @@
 import React from 'react';
-import { CORSPROXY } from '../../components/constants';
+import { CORSPROXY, POSITIONS } from '../../components/constants';
 
 class PlayersDetails extends React.Component {
 	constructor(props) {
@@ -16,16 +16,14 @@ class PlayersDetails extends React.Component {
 			const response = await fetch(CORSPROXY + url);
 			const text = await response.text();
 			const xml = new window.DOMParser().parseFromString(text, "text/xml");
-			console.log(xml);
 			const positionsXml = xml.getElementsByTagName('position');
 			const planetsXml = xml.getElementsByTagName('planet');
 
 			const positions = [];
 			for (const position of positionsXml) {
-				console.log(position);
 				const type = position.getAttribute('type');
 				const score = position.getAttribute('score');
-				positions.push({ type, score });
+				positions.push({ type, score, typeLongName: POSITIONS[type] });
 			}
 
 			const planets = [];
