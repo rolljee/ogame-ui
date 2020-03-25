@@ -39,3 +39,7 @@ code {
 .text-white {
   color: #ffffff
 }
+
+.clickable {
+  cursor: pointer;
+}

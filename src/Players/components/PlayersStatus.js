@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { STATUS } from '../../components/constants';
 
 class PlayersStatus extends React.Component {
@@ -14,12 +16,18 @@ class PlayersStatus extends React.Component {
 				variant={color}
 				onClick={() => this.props.setActiveStatus(status)}
 				className={`margin-right-sm`} key={index}>
-				{status}
+				{STATUS[status]}
 			</Button>
 		);
 	}
 	render() {
-		return Object.keys(STATUS).map((status, index) => this.renderStatus(status, index));
+		return (
+			<Row className="text-center">
+				<Col>
+					{Object.keys(STATUS).map((status, index) => this.renderStatus(status, index))}
+				</Col>
+			</Row>
+		)
 	}
 }
 

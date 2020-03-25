@@ -43,7 +43,7 @@ class Players extends React.Component {
 			for (const player of playersXml) {
 				const id = player.getAttribute('id');
 				const name = player.getAttribute('name');
-				const status = player.getAttribute('status');
+				const status = player.getAttribute('status') || 'A'; // by default Active user does not have any status
 
 				players.push({ id, name, status });
 			}
@@ -59,58 +59,74 @@ class Players extends React.Component {
 	}
 
 	setActiveStatus(selectedStatus) {
+		console.log(selectedStatus);
 		const status = this.state.status.includes(selectedStatus) ?
 			this.state.status.filter(s => s !== selectedStatus)
 			: [...this.state.status, ...selectedStatus];
 
-		this.setState({ status });
+		if (!status.length) {
+			// Avoid user to remove all filters
+			status.push(selectedStatus);
+		}
+		this.setState({ status }, this.refreshPlayers);
+	}
+
+	refreshPlayers() {
+		const { status, players } = this.state;
+		const selected = players.filter(player => new RegExp(`[${status.join('')}]+`).test(player.status));
+		console.log(selected);
+		this.setState({ selected });
 	}
 
 	render() {
 		return (
-			<>
-				<Form onSubmit={this.handleSubmit} className="m-4">
-					<Row>
-						<Col xs="auto">
-							<Form.Control type="number" name="universe" placeholder="universe" size="sm" />
-						</Col>
-						<Col xs="auto">
-							<Form.Control type="text" name="lang" placeholder="fr" size="sm" />
-						</Col>
-						<Col xs="auto">
-							<Button variant="light" type="submit">
-								Submit
+			<Row>
+				<Col sm={12}>
+					<Form onSubmit={this.handleSubmit} className="m-4">
+						<Row className="w-100 justify-content-center">
+							<Col xs="auto">
+								<Form.Control type="number" name="universe" placeholder="universe" size="sm" defaultValue="165" />
+							</Col>
+							<Col xs="auto">
+								<Form.Control type="text" name="lang" placeholder="fr" size="sm" defaultValue="fr" />
+							</Col>
+							<Col xs="auto">
+								<Button variant="light" type="submit">
+									Submit
 						</Button>
-						</Col>
-					</Row>
-				</Form>
-				{this.state.selected.length && (
-					<>
-						<PlayersStatus
-							getActiveStatus={this.getActiveStatus}
-							setActiveStatus={this.setActiveStatus}
-						/>
-						<Table striped bordered variant="dark">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Status</th>
-									<th>id</th>
-								</tr>
-							</thead>
-							<tbody>
-								{this.state.players.map(player => (
-									<tr key={player.id}>
-										<td>{player.name}</td>
-										<td>{player.status}</td>
-										<td>{player.id}</td>
+							</Col>
+						</Row>
+					</Form>
+				</Col>
+				<Col sm={12}>
+					{this.state.selected.length && (
+						<>
+							<PlayersStatus
+								getActiveStatus={this.getActiveStatus}
+								setActiveStatus={this.setActiveStatus}
+							/>
+							<Table striped bordered hover variant="dark">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Status</th>
+										<th>id</th>
 									</tr>
-								))}
-							</tbody>
-						</Table>
-					</>
-				)}
-			</>
+								</thead>
+								<tbody>
+									{this.state.selected.map(player => (
+										<tr key={player.id} className="clickable">
+											<td>{player.name}</td>
+											<td>{player.status}</td>
+											<td>{player.id}</td>
+										</tr>
+									))}
+								</tbody>
+							</Table>
+						</>
+					)}
+				</Col>
+			</Row>
 		)
 	}
 }

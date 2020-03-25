@@ -22,7 +22,8 @@ export const RESOURCES = {
 };
 
 export const STATUS = {
-	a: 'active',
+	A: 'active', // GF take no status as an active player
+	a: 'admin',
 	v: 'vacancy',
 	i: 'inactive',
 	I: 'long inactive',
