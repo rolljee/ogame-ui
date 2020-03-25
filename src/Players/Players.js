@@ -59,7 +59,6 @@ class Players extends React.Component {
 	}
 
 	setActiveStatus(selectedStatus) {
-		console.log(selectedStatus);
 		const status = this.state.status.includes(selectedStatus) ?
 			this.state.status.filter(s => s !== selectedStatus)
 			: [...this.state.status, ...selectedStatus];
@@ -74,7 +73,6 @@ class Players extends React.Component {
 	refreshPlayers() {
 		const { status, players } = this.state;
 		const selected = players.filter(player => new RegExp(`[${status.join('')}]+`).test(player.status));
-		console.log(selected);
 		this.setState({ selected });
 	}
 
