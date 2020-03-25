@@ -3,6 +3,19 @@ export const BACKGROUND = {
 	dark: 'dark',
 };
 
+export const CORSPROXY = "https://api.codetabs.com/v1/proxy?quest=";
+
+export const POSITIONS = {
+	0: 'All',
+	1: "Economy",
+	2: "Research",
+	3: "Military",
+	4: "Military Built",
+	5: "Military Destroyed",
+	6: "Military Lost",
+	7: "Honor",
+}
+
 export const RATES = [
 	{
 		rate: '2.5:1.6:1',
