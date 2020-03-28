@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
+import FuzzySearch from 'fuzzy-search';
 import PlayersStatus from './components/PlayersStatus';
 import { STATUS, CORSPROXY } from '../components/constants';
 import PlayersDetails from './components/PlayerDetails';
@@ -20,13 +21,17 @@ class Players extends React.Component {
 			show: false,
 			status: Object.keys(STATUS),
 			universe: 165,
+			search: '',
 		};
 
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.getActiveStatus = this.getActiveStatus.bind(this);
-		this.setActiveStatus = this.setActiveStatus.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleOnChange = this.handleOnChange.bind(this);
 		this.handleShow = this.handleShow.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.setActiveStatus = this.setActiveStatus.bind(this);
+
+		this.searchPlayers(this.state.lang, this.state.universe);
 	}
 
 	handleClose() {
@@ -37,14 +42,16 @@ class Players extends React.Component {
 		this.setState({ show: true, player });
 	}
 
+	handleOnChange(event) {
+		const { players } = this.state;
+		const search = event.currentTarget.value;
+		const searcher = new FuzzySearch(players, ['name']);
+		const result = searcher.search(search);
+		this.setState({ search, selected: result });
+	}
 
-	async handleSubmit(event) {
-		event.preventDefault();
-		event.stopPropagation();
-
+	async searchPlayers(lang, universe) {
 		try {
-			const lang = event.currentTarget.lang.value;
-			const universe = event.currentTarget.universe.value;
 			const url = `https://s${universe}-${lang}.ogame.gameforge.com/api/players.xml`;
 			const response = await fetch(CORSPROXY + url);
 			const text = await response.text();
@@ -66,6 +73,14 @@ class Players extends React.Component {
 		}
 	}
 
+	handleSubmit(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const lang = event.currentTarget.lang.value;
+		const universe = event.currentTarget.universe.value;
+		this.searchPlayer(lang, universe);
+	}
+
 	getActiveStatus(status) {
 		return this.state.status.includes(status) ? 'primary' : 'light';
 	}
@@ -83,9 +98,11 @@ class Players extends React.Component {
 	}
 
 	refreshPlayers() {
-		const { status, players } = this.state;
-		const selected = players.filter(player => new RegExp(`[${status.join('')}]+`).test(player.status));
-		this.setState({ selected });
+		const { status, players, search } = this.state;
+		const statusRegex = new RegExp(`[${status.join('')}]+`);
+		const playerRegex = new RegExp(search);
+		const selected = players.filter(player => statusRegex.test(player.status));
+		this.setState({ selected: selected.filter(s => playerRegex.exec(s)) });
 	}
 
 	render() {
@@ -107,38 +124,38 @@ class Players extends React.Component {
 					</Form>
 				</Col>
 				<Col sm={12}>
-					{this.state.selected.length && (
-						<>
-							<PlayersStatus
-								getActiveStatus={this.getActiveStatus}
-								setActiveStatus={this.setActiveStatus}
-							/>
-							<Table striped bordered hover variant="dark">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Status</th>
-										<th>id</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									{this.state.selected.map(player => (
-										<tr key={player.id} className="clickable">
-											<td>{player.name}</td>
-											<td>{player.status}</td>
-											<td>{player.id}</td>
-											<td>
-												<Button variant="primary" onClick={() => this.handleShow(player)}>
-													Open details
+					<h4 className="text-white text-center">{this.state.lang} - {this.state.universe}</h4>
+					<PlayersStatus
+						getActiveStatus={this.getActiveStatus}
+						setActiveStatus={this.setActiveStatus}
+					/>
+					<Row className="m-2">
+						<Col>
+							<Form.Control placeholder="Search by player's name" onChange={this.handleOnChange} />
+						</Col>
+					</Row>
+					<Table striped bordered hover variant="dark">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{this.state.selected.map(player => (
+								<tr key={player.id} className="clickable">
+									<td>{player.name}</td>
+									<td>{player.status}</td>
+									<td>
+										<Button variant="primary" onClick={() => this.handleShow(player)}>
+											Open details
 												</Button>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</Table>
-						</>
-					)}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
 				</Col>
 
 				<Modal show={this.state.show} onHide={this.handleClose} animation={false}>
