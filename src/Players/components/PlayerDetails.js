@@ -49,7 +49,8 @@ class PlayersDetails extends React.Component {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 	}
 
-	link(galaxy, system, position) {
+	link(coords) {
+		const [galaxy, system, position] = coords.split(':');
 		return `https://s165-fr.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`;
 	}
 
@@ -74,13 +75,13 @@ class PlayersDetails extends React.Component {
 					</tbody>
 				</Table>
 				<Row>
-					{this.state.planets.map(({ id, name, coords, galaxy, system, position, moon }) => (
+					{this.state.planets.map(({ id, name, coords, moon }) => (
 						<Col xs={12} key={id}>
 							<Col>
 								<Row>
 									<Col>
 										<Image src={Planet} roundedCircle />
-										<small className="ml-1"><a href={this.link(galaxy, system, position)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
+										<small className="ml-1"><a href={this.link(coords)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
 									</Col>
 									<Col>
 										<small>{name}</small>
