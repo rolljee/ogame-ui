@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5dfc533eca091862a4be7573a82249b4",
+    "revision": "3f34d46d8ecaaa5cd0fd970c9a65e68e",
     "url": "/ogame-ui/index.html"
   },
   {
-    "revision": "913abb9bf7dcd76bb6e3",
+    "revision": "0830e737dea78b115515",
     "url": "/ogame-ui/static/css/main.57c59feb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ogame-ui/static/js/2.6e074453.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "913abb9bf7dcd76bb6e3",
-    "url": "/ogame-ui/static/js/main.672644f6.chunk.js"
+    "revision": "0830e737dea78b115515",
+    "url": "/ogame-ui/static/js/main.3d583f6e.chunk.js"
   },
   {
     "revision": "ee34d1a9a50d1564f404",
