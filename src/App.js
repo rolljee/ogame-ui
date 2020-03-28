@@ -37,25 +37,25 @@ class App extends Component {
 			<Layout background={background} setBackground={this.setBackground}>
 				<Router>
 					<Switch>
-						<Route path="/trades">
+						<Route path="trades">
 							<Trader />
 						</Route>
-						<Route path="/players">
+						<Route path="players">
 							<Players />
 						</Route>
-						<Route path="/market">
+						<Route path="market">
 							{/* <Home /> */}
 						</Route>
-						<Route path="/mining">
+						<Route path="mining">
 							{/* <Home /> */}
 						</Route>
-						<Route path="/universes">
+						<Route path="universes">
 							{/* <Home /> */}
 						</Route>
-						<Route path="/score">
+						<Route path="score">
 							{/* <Home /> */}
 						</Route>
-						<Route path="/alliances">
+						<Route path="alliances">
 							{/* <Home /> */}
 						</Route>
 						<Router path="/">
