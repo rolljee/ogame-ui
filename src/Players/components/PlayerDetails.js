@@ -106,7 +106,7 @@ class PlayersDetails extends React.Component {
 								<Row>
 									<Col>
 										<Image src={Planet} roundedCircle />
-										<small className="ml-1"><a href={this.link(galaxy, system, position)}>{coords}</a></small><br />
+										<small className="ml-1"><a href={this.link(galaxy, system, position)} target="_blank"  rel="noopener noreferrer">{coords}</a></small><br />
 									</Col>
 									<Col>
 										<small>{name}</small>
