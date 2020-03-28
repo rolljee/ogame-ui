@@ -1,6 +1,9 @@
 import React from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import NumberIntput from './NumberInput';
-import { RESOURCES } from './constants';
+import { RESOURCES } from '../../components/constants';
 
 class RateInputs extends React.Component {
 	constructor(props) {
@@ -12,24 +15,26 @@ class RateInputs extends React.Component {
 		];
 	}
 
-	renderInput(resource, index) {
+	renderInputs(resource, index) {
 		const current = RESOURCES[resource.id];
 		return (
-			<div className="col-md-4 col-sm-4 col-xs-12" key={index}>
+			<Col key={index}>
 				<NumberIntput
 					text={current}
 					onChange={e => this.props.handleRateChange(e, current)}
 					placeholder={current}
 					value={this.props.getRate(current)}
 				/>
-			</div>
+			</Col>
 		);
 	}
 
 	render() {
-		return this.resources.map((resource, index) =>
-			this.renderInput(resource, index),
-		);
+		return (
+			<Row>
+				{this.resources.map((resource, index) => this.renderInputs(resource, index))}
+			</Row>
+		)
 	}
 }
 

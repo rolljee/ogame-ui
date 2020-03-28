@@ -1,5 +1,7 @@
 import React from 'react';
-import { RATES } from './constants';
+import Button from 'react-bootstrap/Button';
+
+import { RATES } from '../../components/constants';
 
 class DefaultRates extends React.Component {
 	constructor(props) {
@@ -9,13 +11,12 @@ class DefaultRates extends React.Component {
 	renderRates({ rate }, index) {
 		const color = this.props.getActiveRate(rate);
 		return (
-			<span className="margin-right-sm" key={index}>
-				<button
-					onClick={() => this.props.setRate(rate)}
-					className={`btn label label-${color} clickable`}>
-					{rate}
-				</button>
-			</span>
+			<Button
+				variant={color}
+				onClick={() => this.props.setRate(rate)}
+				className={`margin-right-sm`} key={index}>
+				{rate}
+			</Button>
 		);
 	}
 	render() {

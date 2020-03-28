@@ -1,6 +1,6 @@
 import React from 'react';
 import CopyButton from './CopyButton';
-import { RESOURCES } from './constants';
+import { RESOURCES } from '../../components/constants';
 
 class PrintResult extends React.Component {
 	prettify(x) {
@@ -28,12 +28,12 @@ class PrintResult extends React.Component {
 		const text = this.getText(metalText, crystalText, deutText, selected);
 
 		return (
-			<React.Fragment>
+			<>
 				deut: {deutText} metal: {metalText} crystal: {crystalText}
 				<div className="margin-top">
 					<CopyButton text={text} />
 				</div>
-			</React.Fragment>
+			</>
 		);
 	}
 }
