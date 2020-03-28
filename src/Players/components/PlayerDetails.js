@@ -1,7 +1,11 @@
 import React from 'react';
 import { CORSPROXY, POSITIONS } from '../../components/constants';
 import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+import Planet from './planet.png';
+import Moon from './moon.gif';
 
 class PlayersDetails extends React.Component {
 	constructor(props) {
@@ -71,6 +75,10 @@ class PlayersDetails extends React.Component {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 	}
 
+	link(galaxy, system, position) {
+		return `https://s165-fr.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`;
+	}
+
 	render() {
 		return (
 			<>
@@ -91,34 +99,31 @@ class PlayersDetails extends React.Component {
 						))}
 					</tbody>
 				</Table>
-				<Table striped bordered hover>
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Coords</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.state.planets.map(({ id, name, coords, galaxy, system, position }) => (
-							<tr key={id} className="clickable">
-								<td>{name}</td>
-								<td>{coords}</td>
-								<td>
-									<Button
-										variant="primary"
-										className="float-right"
-										target="_blank"
-										href={
-											`https://s165-fr.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`
-										}>
-										Open in galaxy
-									</Button>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</Table>
+				<Row>
+					{this.state.planets.map(({ id, name, coords, galaxy, system, position, moon }) => (
+						<Col xs={12} key={id}>
+							<Col>
+								<Row>
+									<Col>
+										<Image src={Planet} roundedCircle />
+										<small className="ml-1"><a href={this.link(galaxy, system, position)}>{coords}</a></small><br />
+									</Col>
+									<Col>
+										<small>{name}</small>
+									</Col>
+									<Col>
+										{moon && (
+											<>
+												<Image src={Moon} roundedCircle />
+												<small className="ml-1">size: {moon.size}</small>
+											</>
+										)}
+									</Col>
+								</Row>
+							</Col>
+						</Col>
+					))}
+				</Row>
 			</>
 		)
 	}
