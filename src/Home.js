@@ -12,14 +12,20 @@ class Home extends React.Component {
 	render() {
 		return (
 			<Row>
-				{ROUTES.map(route => (
-					<Col>
+				{ROUTES.map((route, index) => (
+					<Col key={index}>
 						<Card bg='dark' text='white' style={{ width: '18rem', height: '10rem' }} className="m-3" key={route.route}>
 							<Card.Body>
 								<span className="float-right">
-									<Button variant="dark" href={route.route}>
-										<FontAwesomeIcon icon={faExternalLinkAlt} />
-									</Button>
+									{route.available ?
+										(
+											<Button variant="dark" href={route.route}>
+												<FontAwesomeIcon icon={faExternalLinkAlt} />
+											</Button>
+										)
+										:
+										'comming soon'
+									}
 								</span>
 								<Card.Title>
 									{route.title}

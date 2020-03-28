@@ -49,42 +49,49 @@ export const ROUTES = [
 		header: 'Trades',
 		title: 'Trades resources',
 		text: 'Get value of resources to sell your resource',
-		route: 'trades'
+		route: 'trades',
+		available: true
 	},
 	{
 		header: 'Players',
 		title: 'Players list',
 		text: 'Get players accross universes',
-		route: 'players'
+		route: 'players',
+		available: true
 	},
 	{
 		header: 'Market',
 		title: 'Market resources calculator',
 		text: 'Get value of ship/resources for the market',
-		route: 'market'
+		route: 'market',
+		available: false
 	},
 	{
 		header: 'Mining',
 		title: 'Building tool',
 		text: 'Get the production/cost of any building',
-		route: 'mining'
+		route: 'mining',
+		available: false
 	},
 	{
 		header: 'Universes',
 		title: 'Get universes informations',
 		text: 'Universes list and data',
-		route: 'universes'
+		route: 'universes',
+		available: false
 	},
 	{
 		header: 'Scores',
 		title: 'Get scores accross universes',
 		text: 'Scores military/mining etc.',
-		route: 'score'
+		route: 'score',
+		available: false
 	},
 	{
 		header: 'Alliances',
 		title: 'Get alliances informations',
 		text: 'Alliances list and data accross universes',
-		route: 'alliances'
+		route: 'alliances',
+		available: false
 	},
 ]
