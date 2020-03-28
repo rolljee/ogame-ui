@@ -26,7 +26,6 @@ class PlayersDetails extends React.Component {
 			const text = await response.text();
 			const xml = new window.DOMParser().parseFromString(text, "text/xml");
 			const positionsXml = xml.getElementsByTagName('position');
-			const planetsXml = xml.getElementsByTagName('planet');
 
 			const positions = [];
 			for (const position of positionsXml) {
@@ -39,32 +38,7 @@ class PlayersDetails extends React.Component {
 				});
 			}
 
-			const planets = [];
-			for (const planet of planetsXml) {
-				const coords = planet.getAttribute('coords');
-				const [galaxy, system, position] = coords.split(':');
-				const planetData = {
-					id: planet.getAttribute('id'),
-					name: planet.getAttribute('name'),
-					coords,
-					galaxy,
-					system,
-					position,
-				}
-
-				const moon = planet.getElementsByTagName('moon')[0];
-				if (moon) {
-					planetData.moon = {
-						id: moon.getAttribute('id'),
-						name: moon.getAttribute('name'),
-						size: moon.getAttribute('size')
-					}
-				}
-
-				planets.push(planetData);
-			}
-
-			this.setState({ planets, positions });
+			this.setState({ positions, planets: player.planets });
 
 		} catch (error) {
 			console.error(error);
@@ -106,7 +80,7 @@ class PlayersDetails extends React.Component {
 								<Row>
 									<Col>
 										<Image src={Planet} roundedCircle />
-										<small className="ml-1"><a href={this.link(galaxy, system, position)} target="_blank"  rel="noopener noreferrer">{coords}</a></small><br />
+										<small className="ml-1"><a href={this.link(galaxy, system, position)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
 									</Col>
 									<Col>
 										<small>{name}</small>
