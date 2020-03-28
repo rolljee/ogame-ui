@@ -5,8 +5,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
 
-import { ROUTES } from './components/constants';
+import { ROUTES } from './constants';
 
 class Home extends React.Component {
 	render() {
@@ -19,9 +20,11 @@ class Home extends React.Component {
 								<span className="float-right">
 									{route.available ?
 										(
-											<Button variant="dark" href={route.route}>
-												<FontAwesomeIcon icon={faExternalLinkAlt} />
-											</Button>
+											<Link to={route.route}>
+												<Button variant="dark">
+													<FontAwesomeIcon icon={faExternalLinkAlt} />
+												</Button>
+											</Link>
 										)
 										:
 										'comming soon'
