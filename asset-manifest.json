@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/ogame-ui/static/css/main.57c59feb.chunk.css",
-    "main.js": "/ogame-ui/static/js/main.3c3113da.chunk.js",
-    "main.js.map": "/ogame-ui/static/js/main.3c3113da.chunk.js.map",
+    "main.js": "/ogame-ui/static/js/main.b2ed01c3.chunk.js",
+    "main.js.map": "/ogame-ui/static/js/main.b2ed01c3.chunk.js.map",
     "runtime-main.js": "/ogame-ui/static/js/runtime-main.f5c18715.js",
     "runtime-main.js.map": "/ogame-ui/static/js/runtime-main.f5c18715.js.map",
-    "static/js/2.0cdbf353.chunk.js": "/ogame-ui/static/js/2.0cdbf353.chunk.js",
-    "static/js/2.0cdbf353.chunk.js.map": "/ogame-ui/static/js/2.0cdbf353.chunk.js.map",
+    "static/js/2.0a814676.chunk.js": "/ogame-ui/static/js/2.0a814676.chunk.js",
+    "static/js/2.0a814676.chunk.js.map": "/ogame-ui/static/js/2.0a814676.chunk.js.map",
     "index.html": "/ogame-ui/index.html",
-    "precache-manifest.ae2704ed2351ffa2ee88961f9a835c96.js": "/ogame-ui/precache-manifest.ae2704ed2351ffa2ee88961f9a835c96.js",
+    "precache-manifest.6ce2e9abbe08346a3684868573361a61.js": "/ogame-ui/precache-manifest.6ce2e9abbe08346a3684868573361a61.js",
     "service-worker.js": "/ogame-ui/service-worker.js",
     "static/css/main.57c59feb.chunk.css.map": "/ogame-ui/static/css/main.57c59feb.chunk.css.map",
-    "static/js/2.0cdbf353.chunk.js.LICENSE.txt": "/ogame-ui/static/js/2.0cdbf353.chunk.js.LICENSE.txt",
+    "static/js/2.0a814676.chunk.js.LICENSE.txt": "/ogame-ui/static/js/2.0a814676.chunk.js.LICENSE.txt",
     "static/media/index.css": "/ogame-ui/static/media/background.75bdd704.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.f5c18715.js",
-    "static/js/2.0cdbf353.chunk.js",
+    "static/js/2.0a814676.chunk.js",
     "static/css/main.57c59feb.chunk.css",
-    "static/js/main.3c3113da.chunk.js"
+    "static/js/main.b2ed01c3.chunk.js"
   ]
 }
