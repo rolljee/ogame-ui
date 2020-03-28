@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 export default function Header() {
 	return (
 		<Navbar bg="dark" variant="dark">
-			<Navbar.Brand href="/">OgameJS</Navbar.Brand>
+			<Navbar.Brand href={process.env.PUBLIC_URL + '/'}>OgameJS</Navbar.Brand>
 			<Nav className="mr-auto">
 				<Nav.Link href="trades">Trades</Nav.Link>
 				<Nav.Link href="players">Players</Nav.Link>
