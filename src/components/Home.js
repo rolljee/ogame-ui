@@ -27,7 +27,7 @@ class Home extends React.Component {
 											</Link>
 										)
 										:
-										'comming soon'
+										'coming soon'
 									}
 								</span>
 								<Card.Title>

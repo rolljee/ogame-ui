@@ -31,10 +31,12 @@ class PlayersDetails extends React.Component {
 			for (const position of positionsXml) {
 				const type = position.getAttribute('type');
 				const score = position.getAttribute('score');
+				const pos = position.textContent;
 				positions.push({
 					type,
 					score: this.prettify(score),
-					typeLongName: POSITIONS[type]
+					typeLongName: POSITIONS[type],
+					pos
 				});
 			}
 
@@ -49,7 +51,8 @@ class PlayersDetails extends React.Component {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 	}
 
-	link(galaxy, system, position) {
+	link(coords) {
+		const [galaxy, system, position] = coords.split(':');
 		return `https://s165-fr.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`;
 	}
 
@@ -62,6 +65,7 @@ class PlayersDetails extends React.Component {
 						<tr>
 							<th>Type</th>
 							<th>score</th>
+							<th>position</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -69,18 +73,19 @@ class PlayersDetails extends React.Component {
 							<tr key={positions.type} className="clickable">
 								<td>{positions.typeLongName}</td>
 								<td>{positions.score}</td>
+								<td>{positions.pos}</td>
 							</tr>
 						))}
 					</tbody>
 				</Table>
 				<Row>
-					{this.state.planets.map(({ id, name, coords, galaxy, system, position, moon }) => (
+					{this.state.planets.map(({ id, name, coords, moon }) => (
 						<Col xs={12} key={id}>
 							<Col>
 								<Row>
 									<Col>
 										<Image src={Planet} roundedCircle />
-										<small className="ml-1"><a href={this.link(galaxy, system, position)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
+										<small className="ml-1"><a href={this.link(coords)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
 									</Col>
 									<Col>
 										<small>{name}</small>
