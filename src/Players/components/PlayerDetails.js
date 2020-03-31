@@ -31,10 +31,12 @@ class PlayersDetails extends React.Component {
 			for (const position of positionsXml) {
 				const type = position.getAttribute('type');
 				const score = position.getAttribute('score');
+				const pos = position.textContent;
 				positions.push({
 					type,
 					score: this.prettify(score),
-					typeLongName: POSITIONS[type]
+					typeLongName: POSITIONS[type],
+					pos
 				});
 			}
 
@@ -63,6 +65,7 @@ class PlayersDetails extends React.Component {
 						<tr>
 							<th>Type</th>
 							<th>score</th>
+							<th>position</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -70,6 +73,7 @@ class PlayersDetails extends React.Component {
 							<tr key={positions.type} className="clickable">
 								<td>{positions.typeLongName}</td>
 								<td>{positions.score}</td>
+								<td>{positions.pos}</td>
 							</tr>
 						))}
 					</tbody>

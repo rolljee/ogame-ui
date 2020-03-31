@@ -122,12 +122,21 @@ class Players extends React.Component {
 		}
 	}
 
-	handleSubmit(event) {
+	async updateList(lang, universe) {
+		await this.searchPlayerPlanets(lang, universe);
+		await this.searchPlayers(lang, universe);
+		this.setState({ loading: false });
+	}
+
+	async handleSubmit(event) {
 		event.preventDefault();
 		event.stopPropagation();
 		const lang = event.currentTarget.lang.value;
 		const universe = event.currentTarget.universe.value;
-		this.searchPlayer(lang, universe);
+
+		this.setState({ loading: true }, () => {
+			this.updateList(lang, universe)
+		});
 	}
 
 	getActiveStatus(status) {
@@ -163,10 +172,10 @@ class Players extends React.Component {
 							<Form onSubmit={this.handleSubmit} className="m-4">
 								<Row className="w-100 justify-content-center">
 									<Col xs="auto">
-										<Form.Control type="number" name="universe" placeholder="universe" size="sm" defaultValue="165" />
+										<Form.Control type="number" name="universe" placeholder="universe" size="sm" />
 									</Col>
 									<Col xs="auto">
-										<Form.Control type="text" name="lang" placeholder="fr" size="sm" defaultValue="fr" />
+										<Form.Control type="text" name="lang" placeholder="fr" size="sm" />
 									</Col>
 									<Col xs="auto">
 										<Button variant="light" type="submit">Submit</Button>

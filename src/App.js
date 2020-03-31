@@ -13,6 +13,7 @@ import {
 import Home from './components/Home';
 import Trader from './Trader/Trader';
 import Players from './Players/Players';
+import Universe from './Universe/Universe';
 
 function App() {
 	return (
@@ -49,7 +50,7 @@ function App() {
 										<Home />
 									</Route>
 									<Route path="/universes">
-										<Home />
+										<Universe />
 									</Route>
 									<Route path="/score">
 										<Home />
