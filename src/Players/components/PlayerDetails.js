@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import unionBy from 'lodash/unionBy';
 
-import Planet from './planet.png';
-import Moon from './moon.gif';
+import Planet from '../../images/planet.png';
+import Moon from '../../images/moon.gif';
 import { CORSPROXY, POSITIONS } from '../../components/constants';
 
 class PlayersDetails extends React.Component {

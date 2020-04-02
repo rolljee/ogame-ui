@@ -13,7 +13,7 @@ import {
 import Home from './components/Home';
 import Trader from './Trader/Trader';
 import Players from './Players/Players';
-import Universe from './Universe/Universe';
+import Mining from './Mining/Mining';
 
 function App() {
 	return (
@@ -21,50 +21,42 @@ function App() {
 			<Router basename={process.env.PUBLIC_URL}>
 				<Navbar bg="dark" variant="dark">
 					<Nav className="mr-auto">
-						<Link className="ml-3" to="/">Home</Link>
-						<Link className="ml-3" to="trades">Trades</Link>
-						<Link className="ml-3" to="players">Players</Link>
-						<Link className="ml-3" to="market">Market</Link>
-						<Link className="ml-3" to="mining">Mining</Link>
-						<Link className="ml-3" to="universes">Universes</Link>
-						<Link className="ml-3" to="score">Scores</Link>
-						<Link className="ml-3" to="alliances">Alliances</Link>
+						<Link className="ml-3 text-white" to="/">Home</Link>
+						<Link className="ml-3 text-white" to="trades">Trades</Link>
+						<Link className="ml-3 text-white" to="players">Players</Link>
+						<Link className="ml-3 text-white" to="market">Market</Link>
+						<Link className="ml-3 text-white" to="mining">Mining</Link>
 					</Nav>
 				</Navbar>
 
 				<Container fluid className="full-height">
-					<Container>
-						<Row>
-							<Col>
-								<Switch>
-									<Route path="/trades">
+					<Row>
+						<Col>
+							<Switch>
+								<Route path="/trades">
+									<Container>
 										<Trader />
-									</Route>
-									<Route path="/players">
+									</Container>
+								</Route>
+								<Route path="/players">
+									<Container>
 										<Players />
-									</Route>
-									<Route path="/market">
+									</Container>
+								</Route>
+								<Route path="/market">
+									<Home />
+								</Route>
+								<Route path="/mining">
+									<Mining />
+								</Route>
+								<Router path="/">
+									<Container>
 										<Home />
-									</Route>
-									<Route path="/mining">
-										<Home />
-									</Route>
-									<Route path="/universes">
-										<Universe />
-									</Route>
-									<Route path="/score">
-										<Home />
-									</Route>
-									<Route path="/alliances">
-										<Home />
-									</Route>
-									<Router path="/">
-										<Home />
-									</Router>
-								</Switch>
-							</Col>
-						</Row>
-					</Container>
+									</Container>
+								</Router>
+							</Switch>
+						</Col>
+					</Row>
 				</Container>
 			</Router>
 		</>

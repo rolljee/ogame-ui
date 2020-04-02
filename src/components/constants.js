@@ -1,3 +1,9 @@
+import Crystal from '../images/crystal.png';
+import Metal from '../images/metal.png';
+import Synth from '../images/synth.png';
+import solarPlant from '../images/solarPlant.png';
+import fusionReactor from '../images/fusionReactor.png';
+
 export const BACKGROUND = {
 	light: 'light',
 	dark: 'dark',
@@ -26,6 +32,14 @@ export const RATES = [
 	{
 		rate: '1.8:1.4:1',
 	},
+];
+
+export const MINES = [
+	{ name: 'crystal', img: Crystal },
+	{ name: 'metal', img: Metal },
+	{ name: 'synth', img: Synth },
+	{ name: 'solarPlant', img: solarPlant },
+	{ name: 'fusionReactor', img: fusionReactor }
 ];
 
 export const RESOURCES = {
@@ -71,27 +85,6 @@ export const ROUTES = [
 		title: 'Building tool',
 		text: 'Get the production/cost of any building',
 		route: 'mining',
-		available: false
-	},
-	{
-		header: 'Universes',
-		title: 'Get universes informations',
-		text: 'Universes list and data',
-		route: 'universes',
-		available: false
-	},
-	{
-		header: 'Scores',
-		title: 'Get scores accross universes',
-		text: 'Scores military/mining etc.',
-		route: 'score',
-		available: false
-	},
-	{
-		header: 'Alliances',
-		title: 'Get alliances informations',
-		text: 'Alliances list and data accross universes',
-		route: 'alliances',
-		available: false
+		available: true
 	},
 ]
