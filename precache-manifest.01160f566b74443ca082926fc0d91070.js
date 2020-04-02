@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cdc68b809fc205d9628df791432cd6a4",
+    "revision": "7f627eaf4ee575106dedc4bf256c1d5c",
     "url": "/ogame-ui/index.html"
   },
   {
-    "revision": "f3764a32acb6615d6c42",
-    "url": "/ogame-ui/static/css/main.57c59feb.chunk.css"
+    "revision": "a7572e44f8594902f37d",
+    "url": "/ogame-ui/static/css/main.898cf031.chunk.css"
   },
   {
-    "revision": "ec146706188e1ed95910",
-    "url": "/ogame-ui/static/js/2.e1198c0e.chunk.js"
+    "revision": "4c9542eee330d5e885a0",
+    "url": "/ogame-ui/static/js/2.d30872c8.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/ogame-ui/static/js/2.e1198c0e.chunk.js.LICENSE.txt"
+    "url": "/ogame-ui/static/js/2.d30872c8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f3764a32acb6615d6c42",
-    "url": "/ogame-ui/static/js/main.71c96501.chunk.js"
+    "revision": "a7572e44f8594902f37d",
+    "url": "/ogame-ui/static/js/main.850e2eca.chunk.js"
   },
   {
     "revision": "ee34d1a9a50d1564f404",

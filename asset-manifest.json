@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/ogame-ui/static/css/main.57c59feb.chunk.css",
-    "main.js": "/ogame-ui/static/js/main.71c96501.chunk.js",
-    "main.js.map": "/ogame-ui/static/js/main.71c96501.chunk.js.map",
+    "main.css": "/ogame-ui/static/css/main.898cf031.chunk.css",
+    "main.js": "/ogame-ui/static/js/main.850e2eca.chunk.js",
+    "main.js.map": "/ogame-ui/static/js/main.850e2eca.chunk.js.map",
     "runtime-main.js": "/ogame-ui/static/js/runtime-main.f5c18715.js",
     "runtime-main.js.map": "/ogame-ui/static/js/runtime-main.f5c18715.js.map",
-    "static/js/2.e1198c0e.chunk.js": "/ogame-ui/static/js/2.e1198c0e.chunk.js",
-    "static/js/2.e1198c0e.chunk.js.map": "/ogame-ui/static/js/2.e1198c0e.chunk.js.map",
+    "static/js/2.d30872c8.chunk.js": "/ogame-ui/static/js/2.d30872c8.chunk.js",
+    "static/js/2.d30872c8.chunk.js.map": "/ogame-ui/static/js/2.d30872c8.chunk.js.map",
     "index.html": "/ogame-ui/index.html",
-    "precache-manifest.e7c514069587f75a3890caafda8140f8.js": "/ogame-ui/precache-manifest.e7c514069587f75a3890caafda8140f8.js",
+    "precache-manifest.01160f566b74443ca082926fc0d91070.js": "/ogame-ui/precache-manifest.01160f566b74443ca082926fc0d91070.js",
     "service-worker.js": "/ogame-ui/service-worker.js",
-    "static/css/main.57c59feb.chunk.css.map": "/ogame-ui/static/css/main.57c59feb.chunk.css.map",
-    "static/js/2.e1198c0e.chunk.js.LICENSE.txt": "/ogame-ui/static/js/2.e1198c0e.chunk.js.LICENSE.txt",
+    "static/css/main.898cf031.chunk.css.map": "/ogame-ui/static/css/main.898cf031.chunk.css.map",
+    "static/js/2.d30872c8.chunk.js.LICENSE.txt": "/ogame-ui/static/js/2.d30872c8.chunk.js.LICENSE.txt",
     "static/media/index.css": "/ogame-ui/static/media/background.75bdd704.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.f5c18715.js",
-    "static/js/2.e1198c0e.chunk.js",
-    "static/css/main.57c59feb.chunk.css",
-    "static/js/main.71c96501.chunk.js"
+    "static/js/2.d30872c8.chunk.js",
+    "static/css/main.898cf031.chunk.css",
+    "static/js/main.850e2eca.chunk.js"
   ]
 }
