@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import FuzzySearch from 'fuzzy-search';
 import PlayersStatus from './components/PlayersStatus';
-import { STATUS, CORSPROXY } from '../components/constants';
+import { CORSPROXY } from '../components/constants';
 import PlayersDetails from './components/PlayerDetails';
 import Loading from '../components/Loading';
 
@@ -23,7 +23,7 @@ class Players extends React.Component {
 			search: '',
 			selected: [],
 			show: false,
-			status: Object.keys(STATUS),
+			status: ['A', 'I', 'i'],
 			universe: 165,
 		};
 
@@ -116,7 +116,7 @@ class Players extends React.Component {
 				players.push({ id, name, status });
 			}
 
-			this.setState({ selected: players, players, lang, universe });
+			this.setState({ players, lang, universe }, this.refreshPlayers);
 		} catch (error) {
 			console.error(error);
 		}
@@ -157,9 +157,8 @@ class Players extends React.Component {
 
 	refreshPlayers() {
 		const { status, players, search } = this.state;
-		const statusRegex = new RegExp(`[${status.join('')}]+`);
 		const playerRegex = new RegExp(search);
-		const selected = players.filter(player => statusRegex.test(player.status));
+		const selected = players.filter(player => status.includes(player.status));
 		this.setState({ selected: selected.filter(s => playerRegex.exec(s)) });
 	}
 

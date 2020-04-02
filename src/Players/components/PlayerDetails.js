@@ -1,11 +1,13 @@
 import React from 'react';
-import { CORSPROXY, POSITIONS } from '../../components/constants';
 import Table from 'react-bootstrap/Table'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import unionBy from 'lodash/unionBy';
+
 import Planet from './planet.png';
 import Moon from './moon.gif';
+import { CORSPROXY, POSITIONS } from '../../components/constants';
 
 class PlayersDetails extends React.Component {
 	constructor(props) {
@@ -26,21 +28,46 @@ class PlayersDetails extends React.Component {
 			const text = await response.text();
 			const xml = new window.DOMParser().parseFromString(text, "text/xml");
 			const positionsXml = xml.getElementsByTagName('position');
+			const planetsXml = xml.getElementsByTagName('planet');
 
 			const positions = [];
 			for (const position of positionsXml) {
 				const type = position.getAttribute('type');
 				const score = position.getAttribute('score');
+				const ships = position.getAttribute('ships');
 				const pos = position.textContent;
 				positions.push({
 					type,
 					score: this.prettify(score),
 					typeLongName: POSITIONS[type],
-					pos
+					pos,
+					ships
 				});
 			}
 
-			this.setState({ positions, planets: player.planets });
+			const planets = [];
+			for (const planet of planetsXml) {
+				const data = {
+					id: planet.getAttribute('id'),
+					name: planet.getAttribute('name'),
+					player: planet.getAttribute('player'),
+					coords: planet.getAttribute('coords'),
+				}
+
+				const moon = planet.getElementsByTagName('moon')[0];
+
+				if (moon) {
+					data.moon = {
+						id: moon.getAttribute('id'),
+						name: moon.getAttribute('name'),
+						size: moon.getAttribute('size'),
+					}
+				}
+
+				planets.push(data);
+			}
+
+			this.setState({ positions, planets: unionBy(player.planets, planets, 'id') });
 
 		} catch (error) {
 			console.error(error);
@@ -73,7 +100,10 @@ class PlayersDetails extends React.Component {
 							<tr key={positions.type} className="clickable">
 								<td>{positions.typeLongName}</td>
 								<td>{positions.score}</td>
-								<td>{positions.pos}</td>
+								<td>{positions.pos} {positions.ships && (
+									<span className="float-right"> <span role="img" aria-labelledby="death">☠️</span> {positions.ships}</span>
+								)}
+								</td>
 							</tr>
 						))}
 					</tbody>
