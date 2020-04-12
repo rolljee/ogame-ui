@@ -7,9 +7,12 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import Ogame from 'ogamejs';
 
+import Ogame from 'ogamejs';
 import { MINES } from '../components/constants';
+import MetalMine from './components/MetalMine';
+import CrystalMine from './components/CrystalMine';
+import DeutSynth from './components/DeutSynth';
 
 function Mining() {
 	const [show, setShow] = useState(false);
@@ -18,24 +21,6 @@ function Mining() {
 
 	async function getUniverseData() {
 
-	}
-
-	function prettify(x) {
-		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-	}
-
-	function MetalMine(props) {
-		const { planet } = props;
-		const mine = Ogame.models.Buildings[1].base;
-		const metal = Ogame.Building.getMetalMine(mine, Number(planet.metal), 5);
-
-		return (
-			<div>
-				<p>Niveau: {planet.metal}</p>
-				<p>production: {prettify(metal.production)}</p>
-				<p>énergie: {prettify(metal.energy)}</p>
-			</div>
-		);
 	}
 
 	async function handleSubmit(event) {
@@ -87,8 +72,12 @@ function Mining() {
 							<th>
 								<MetalMine universeData={universeData} planet={planet} />
 							</th>
-							<th>{planet.crystal}</th>
-							<th>{planet.deut}</th>
+							<th>
+								<CrystalMine universeData={universeData} planet={planet} />
+							</th>
+							<th>
+								<DeutSynth universeData={universeData} planet={planet} />
+							</th>
 							<th>5</th>
 							<th>6</th>
 							<th>7</th>
