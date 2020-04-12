@@ -35,8 +35,8 @@ export const RATES = [
 ];
 
 export const MINES = [
-	{ name: 'crystal', img: Crystal },
 	{ name: 'metal', img: Metal },
+	{ name: 'crystal', img: Crystal },
 	{ name: 'synth', img: Synth },
 	{ name: 'solarPlant', img: solarPlant },
 	{ name: 'fusionReactor', img: fusionReactor }
