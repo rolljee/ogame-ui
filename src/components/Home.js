@@ -15,7 +15,7 @@ class Home extends React.Component {
 			<Row>
 				{ROUTES.map((route, index) => (
 					<Col key={index}>
-						<Card bg='dark' text='white' style={{ width: '18rem', height: '10rem' }} className="m-3" key={route.route}>
+						<Card bg='dark' text='white' style={{ width: '18rem', height: '10rem' }} className="m-3">
 							<Card.Body>
 								<span className="float-right">
 									{route.available ?
