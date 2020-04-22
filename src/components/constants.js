@@ -3,6 +3,7 @@ import Metal from '../images/metal.png';
 import Synth from '../images/synth.png';
 import solarPlant from '../images/solarPlant.png';
 import fusionReactor from '../images/fusionReactor.png';
+import Sats from '../images/sats.png';
 
 export const BACKGROUND = {
 	light: 'light',
@@ -39,7 +40,8 @@ export const MINES = [
 	{ name: 'crystal', img: Crystal },
 	{ name: 'synth', img: Synth },
 	{ name: 'solarPlant', img: solarPlant },
-	{ name: 'fusionReactor', img: fusionReactor }
+	{ name: 'fusionReactor', img: fusionReactor },
+	{ name: 'sats', img: Sats }
 ];
 
 export const RESOURCES = {
