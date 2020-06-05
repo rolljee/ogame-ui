@@ -1,7 +1,5 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {
@@ -21,50 +19,44 @@ function App() {
 			<Router basename={process.env.PUBLIC_URL}>
 				<Navbar bg="dark" variant="dark">
 					<Nav className="mr-auto">
-						<Link className="ml-3" to="/">Home</Link>
-						<Link className="ml-3" to="trades">Trades</Link>
-						<Link className="ml-3" to="players">Players</Link>
-						<Link className="ml-3" to="market">Market</Link>
-						<Link className="ml-3" to="mining">Mining</Link>
-						<Link className="ml-3" to="universes">Universes</Link>
-						<Link className="ml-3" to="score">Scores</Link>
-						<Link className="ml-3" to="alliances">Alliances</Link>
+						<Link className="ml-3 text-white" to="/">Home</Link>
+						<Link className="ml-3 text-white" to="trades">Trades</Link>
+						<Link className="ml-3 text-white" to="players">Players</Link>
+						<Link className="ml-3 text-white" to="market">Market</Link>
+						<Link className="ml-3 text-white" to="mining">Mining</Link>
+						<Link className="ml-3 text-white" to="universes">Universes</Link>
+						<Link className="ml-3 text-white" to="score">Scores</Link>
+						<Link className="ml-3 text-white" to="alliances">Alliances</Link>
 					</Nav>
 				</Navbar>
 
-				<Container fluid className="full-height">
-					<Container>
-						<Row>
-							<Col>
-								<Switch>
-									<Route path="/trades">
-										<Trader />
-									</Route>
-									<Route path="/players">
-										<Players />
-									</Route>
-									<Route path="/market">
-										<Home />
-									</Route>
-									<Route path="/mining">
-										<Home />
-									</Route>
-									<Route path="/universes">
-										<Universe />
-									</Route>
-									<Route path="/score">
-										<Home />
-									</Route>
-									<Route path="/alliances">
-										<Home />
-									</Route>
-									<Router path="/">
-										<Home />
-									</Router>
-								</Switch>
-							</Col>
-						</Row>
-					</Container>
+				<Container>
+					<Switch>
+						<Route path="/trades">
+							<Trader />
+						</Route>
+						<Route path="/players">
+							<Players />
+						</Route>
+						<Route path="/market">
+							<Home />
+						</Route>
+						<Route path="/mining">
+							<Home />
+						</Route>
+						<Route path="/universes">
+							<Universe />
+						</Route>
+						<Route path="/score">
+							<Home />
+						</Route>
+						<Route path="/alliances">
+							<Home />
+						</Route>
+						<Router path="/">
+							<Home />
+						</Router>
+					</Switch>
 				</Container>
 			</Router>
 		</>

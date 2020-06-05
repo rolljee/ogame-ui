@@ -15,6 +15,7 @@ class Players extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			alliances: [],
 			allPlanets: [],
 			lang: "fr",
 			loading: true,
@@ -40,6 +41,9 @@ class Players extends React.Component {
 	async init() {
 		await this.searchPlayers(this.state.lang, this.state.universe)
 		await this.searchPlayerPlanets(this.state.lang, this.state.universe)
+		await this.searchAlliances(this.state.lang, this.state.universe)
+		await this.linkAlliancesToPlayers();
+
 		this.setState({ loading: false });
 	}
 
@@ -62,9 +66,56 @@ class Players extends React.Component {
 	handleOnChange(event) {
 		const { players } = this.state;
 		const search = event.currentTarget.value;
-		const searcher = new FuzzySearch(players, ['name']);
+		const searcher = new FuzzySearch(players, ['name', 'alliance.tag', 'alliance.name'], { sort: true });
 		const result = searcher.search(search);
 		this.setState({ search, selected: result });
+	}
+
+	async linkAlliancesToPlayers() {
+		const { players, alliances } = this.state;
+
+		for (let i = 0; i < players.length; i++) {
+			const player = players[i];
+
+			for (let j = 0; j < alliances.length; j++) {
+				const alliance = alliances[j];
+				if (alliance.members.includes(player.id)) {
+					player.alliance = alliance;
+				}
+			}
+		}
+
+		this.setState({ players });
+	}
+
+	async searchAlliances(lang, universe) {
+		const url = `https://s${universe}-${lang}.ogame.gameforge.com/api/alliances.xml`;
+		const response = await fetch(CORSPROXY + url);
+		const text = await response.text();
+		const xml = new window.DOMParser().parseFromString(text, "text/xml");
+		const alliancesXml = xml.getElementsByTagName('alliance');
+		const alliances = [];
+
+		for (let i = 0; i < alliancesXml.length; i++) {
+			const alliance = alliancesXml[i];
+			const members = [];
+			const membersXml = alliance.getElementsByTagName('player');
+			for (let j = 0; j < membersXml.length; j++) {
+				const member = membersXml[j];
+				members.push(member.getAttribute('id'));
+			}
+
+			alliances.push({
+				id: alliance.getAttribute('id'),
+				name: alliance.getAttribute('name'),
+				tag: alliance.getAttribute('tag'),
+				founder: alliance.getAttribute('founder'),
+				foundDate: alliance.getAttribute('foundDate'),
+				members,
+			});
+		}
+
+		this.setState({ alliances });
 	}
 
 	async searchPlayerPlanets(lang, universe) {
@@ -100,26 +151,23 @@ class Players extends React.Component {
 	}
 
 	async searchPlayers(lang, universe) {
-		try {
-			const url = `https://s${universe}-${lang}.ogame.gameforge.com/api/players.xml`;
-			const response = await fetch(CORSPROXY + url);
-			const text = await response.text();
-			const xml = new window.DOMParser().parseFromString(text, "text/xml")
-			const playersXml = xml.getElementsByTagName('player')
+		const url = `https://s${universe}-${lang}.ogame.gameforge.com/api/players.xml`;
+		const response = await fetch(CORSPROXY + url);
+		const text = await response.text();
+		const xml = new window.DOMParser().parseFromString(text, "text/xml")
+		const playersXml = xml.getElementsByTagName('player')
 
-			const players = [];
-			for (const player of playersXml) {
-				const id = player.getAttribute('id');
-				const name = player.getAttribute('name');
-				const status = player.getAttribute('status') || 'A'; // by default Active user does not have any status
+		const players = [];
+		for (let i = 0; i < playersXml.length; i++) {
+			const player = playersXml[i];
+			const id = player.getAttribute('id');
+			const name = player.getAttribute('name');
+			const status = player.getAttribute('status') || 'A'; // by default Active user does not have any status
 
-				players.push({ id, name, status });
-			}
-
-			this.setState({ players, lang, universe }, this.refreshPlayers);
-		} catch (error) {
-			console.error(error);
+			players.push({ id, name, status });
 		}
+
+		this.setState({ players, lang, universe }, this.refreshPlayers);
 	}
 
 	async updateList(lang, universe) {
@@ -198,7 +246,7 @@ class Players extends React.Component {
 									<tr>
 										<th>Name</th>
 										<th>Status</th>
-										<th></th>
+										<th>Alliance</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -206,6 +254,7 @@ class Players extends React.Component {
 										<tr key={player.id} className="clickable">
 											<td>{player.name}</td>
 											<td>{player.status}</td>
+											<td>{player.alliance && player.alliance.tag}</td>
 											<td>
 												<Button variant="primary" onClick={() => this.handleShow(player)}>
 													Open details

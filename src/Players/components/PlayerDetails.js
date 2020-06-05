@@ -41,7 +41,7 @@ class PlayersDetails extends React.Component {
 					score: this.prettify(score),
 					typeLongName: POSITIONS[type],
 					pos,
-					ships
+					ships: ships && this.prettify(ships),
 				});
 			}
 
@@ -109,6 +109,7 @@ class PlayersDetails extends React.Component {
 					</tbody>
 				</Table>
 				<Row>
+					<Col className="text-center mb-3">{this.state.planets.length} planètes</Col>
 					{this.state.planets.map(({ id, name, coords, moon }) => (
 						<Col xs={12} key={id}>
 							<Col>

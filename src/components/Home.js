@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +14,7 @@ class Home extends React.Component {
 		return (
 			<Row>
 				{ROUTES.map((route, index) => (
-					<Col key={index}>
+					<Col key={index} sm={6}>
 						<Card bg='dark' text='white' style={{ width: '18rem', height: '10rem' }} className="m-3" key={route.route}>
 							<Card.Body>
 								<span className="float-right">
@@ -27,7 +27,7 @@ class Home extends React.Component {
 											</Link>
 										)
 										:
-										'coming soon'
+										'Bientôt disponible'
 									}
 								</span>
 								<Card.Title>
