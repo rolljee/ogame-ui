@@ -101,7 +101,7 @@ class PlayersDetails extends React.Component {
 								<td>{positions.typeLongName}</td>
 								<td>{positions.score}</td>
 								<td>{positions.pos} {positions.ships && (
-									<span className="float-right"> <span role="img" aria-labelledby="death">☠️</span> {positions.ships}</span>
+									<span className="float-end"> <span role="img" aria-labelledby="death">☠️</span> {positions.ships}</span>
 								)}
 								</td>
 							</tr>
@@ -115,7 +115,7 @@ class PlayersDetails extends React.Component {
 								<Row>
 									<Col>
 										<Image src={Planet} roundedCircle />
-										<small className="ml-1"><a href={this.link(coords)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
+										<small className="ms-1"><a href={this.link(coords)} target="_blank" rel="noopener noreferrer">{coords}</a></small><br />
 									</Col>
 									<Col>
 										<small>{name}</small>
@@ -124,7 +124,7 @@ class PlayersDetails extends React.Component {
 										{moon && (
 											<>
 												<Image src={Moon} roundedCircle />
-												<small className="ml-1">size: {moon.size}</small>
+												<small className="ms-1">size: {moon.size}</small>
 											</>
 										)}
 									</Col>
