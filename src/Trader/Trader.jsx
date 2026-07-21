@@ -1,6 +1,9 @@
 import React from 'react';
-import Ogame from 'ogamejs';
+import OgameLib from 'ogamejs';
 import Col from 'react-bootstrap/Col';
+
+// ogamejs 2.1.x is published as a CommonJS module with a nested default export.
+const Ogame = OgameLib.default || OgameLib;
 
 import DefaultRates from './components/DefaultRates';
 import Percents from './components/Percents';

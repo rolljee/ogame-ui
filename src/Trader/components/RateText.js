@@ -1,5 +1,8 @@
 import React from "react";
-import Ogame from "ogamejs";
+import OgameLib from "ogamejs";
+
+// ogamejs 2.1.x is published as a CommonJS module with a nested default export.
+const Ogame = OgameLib.default || OgameLib;
 
 class RateText extends React.Component {
   render() {

@@ -6,9 +6,7 @@ class NumberInput extends React.Component {
 	render() {
 		return (
 			<InputGroup>
-				<InputGroup.Prepend>
-					<InputGroup.Text id={`input-${this.props.text}`}>{this.props.text}</InputGroup.Text>
-				</InputGroup.Prepend>
+				<InputGroup.Text id={`input-${this.props.text}`}>{this.props.text}</InputGroup.Text>
 				<FormControl
 					aria-label={this.props.input}
 					aria-describedby={`input-${this.props.text}`}

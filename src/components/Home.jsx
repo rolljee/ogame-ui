@@ -17,10 +17,10 @@ class Home extends React.Component {
 					<Col key={index}>
 						<Card bg='dark' text='white' style={{ width: '18rem', height: '10rem' }} className="m-3" key={route.route}>
 							<Card.Body>
-								<span className="float-right">
+								<span className="float-end">
 									{route.available ?
 										(
-											<Link to={route.route}>
+											<Link to={`/${route.route}`}>
 												<Button variant="dark">
 													<FontAwesomeIcon icon={faExternalLinkAlt} />
 												</Button>
