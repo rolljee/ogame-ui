@@ -5,19 +5,10 @@
   "type": "module",
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.3.1",
-    "@fortawesome/free-solid-svg-icons": "^7.3.1",
-    "@fortawesome/react-fontawesome": "^3.5.0",
-    "bootstrap": "^5.3.8",
     "copy-to-clipboard": "^4.0.2",
-    "fuzzy-search": "^3.2.1",
-    "lodash": "^4.17.21",
     "ogamejs": "^3.0.0",
-    "prop-types": "^15.8.1",
     "react": "^19.2.7",
-    "react-bootstrap": "^2.10.10",
-    "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.1"
+    "react-dom": "^19.2.7"
   },
   "scripts": {
     "dev": "vite",

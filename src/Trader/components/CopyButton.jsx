@@ -1,23 +1,26 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
+import { useI18n } from '../../i18n/I18nContext';
 
+function CopyButton({ text }) {
+	const { t } = useI18n();
+	const [copied, setCopied] = useState(false);
 
-class CopyButton extends React.Component {
-	constructor(props) {
-		super(props);
-		this.handleOnClick = this.handleOnClick.bind(this);
+	function handleClick() {
+		copy(text);
+		setCopied(true);
+		setTimeout(() => setCopied(false), 1800);
 	}
 
-	handleOnClick() {
-		copy(this.props.text);
-	}
-
-	render() {
-		return (
-			<Button variant="light" onClick={this.handleOnClick}>Copy</Button>
-		);
-	}
+	return (
+		<button
+			type="button"
+			className={`btn btn-copy ${copied ? 'is-copied' : ''}`}
+			onClick={handleClick}
+		>
+			{copied ? `✓ ${t('result.copied')}` : t('result.copy')}
+		</button>
+	);
 }
 
 export default CopyButton;

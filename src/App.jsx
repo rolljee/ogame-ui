@@ -1,50 +1,55 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import {
-	HashRouter as Router,
-	Routes,
-	Route,
-	Link
-} from "react-router-dom";
-import Home from './components/Home';
+import { useI18n } from './i18n/I18nContext';
+import { LANGUAGES } from './i18n/translations';
 import Trader from './Trader/Trader';
-import Players from './Players/Players';
-import Mining from './Mining/Mining';
+
+function LangToggle() {
+	const { lang, setLang, t } = useI18n();
+	return (
+		<div className="lang-toggle" role="group" aria-label={t('lang.label')}>
+			{LANGUAGES.map(({ code, label }) => (
+				<button
+					key={code}
+					type="button"
+					className={code === lang ? 'is-active' : ''}
+					aria-pressed={code === lang}
+					onClick={() => setLang(code)}
+				>
+					{label}
+				</button>
+			))}
+		</div>
+	);
+}
 
 function App() {
+	const { t } = useI18n();
 	return (
 		<>
-			<Router>
-				<Navbar bg="dark" variant="dark">
-					<Nav className="me-auto">
-						<Link className="ms-3 text-white" to="/">Home</Link>
-						<Link className="ms-3 text-white" to="/trades">Trades</Link>
-						<Link className="ms-3 text-white" to="/players">Players</Link>
-						<Link className="ms-3 text-white" to="/market">Market</Link>
-						<Link className="ms-3 text-white" to="/mining">Mining</Link>
-					</Nav>
-				</Navbar>
+			<div className="starfield" aria-hidden="true" />
+			<div className="app-shell">
+				<header className="app-header">
+					<div className="brand">
+						<div className="brand-logo" aria-hidden="true">🚀</div>
+						<div>
+							<div className="brand-name">{t('brand')}</div>
+							<div className="brand-tagline">{t('tagline')}</div>
+						</div>
+					</div>
+					<LangToggle />
+				</header>
 
-				<Container fluid className="full-height">
-					<Container>
-						<Row>
-							<Col>
-								<Routes>
-									<Route path="/trades" element={<Trader />} />
-									<Route path="/players" element={<Players />} />
-									<Route path="/market" element={<Home />} />
-									<Route path="/mining" element={<Mining />} />
-									<Route path="/" element={<Home />} />
-								</Routes>
-							</Col>
-						</Row>
-					</Container>
-				</Container>
-			</Router>
+				<main className="card">
+					<Trader />
+				</main>
+
+				<footer className="app-footer">
+					<a href="https://ogame.gameforge.com" target="_blank" rel="noopener noreferrer">
+						OGame
+					</a>{' '}
+					· fan-made tool
+				</footer>
+			</div>
 		</>
 	);
 }
