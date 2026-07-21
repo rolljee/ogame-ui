@@ -13,5 +13,5 @@ export const RESOURCE_ORDER = [RESOURCES.metal, RESOURCES.crystal, RESOURCES.deu
 export function prettify(x) {
 	return Number(x || 0)
 		.toString()
-		.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // thin space thousands separator
+		.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // dot thousands separator (OGame style)
 }

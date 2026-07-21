@@ -305,6 +305,7 @@ h3,
 	border-radius: var(--radius-sm);
 	background: var(--surface-2);
 	border: 1px solid var(--border);
+	cursor: text;
 	transition: border-color 0.18s ease, box-shadow 0.18s ease;
 
 	&:focus-within {
@@ -417,7 +418,7 @@ h3,
 
 .rate-inputs {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 12px;
 	margin-top: 16px;
 }
@@ -426,6 +427,7 @@ h3,
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
+	min-width: 0;
 }
 
 .mini-field label {
@@ -437,6 +439,8 @@ h3,
 }
 
 .mini-field input {
+	width: 100%;
+	min-width: 0;
 	appearance: none;
 	border: 1px solid var(--border);
 	background: var(--surface-2);
