@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import OgameLib from 'ogamejs';
+import Ogame from 'ogamejs';
 import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
@@ -14,9 +14,6 @@ import { MINES } from '../components/constants';
 import CrystalMine from './components/CrystalMine';
 import DeutSynth from './components/DeutSynth';
 import MetalMine from './components/MetalMine';
-
-// ogamejs 2.1.x is published as a CommonJS module with a nested default export.
-const Ogame = OgameLib.default || OgameLib;
 
 function Mining() {
 	const [show, setShow] = useState(false);
