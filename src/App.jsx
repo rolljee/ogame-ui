@@ -13,7 +13,7 @@ import {
 import Home from './components/Home';
 import Trader from './Trader/Trader';
 import Players from './Players/Players';
-import Universe from './Universe/Universe';
+import Mining from './Mining/Mining';
 
 function App() {
 	return (
@@ -21,14 +21,11 @@ function App() {
 			<Router>
 				<Navbar bg="dark" variant="dark">
 					<Nav className="me-auto">
-						<Link className="ms-3" to="/">Home</Link>
-						<Link className="ms-3" to="/trades">Trades</Link>
-						<Link className="ms-3" to="/players">Players</Link>
-						<Link className="ms-3" to="/market">Market</Link>
-						<Link className="ms-3" to="/mining">Mining</Link>
-						<Link className="ms-3" to="/universes">Universes</Link>
-						<Link className="ms-3" to="/score">Scores</Link>
-						<Link className="ms-3" to="/alliances">Alliances</Link>
+						<Link className="ms-3 text-white" to="/">Home</Link>
+						<Link className="ms-3 text-white" to="/trades">Trades</Link>
+						<Link className="ms-3 text-white" to="/players">Players</Link>
+						<Link className="ms-3 text-white" to="/market">Market</Link>
+						<Link className="ms-3 text-white" to="/mining">Mining</Link>
 					</Nav>
 				</Navbar>
 
@@ -40,10 +37,7 @@ function App() {
 									<Route path="/trades" element={<Trader />} />
 									<Route path="/players" element={<Players />} />
 									<Route path="/market" element={<Home />} />
-									<Route path="/mining" element={<Home />} />
-									<Route path="/universes" element={<Universe />} />
-									<Route path="/score" element={<Home />} />
-									<Route path="/alliances" element={<Home />} />
+									<Route path="/mining" element={<Mining />} />
 									<Route path="/" element={<Home />} />
 								</Routes>
 							</Col>

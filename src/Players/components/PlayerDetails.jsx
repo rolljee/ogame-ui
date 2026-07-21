@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import unionBy from 'lodash/unionBy';
 
-import Planet from './planet.png';
-import Moon from './moon.gif';
+import Planet from '../../images/planet.png';
+import Moon from '../../images/moon.gif';
 import { CORSPROXY, POSITIONS } from '../../components/constants';
 
 class PlayersDetails extends React.Component {
@@ -18,6 +18,7 @@ class PlayersDetails extends React.Component {
 		};
 
 		this.getPlayerData();
+		this.link = this.link.bind(this);
 	}
 
 	async getPlayerData() {
@@ -79,8 +80,9 @@ class PlayersDetails extends React.Component {
 	}
 
 	link(coords) {
+		const { universe, lang } = this.props;
 		const [galaxy, system, position] = coords.split(':');
-		return `https://s165-fr.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`;
+		return `https://s${universe}-${lang}.ogame.gameforge.com/game/index.php?page=ingame&component=galaxy&galaxy=${galaxy}&system=${system}&position=${position}`;
 	}
 
 	render() {
