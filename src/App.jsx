@@ -3,10 +3,12 @@ import { useI18n } from './i18n/I18nContext';
 import { LANGUAGES } from './i18n/translations';
 import Trader from './Trader/Trader';
 import Moonbreak from './Moonbreak/Moonbreak';
+import ServerSettings from './ServerSettings/ServerSettings';
 
 const TOOLS = [
 	{ id: 'trader', labelKey: 'nav.trader', Component: Trader },
 	{ id: 'moonbreak', labelKey: 'nav.moonbreak', Component: Moonbreak },
+	{ id: 'server', labelKey: 'nav.server', Component: ServerSettings },
 ];
 
 function LangToggle() {

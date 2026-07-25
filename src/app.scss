@@ -766,6 +766,124 @@ input[type='range'].slider {
 }
 
 // ---------------------------------------------------------------------------
+// Server settings
+// ---------------------------------------------------------------------------
+
+.universe-picker {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.universe-picker .mini-field {
+	min-width: 120px;
+}
+
+.universe-picker .universe-field {
+	flex: 1;
+	min-width: 220px;
+}
+
+.mini-field select {
+	width: 100%;
+	appearance: none;
+	border: 1px solid var(--border);
+	background: var(--surface-2);
+	color: var(--text);
+	font-family: var(--font-display);
+	font-size: 14px;
+	padding: 11px 12px;
+	border-radius: var(--radius-sm);
+	outline: none;
+	cursor: pointer;
+
+	&:focus {
+		border-color: var(--border-strong);
+		box-shadow: 0 0 0 3px rgba(55, 200, 255, 0.12);
+	}
+
+	option {
+		background: var(--bg-1);
+		color: var(--text);
+	}
+}
+
+.api-error {
+	margin: 18px 0 0;
+	padding: 13px 16px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--danger);
+	background: rgba(255, 122, 122, 0.08);
+	color: var(--text);
+	font-size: 13.5px;
+}
+
+.api-error-detail {
+	display: block;
+	margin-top: 4px;
+	color: var(--text-dim);
+	font-size: 12px;
+}
+
+.srv-subtitle {
+	margin: -8px 0 20px;
+	font-size: 13px;
+	color: var(--text-muted);
+}
+
+.srv-group + .srv-group {
+	margin-top: 22px;
+}
+
+.srv-group-title {
+	font-family: var(--font-display);
+	font-size: 12px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin: 0 0 8px;
+}
+
+.srv-rows {
+	margin: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 2px 18px;
+}
+
+.srv-row {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 8px 12px;
+	border-radius: var(--radius-sm);
+	background: rgba(4, 6, 13, 0.3);
+
+	dt {
+		font-size: 13px;
+		color: var(--text-muted);
+	}
+
+	dd {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 14px;
+		color: var(--text);
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	.is-on {
+		color: var(--deut);
+	}
+
+	.is-off {
+		color: var(--text-dim);
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Buttons
 // ---------------------------------------------------------------------------
 

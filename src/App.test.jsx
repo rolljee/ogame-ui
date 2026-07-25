@@ -49,6 +49,19 @@ describe('<App />', () => {
 		);
 	});
 
+	it('switches to the server settings tool', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('button', { name: 'Server settings' }));
+
+		expect(screen.getByText('Pick a universe')).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Server settings' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+	});
+
 	it('comes back to the trade calculator', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);

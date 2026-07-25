@@ -140,11 +140,11 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 | --- | --- | --- |
 | `!ogc` | calculateur de commerce | ✅ fait |
 | `!mb` | proba de moonbreak + pertes RIP estimées (1 à 4 attaquants) | ✅ fait (`src/Moonbreak/`) |
-| `!ogs` | réglages serveur (vitesses, débris, galaxies, top score…) | **1 — `fetchServerData()` est prête** |
-| `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | 2 |
-| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | 3 |
+| `!ogs` | réglages serveur (vitesses, débris, galaxies, top score…) | ✅ fait (`src/ServerSettings/`) |
+| `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | **1** |
+| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | 2 |
 | `!ogp` | planètes + lunes + points d'un joueur | = vue Joueurs (§1) |
-| `!oga` | membres d'une alliance | 4 — `searchAlliances()` est prête |
+| `!oga` | membres d'une alliance | 3 — `searchAlliances()` est prête |
 
 - [x] **Moonbreak** (`mb.js`) — porté dans `src/Moonbreak/formulas.js`, parité
       numérique vérifiée avec le bot. Un écart volontaire : le bot ne plafonne
@@ -153,8 +153,10 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
       (`!mb 3464 200`). **Correctif à remonter au bot.**
 - [ ] Courbe de proba selon le nombre de RIP — la visualisation que Discord ne
       peut pas offrir. Pas encore faite.
-- [ ] **Réglages serveur** (`serverData.js`) — un seul appel, aucune logique :
-      la première vue à brancher sur le proxy.
+- [x] **Réglages serveur** (`serverData.js`) — première vue branchée sur le
+      proxy, avec `UniversePicker` (réutilisable) et le hook `useApiData`.
+      Affiche aussi le taux d'échange officiel de l'univers, directement
+      utilisable dans le calculateur de commerce.
 - [ ] **Fret d'expédition** (`expeditions.js`) — formule copiable telle quelle.
 - [ ] **Verrou de lune / lien galaxie** (`create-link.js`) — utilise
       `Ogame.models.Destroyable` pour le coût des clés/sondes.

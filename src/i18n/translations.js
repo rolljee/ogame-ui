@@ -9,6 +9,10 @@ export const translations = {
 		'nav.label': 'Outils',
 		'nav.trader': 'Commerce',
 		'nav.moonbreak': 'Destruction de lune',
+		'nav.server': 'Réglages serveur',
+
+		'common.yes': 'Oui',
+		'common.no': 'Non',
 
 		'calc.title': 'Calculateur de commerce',
 		'calc.intro':
@@ -74,6 +78,57 @@ export const translations = {
 		'mb.error.rip': 'Entre le nombre de RIP de chaque attaquant pour voir le résultat.',
 		'mb.error.attackers': 'Il faut entre 1 et 4 attaquants.',
 
+		'srv.intro':
+			"Les réglages d'un univers : vitesses, débris, taille de la galaxie, score du premier. Utile pour savoir à quoi s'attendre avant de s'y installer, ou pour régler les autres calculateurs.",
+
+		'srv.step.universe': 'Choisir un univers',
+		'srv.step.universe.help':
+			"Choisis ta communauté puis ton univers. La liste vient directement de Gameforge : seuls les univers encore ouverts apparaissent.",
+		'srv.language': 'Communauté',
+		'srv.universe': 'Univers',
+		'srv.subtitle': 'Univers {number} · {lang}',
+		'srv.unnamed': 'Univers {number}',
+
+		'srv.loadingUniverses': 'Chargement de la liste des univers…',
+		'srv.loading': 'Chargement des réglages…',
+		'srv.error.universes': 'Impossible de charger la liste des univers.',
+		'srv.error.data': 'Impossible de charger les réglages de cet univers.',
+
+		'srv.group.universe': 'Univers',
+		'srv.group.speed': 'Vitesses',
+		'srv.group.combat': 'Combat et débris',
+		'srv.group.economy': 'Économie',
+
+		'srv.version': 'Version du jeu',
+		'srv.galaxies': 'Nombre de galaxies',
+		'srv.systems': 'Systèmes par galaxie',
+		'srv.bonusFields': 'Cases supplémentaires',
+		'srv.donutGalaxy': 'Galaxies cycliques',
+		'srv.donutSystem': 'Systèmes cycliques',
+		'srv.timezone': 'Fuseau horaire',
+
+		'srv.speed': "Vitesse d'économie",
+		'srv.fleetPeaceful': 'Vitesse de flotte (paix)',
+		'srv.fleetWar': 'Vitesse de flotte (guerre)',
+		'srv.fleetHolding': 'Vitesse de flotte (retenue)',
+		'srv.research': 'Durée de recherche',
+
+		'srv.debris': 'Débris des vaisseaux',
+		'srv.debrisDef': 'Débris des défenses',
+		'srv.deutInDebris': 'Deutérium dans les débris',
+		'srv.repair': 'Réparation du bouclier',
+		'srv.defToTF': 'Défenses réparables',
+		'srv.acs': 'Attaque groupée (AGR)',
+		'srv.rapidFire': 'Feu rapide',
+		'srv.bashlimit': 'Limite de bash',
+
+		'srv.topScore': 'Score du premier',
+		'srv.deutSave': 'Consommation de deutérium',
+		'srv.probeCargo': 'Fret dans les sondes',
+		'srv.hyperspaceCargo': 'Fret par niveau d\'hyperespace',
+		'srv.marketplace': 'Place de marché',
+		'srv.tradeRatio': "Taux d'échange officiel",
+
 		'lang.label': 'Langue',
 	},
 	en: {
@@ -83,6 +138,10 @@ export const translations = {
 		'nav.label': 'Tools',
 		'nav.trader': 'Trade',
 		'nav.moonbreak': 'Moonbreak',
+		'nav.server': 'Server settings',
+
+		'common.yes': 'Yes',
+		'common.no': 'No',
 
 		'calc.title': 'Trade calculator',
 		'calc.intro':
@@ -147,6 +206,57 @@ export const translations = {
 		'mb.error.size': 'Enter a valid moon size to see the result.',
 		'mb.error.rip': "Enter each attacker's Deathstar count to see the result.",
 		'mb.error.attackers': 'You need between 1 and 4 attackers.',
+
+		'srv.intro':
+			"A universe's settings: speeds, debris, galaxy size, top score. Handy to know what you are getting into before settling in, or to configure the other calculators.",
+
+		'srv.step.universe': 'Pick a universe',
+		'srv.step.universe.help':
+			'Pick your community, then your universe. The list comes straight from Gameforge: only universes that are still open show up.',
+		'srv.language': 'Community',
+		'srv.universe': 'Universe',
+		'srv.subtitle': 'Universe {number} · {lang}',
+		'srv.unnamed': 'Universe {number}',
+
+		'srv.loadingUniverses': 'Loading the universe list…',
+		'srv.loading': 'Loading settings…',
+		'srv.error.universes': 'Could not load the universe list.',
+		'srv.error.data': 'Could not load this universe’s settings.',
+
+		'srv.group.universe': 'Universe',
+		'srv.group.speed': 'Speeds',
+		'srv.group.combat': 'Combat and debris',
+		'srv.group.economy': 'Economy',
+
+		'srv.version': 'Game version',
+		'srv.galaxies': 'Galaxies',
+		'srv.systems': 'Systems per galaxy',
+		'srv.bonusFields': 'Bonus fields',
+		'srv.donutGalaxy': 'Wrapping galaxies',
+		'srv.donutSystem': 'Wrapping systems',
+		'srv.timezone': 'Time zone',
+
+		'srv.speed': 'Economy speed',
+		'srv.fleetPeaceful': 'Fleet speed (peaceful)',
+		'srv.fleetWar': 'Fleet speed (war)',
+		'srv.fleetHolding': 'Fleet speed (holding)',
+		'srv.research': 'Research duration',
+
+		'srv.debris': 'Ship debris',
+		'srv.debrisDef': 'Defence debris',
+		'srv.deutInDebris': 'Deuterium in debris',
+		'srv.repair': 'Shield repair',
+		'srv.defToTF': 'Repairable defences',
+		'srv.acs': 'Combined attack (ACS)',
+		'srv.rapidFire': 'Rapid fire',
+		'srv.bashlimit': 'Bashing limit',
+
+		'srv.topScore': 'Top score',
+		'srv.deutSave': 'Deuterium consumption',
+		'srv.probeCargo': 'Cargo on probes',
+		'srv.hyperspaceCargo': 'Cargo per hyperspace level',
+		'srv.marketplace': 'Marketplace',
+		'srv.tradeRatio': 'Official exchange rate',
 
 		'lang.label': 'Language',
 	},
