@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Ogame from 'ogamejs';
+import OgameTrader from 'ogamejs/trades';
 
 import { useI18n } from '../i18n/I18nContext';
 import { RESOURCES } from '../components/constants';
@@ -23,14 +23,14 @@ function computeOutputs(selected, amount, rate, percents) {
 	if (!value) return {};
 
 	if (selected === RESOURCES.deut) {
-		const { metal, crystal } = Ogame.Trader.sellDeut(value, percents.metal, percents.crystal, rate);
+		const { metal, crystal } = OgameTrader.sellDeut(value, percents.metal, percents.crystal, rate);
 		return { metal, crystal };
 	}
 	if (selected === RESOURCES.metal) {
-		const { crystal, deut } = Ogame.Trader.sellMetal(value, percents.deut, percents.crystal, rate);
+		const { crystal, deut } = OgameTrader.sellMetal(value, percents.deut, percents.crystal, rate);
 		return { crystal, deut };
 	}
-	const { metal, deut } = Ogame.Trader.sellCrystal(value, percents.deut, percents.metal, rate);
+	const { metal, deut } = OgameTrader.sellCrystal(value, percents.deut, percents.metal, rate);
 	return { metal, deut };
 }
 

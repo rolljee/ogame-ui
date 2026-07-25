@@ -6,7 +6,7 @@
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
     "copy-to-clipboard": "^4.0.2",
-    "ogamejs": "^3.0.0",
+    "ogamejs": "^4.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
