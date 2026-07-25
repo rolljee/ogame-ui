@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
 	API_URL,
 	ApiError,
+	fetchAlliance,
 	fetchPlayer,
 	fetchServerData,
 	fetchUniverses,
@@ -79,6 +80,16 @@ describe('fetchPlayer and searchAlliances', () => {
 		await expect(
 			searchAlliances({ universe: 172, lang: 'fr', search: 'twa' }),
 		).resolves.toMatchObject({ total: 1 });
+	});
+
+	it('fetches one alliance by id', async () => {
+		const spy = stubFetch({ id: '1', tag: 'TWA', members: [] });
+		await expect(fetchAlliance({ universe: 172, lang: 'fr', id: '1' })).resolves.toMatchObject({
+			tag: 'TWA',
+		});
+		expect(spy.mock.calls[0][0].toString()).toBe(
+			`${API_URL}/alliance?universe=172&lang=fr&id=1`,
+		);
 	});
 });
 

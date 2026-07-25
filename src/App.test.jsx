@@ -62,6 +62,19 @@ describe('<App />', () => {
 		);
 	});
 
+	it('switches to the alliances tool', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('button', { name: 'Alliances' }));
+
+		expect(screen.getByText('Find an alliance')).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Alliances' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+	});
+
 	it('comes back to the trade calculator', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);

@@ -1,19 +1,6 @@
 import React from 'react';
 import { useI18n } from '../../i18n/I18nContext';
-import { describeStatus } from '../model';
-
-function StatusBadges({ status }) {
-	const { t } = useI18n();
-	return (
-		<span className="pl-badges">
-			{describeStatus(status).map(({ key, labelKey, icon }) => (
-				<span key={key} className={`pl-badge pl-badge-${key}`}>
-					<span aria-hidden="true">{icon}</span> {t(labelKey)}
-				</span>
-			))}
-		</span>
-	);
-}
+import StatusBadges from '../../components/StatusBadges';
 
 function PlayerList({ players, total, selectedId, onSelect }) {
 	const { t } = useI18n();
@@ -37,7 +24,15 @@ function PlayerList({ players, total, selectedId, onSelect }) {
 							aria-pressed={player.id === selectedId}
 							onClick={() => onSelect(player.id)}
 						>
-							<span className="pl-row-name">{player.name}</span>
+							<span className="pl-row-name">
+								{player.name}
+								{/* The proxy resolves the alliance id against alliances.xml. */}
+								{player.alliance && (
+									<span className="pl-row-alliance" title={player.alliance.name}>
+										[{player.alliance.tag}]
+									</span>
+								)}
+							</span>
 							<StatusBadges status={player.status} />
 						</button>
 					</li>

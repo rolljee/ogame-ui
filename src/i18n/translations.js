@@ -12,6 +12,7 @@ export const translations = {
 		'nav.expeditions': 'Expéditions',
 		'nav.moonlock': 'Verrou de lune',
 		'nav.players': 'Joueurs',
+		'nav.alliances': 'Alliances',
 		'nav.server': 'Réglages serveur',
 
 		'common.yes': 'Oui',
@@ -76,6 +77,19 @@ export const translations = {
 		'mb.waves.uniform': '{waves} vagues de {rip} RIP.',
 		'mb.waves.mixed': '{wavesA} vague(s) de {ripA} et {wavesB} vague(s) de {ripB} RIP.',
 		'mb.waves.partial': '{waves} vague(s) de 1 RIP.',
+
+		'mb.curve.title': 'Courbe de probabilité',
+		'mb.curve.help':
+			"Les mêmes {attackers} attaquant(s), avec une flotte plus ou moins grosse répartie équitablement entre eux. Passé le palier des 95 %, chaque RIP de plus ne rapporte presque rien : il vaut mieux un attaquant supplémentaire.",
+		'mb.curve.aria':
+			'Probabilité de casser la lune selon le nombre de RIP, de 1 à {rip} RIP, jusqu’à {probability} %.',
+		'mb.curve.axisX': '{rip} RIP',
+		'mb.curve.point': '{rip} RIP · {probability} %',
+		'mb.curve.target': '{target} % dès {rip} RIP',
+		'mb.curve.unreachable': '{target} % hors d’atteinte à {attackers} attaquant(s)',
+		'mb.curve.table': 'Voir les valeurs',
+		'mb.curve.col.rip': 'RIP',
+		'mb.curve.col.probability': 'Chances',
 
 		'mb.error.size': 'Entre une taille de lune valide pour voir le résultat.',
 		'mb.error.rip': 'Entre le nombre de RIP de chaque attaquant pour voir le résultat.',
@@ -155,6 +169,44 @@ export const translations = {
 		'pl.score.militaryDestroyed': 'Militaire détruit',
 		'pl.score.militaryLost': 'Militaire perdu',
 		'pl.score.honour': 'Honneur',
+
+		'al.intro':
+			"Cherche une alliance par son nom ou son tag pour voir son effectif complet : chaque membre avec son statut, le fondateur, et la part de l'alliance encore active.",
+
+		'al.step.universe': 'Choisir un univers',
+		'al.step.universe.help':
+			"Les alliances sont propres à un univers : commence par choisir le tien.",
+
+		'al.step.search': 'Chercher une alliance',
+		'al.step.search.help':
+			"La recherche porte sur le nom et sur le tag, en ignorant la casse et les accents. Un tag exact remonte en premier, puis les alliances les plus nombreuses.",
+		'al.search.label': 'Nom ou tag',
+		'al.search.placeholder': 'Nom ou tag de l’alliance',
+		'al.search.submit': 'Chercher',
+		'al.filter.label': 'Filtrer les membres par statut',
+
+		'al.list.count': '{shown} alliance(s) affichée(s) sur {total} trouvée(s).',
+		'al.list.empty': 'Aucune alliance ne correspond.',
+		'al.list.members': '{count} membre(s)',
+
+		'al.loading': 'Recherche en cours…',
+		'al.loading.detail': 'Chargement de l’alliance…',
+		'al.error.search': 'La recherche a échoué.',
+		'al.error.detail': 'Impossible de charger cette alliance.',
+
+		'al.detail.title': 'Alliance',
+		'al.detail.pick': 'Choisis une alliance dans la liste pour voir son effectif.',
+		'al.detail.searchFirst': 'Cherche une alliance pour voir son effectif.',
+		'al.detail.summary': '{members} membre(s)',
+		'al.detail.founded': 'fondée en {year}',
+		'al.detail.open': 'recrutement ouvert',
+		'al.detail.closed': 'recrutement fermé',
+		'al.detail.homepage': 'Site de l’alliance',
+		'al.detail.breakdown': 'Répartition',
+		'al.detail.members': 'Membres',
+		'al.detail.founder': 'Fondateur',
+		'al.members.empty': 'Aucun membre ne correspond au filtre.',
+		'al.members.unknown': 'Joueur introuvable',
 
 		'ml.intro':
 			"Une lune apparaît quand un combat laisse des débris sur la position, et les chances plafonnent à 20 % à partir de 2 000 000 de débris. Voici combien de vaisseaux il faut sacrifier pour atteindre ce plafond dans ton univers, et le lien direct vers la position.",
@@ -243,6 +295,7 @@ export const translations = {
 		'nav.expeditions': 'Expeditions',
 		'nav.moonlock': 'Moon lock',
 		'nav.players': 'Players',
+		'nav.alliances': 'Alliances',
 		'nav.server': 'Server settings',
 
 		'common.yes': 'Yes',
@@ -307,6 +360,19 @@ export const translations = {
 		'mb.waves.uniform': '{waves} waves of {rip} Deathstars.',
 		'mb.waves.mixed': '{wavesA} wave(s) of {ripA} and {wavesB} wave(s) of {ripB} Deathstars.',
 		'mb.waves.partial': '{waves} wave(s) of 1 Deathstar.',
+
+		'mb.curve.title': 'Probability curve',
+		'mb.curve.help':
+			'The same {attackers} attacker(s), with a larger or smaller fleet spread evenly between them. Past the 95 % mark each extra Deathstar buys almost nothing: bring another attacker instead.',
+		'mb.curve.aria':
+			'Chance of breaking the moon by Deathstar count, from 1 to {rip} RIP, up to {probability} %.',
+		'mb.curve.axisX': '{rip} RIP',
+		'mb.curve.point': '{rip} RIP · {probability} %',
+		'mb.curve.target': '{target} % from {rip} RIP',
+		'mb.curve.unreachable': '{target} % out of reach with {attackers} attacker(s)',
+		'mb.curve.table': 'Show the values',
+		'mb.curve.col.rip': 'RIP',
+		'mb.curve.col.probability': 'Chance',
 
 		'mb.error.size': 'Enter a valid moon size to see the result.',
 		'mb.error.rip': "Enter each attacker's Deathstar count to see the result.",
@@ -385,6 +451,43 @@ export const translations = {
 		'pl.score.militaryDestroyed': 'Military destroyed',
 		'pl.score.militaryLost': 'Military lost',
 		'pl.score.honour': 'Honour',
+
+		'al.intro':
+			'Search an alliance by name or tag to see its full roster: every member with their status, the founder, and how much of the alliance is still active.',
+
+		'al.step.universe': 'Pick a universe',
+		'al.step.universe.help': 'Alliances belong to a universe: start by picking yours.',
+
+		'al.step.search': 'Find an alliance',
+		'al.step.search.help':
+			'The search covers both the name and the tag, ignoring case and accents. An exact tag comes first, then the largest alliances.',
+		'al.search.label': 'Name or tag',
+		'al.search.placeholder': 'Alliance name or tag',
+		'al.search.submit': 'Search',
+		'al.filter.label': 'Filter members by status',
+
+		'al.list.count': 'Showing {shown} of {total} matching alliance(s).',
+		'al.list.empty': 'No alliance matches.',
+		'al.list.members': '{count} member(s)',
+
+		'al.loading': 'Searching…',
+		'al.loading.detail': 'Loading the alliance…',
+		'al.error.search': 'The search failed.',
+		'al.error.detail': 'Could not load this alliance.',
+
+		'al.detail.title': 'Alliance',
+		'al.detail.pick': 'Pick an alliance from the list to see its roster.',
+		'al.detail.searchFirst': 'Search for an alliance to see its roster.',
+		'al.detail.summary': '{members} member(s)',
+		'al.detail.founded': 'founded in {year}',
+		'al.detail.open': 'open to new members',
+		'al.detail.closed': 'closed to new members',
+		'al.detail.homepage': 'Alliance homepage',
+		'al.detail.breakdown': 'Breakdown',
+		'al.detail.members': 'Members',
+		'al.detail.founder': 'Founder',
+		'al.members.empty': 'No member matches the filter.',
+		'al.members.unknown': 'Player not found',
 
 		'ml.intro':
 			'A moon appears when a battle leaves debris on the position, and the odds cap at 20% once the field holds 2,000,000 units. Here is how many ships you have to blow up to reach that cap in your universe, plus a direct link to the position.',

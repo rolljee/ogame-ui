@@ -11,6 +11,7 @@
 import {
 	LOBBY_URL,
 	UpstreamError,
+	indexById,
 	matchesSearch,
 	normalizeForSearch,
 	normalizeUniverses,
@@ -18,7 +19,9 @@ import {
 	parsePlayerData,
 	parsePlayers,
 	parseServerData,
+	resolveMembers,
 	serverBaseUrl,
+	summarizeAlliance,
 } from './gameforge.js';
 
 // Upstream regenerates these documents roughly once a day, so caching for an
@@ -101,13 +104,30 @@ async function handleServerData(params) {
 	return parseServerData(await response.text());
 }
 
+// The two documents a view is built from. They are fetched together because a
+// player is only fully described by both, and both are edge-cached anyway.
+async function fetchPlayers(base) {
+	const response = await fetchUpstream(`${base}/api/players.xml`);
+	return parsePlayers(await response.text());
+}
+
+async function fetchAlliances(base) {
+	const response = await fetchUpstream(`${base}/api/alliances.xml`);
+	return parseAlliances(await response.text());
+}
+
 async function handlePlayers(params) {
 	const search = requireParam(params, 'search');
-	const response = await fetchUpstream(`${resolveBase(params)}/api/players.xml`);
-	const { timestamp, players } = parsePlayers(await response.text());
+	const base = resolveBase(params);
+	const [{ timestamp, players }, { alliances }] = await Promise.all([
+		fetchPlayers(base),
+		fetchAlliances(base),
+	]);
+
 	const matches = players.filter((player) => matchesSearch(player.name, search));
 	const needle = normalizeForSearch(search);
 	const isExact = (player) => (normalizeForSearch(player.name) === needle ? 0 : 1);
+	const byId = indexById(alliances);
 
 	return {
 		timestamp,
@@ -115,13 +135,29 @@ async function handlePlayers(params) {
 		// An exact name first — that is usually the player being looked up.
 		players: matches
 			.sort((a, b) => isExact(a) - isExact(b) || a.name.localeCompare(b.name))
-			.slice(0, MAX_RESULTS),
+			.slice(0, MAX_RESULTS)
+			// players.xml only carries the alliance id; resolve it here so the
+			// browser never has to download alliances.xml to show a tag.
+			.map((player) => {
+				const alliance = player.alliance ? byId.get(player.alliance) : undefined;
+				return {
+					...player,
+					alliance: alliance
+						? { id: alliance.id, name: alliance.name, tag: alliance.tag }
+						: null,
+				};
+			}),
 	};
 }
 
-async function handlePlayer(params) {
+function requireId(params) {
 	const id = requireParam(params, 'id');
 	if (!/^\d{1,12}$/.test(id)) throw new UpstreamError(`invalid id: ${id}`, 400);
+	return id;
+}
+
+async function handlePlayer(params) {
+	const id = requireId(params);
 
 	// playerData.xml already carries the planets and their moons, and is fresher
 	// than universe.xml — no need to download the 3.4 MB galaxy dump.
@@ -131,13 +167,38 @@ async function handlePlayer(params) {
 
 async function handleAlliances(params) {
 	const search = requireParam(params, 'search');
-	const response = await fetchUpstream(`${resolveBase(params)}/api/alliances.xml`);
-	const { timestamp, alliances } = parseAlliances(await response.text());
+	const { timestamp, alliances } = await fetchAlliances(resolveBase(params));
 	const matches = alliances.filter(
 		(alliance) => matchesSearch(alliance.name, search) || matchesSearch(alliance.tag, search),
 	);
+	const needle = normalizeForSearch(search);
+	// A tag is what players actually type, so an exact tag wins the top spot.
+	const isExact = (alliance) => (normalizeForSearch(alliance.tag) === needle ? 0 : 1);
 
-	return { timestamp, total: matches.length, alliances: matches.slice(0, MAX_RESULTS) };
+	return {
+		timestamp,
+		total: matches.length,
+		// Member ids are useless before they are resolved into names, which is
+		// what /alliance does for the one alliance being looked at.
+		alliances: matches
+			.sort((a, b) => isExact(a) - isExact(b) || b.members.length - a.members.length)
+			.slice(0, MAX_RESULTS)
+			.map(summarizeAlliance),
+	};
+}
+
+async function handleAlliance(params) {
+	const id = requireId(params);
+	const base = resolveBase(params);
+	const [{ timestamp, alliances }, { players }] = await Promise.all([
+		fetchAlliances(base),
+		fetchPlayers(base),
+	]);
+
+	const alliance = alliances.find((candidate) => candidate.id === id);
+	if (!alliance) throw new UpstreamError(`unknown alliance: ${id}`, 404);
+
+	return { timestamp, ...resolveMembers(alliance, players) };
 }
 
 const ROUTES = {
@@ -146,6 +207,7 @@ const ROUTES = {
 	'/players': handlePlayers,
 	'/player': handlePlayer,
 	'/alliances': handleAlliances,
+	'/alliance': handleAlliance,
 };
 
 export default {

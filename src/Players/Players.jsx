@@ -4,7 +4,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { fetchPlayer, searchPlayers } from '../api/ogame';
 import { useApiData } from '../api/useApiData';
 import UniversePicker from '../components/UniversePicker';
-import { filterPlayers } from './model';
+import { filterByStatus } from '../components/status';
 import PlayerSearch from './components/PlayerSearch';
 import PlayerList from './components/PlayerList';
 import PlayerDetail from './components/PlayerDetail';
@@ -47,7 +47,7 @@ function Players() {
 	}
 
 	const players = useMemo(
-		() => filterPlayers(results.data?.players, statuses),
+		() => filterByStatus(results.data?.players, statuses),
 		[results.data, statuses],
 	);
 

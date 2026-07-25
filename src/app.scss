@@ -765,6 +765,123 @@ input[type='range'].slider {
 	min-width: 44px;
 }
 
+.mb-curve {
+	margin-top: 16px;
+
+	.help {
+		margin: 0 0 12px;
+	}
+}
+
+.mb-curve-chart {
+	display: block;
+	width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+// Grid and axes stay recessive: the line is what should be read.
+.mb-curve-grid {
+	stroke: var(--border);
+	stroke-width: 1;
+}
+
+.mb-curve-tick {
+	fill: var(--text-dim);
+	font-family: var(--font-body);
+	font-size: 9px;
+	text-anchor: end;
+}
+
+.mb-curve-target {
+	stroke: var(--border-strong);
+	stroke-width: 1;
+	stroke-dasharray: 3 3;
+}
+
+.mb-curve-target-label {
+	fill: var(--text-muted);
+	font-family: var(--font-display);
+	font-size: 9px;
+	text-anchor: middle;
+}
+
+.mb-curve-line {
+	fill: none;
+	stroke: var(--accent);
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.mb-curve-point {
+	fill: var(--accent);
+	// A ring in the surface colour keeps the marker readable over the line.
+	stroke: var(--bg-0);
+	stroke-width: 2;
+}
+
+.mb-curve-point-label {
+	fill: var(--text);
+	font-family: var(--font-display);
+	font-size: 9.5px;
+}
+
+.mb-curve-hit {
+	fill: transparent;
+	// Hit target only; the visible marks carry the encoding.
+	pointer-events: all;
+}
+
+.mb-curve-targets {
+	list-style: none;
+	margin: 12px 0 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	li {
+		font-size: 12.5px;
+		color: var(--text-muted);
+		padding: 4px 10px;
+		border-radius: var(--radius-pill);
+		background: rgba(4, 6, 13, 0.4);
+		border: 1px solid var(--border);
+	}
+}
+
+.mb-curve-table {
+	margin-top: 12px;
+	font-size: 13px;
+	color: var(--text-muted);
+
+	summary {
+		cursor: pointer;
+		color: var(--accent);
+	}
+
+	table {
+		margin-top: 8px;
+		border-collapse: collapse;
+		// A long curve must not stretch the card.
+		display: block;
+		max-height: 220px;
+		overflow-y: auto;
+	}
+
+	th,
+	td {
+		text-align: left;
+		padding: 3px 18px 3px 0;
+	}
+
+	th {
+		color: var(--text-dim);
+		font-weight: 600;
+	}
+}
+
 // ---------------------------------------------------------------------------
 // Expeditions
 // ---------------------------------------------------------------------------
@@ -1027,6 +1144,87 @@ input[type='range'].slider {
 .pl-moon {
 	font-size: 12.5px;
 	color: var(--text-muted);
+}
+
+.pl-row-alliance {
+	margin-left: 8px;
+	font-family: var(--font-display);
+	font-size: 12.5px;
+	font-weight: 400;
+	color: var(--text-dim);
+}
+
+// ---------------------------------------------------------------------------
+// Alliances
+// ---------------------------------------------------------------------------
+
+.al-tag {
+	font-family: var(--font-display);
+	color: var(--accent);
+}
+
+.al-count {
+	font-size: 12.5px;
+	color: var(--text-muted);
+	white-space: nowrap;
+}
+
+.al-breakdown {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.al-breakdown-item {
+	font-size: 12.5px;
+	color: var(--text-muted);
+	padding: 4px 10px;
+	border-radius: var(--radius-pill);
+	background: rgba(4, 6, 13, 0.4);
+	border: 1px solid var(--border);
+	white-space: nowrap;
+}
+
+.al-members {
+	list-style: none;
+	margin: 12px 0 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	// A large alliance runs to a hundred members: keep the page navigable.
+	max-height: 420px;
+	overflow-y: auto;
+
+	li {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px;
+		padding: 9px 12px;
+		border-radius: var(--radius-sm);
+		background: rgba(4, 6, 13, 0.3);
+	}
+
+	li.is-unknown {
+		opacity: 0.7;
+	}
+}
+
+.al-member-name {
+	flex: 1;
+	font-weight: 600;
+}
+
+.al-founder {
+	font-size: 11.5px;
+	color: var(--accent);
+	white-space: nowrap;
+}
+
+.al-unknown {
+	font-size: 11.5px;
+	color: var(--text-dim);
 }
 
 // ---------------------------------------------------------------------------

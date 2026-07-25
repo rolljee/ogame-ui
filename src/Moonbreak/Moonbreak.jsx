@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
 
 import { useI18n } from '../i18n/I18nContext';
-import { computeMoonbreak, MAX_ATTACKERS, MAX_MOON_SIZE } from './formulas';
+import { computeMoonbreak, describeCurve, MAX_ATTACKERS, MAX_MOON_SIZE } from './formulas';
 import MoonSizeInput from './components/MoonSizeInput';
 import AttackerList from './components/AttackerList';
 import MoonbreakResult from './components/MoonbreakResult';
+import MoonbreakCurve from './components/MoonbreakCurve';
 
 function Moonbreak() {
 	const { t } = useI18n();
@@ -27,6 +28,20 @@ function Moonbreak() {
 	const result = useMemo(
 		() => computeMoonbreak({ moonSize, attackers }),
 		[moonSize, attackers],
+	);
+
+	// Only worth computing once the form is usable; the curve reuses the moon
+	// size and the number of attackers, and spreads the fleet evenly.
+	const curve = useMemo(
+		() =>
+			result.ok
+				? describeCurve({
+						moonSize: Number(moonSize),
+						attackerCount: result.attackers.length,
+						currentRip: result.totalRip,
+					})
+				: null,
+		[result, moonSize],
 	);
 
 	return (
@@ -57,6 +72,8 @@ function Moonbreak() {
 			</section>
 
 			<MoonbreakResult result={result} />
+
+			{curve && <MoonbreakCurve curve={curve} attackerCount={result.attackers.length} />}
 		</>
 	);
 }
