@@ -34,6 +34,21 @@ composants se rendent via l'utilitaire `renderWithI18n` de
 Stack : **React 19 + Vite 8 + Sass**. Aucun framework CSS : le thème
 « spatial » est un design system maison (`src/app.scss`).
 
+## Proxy API (`worker/`)
+
+Les vues qui lisent des données OGame passent par un Cloudflare Worker, parce
+que l'API de Gameforge n'envoie pas d'en-tête CORS. Il normalise le XML en JSON
+et évite d'expédier les gros documents au navigateur.
+
+```bash
+npm run api:dev      # proxy local sur http://localhost:8787
+npm run api:deploy   # déploiement (npx wrangler login au préalable)
+```
+
+Le front lit l'URL du proxy dans `VITE_API_URL` (défaut :
+`http://localhost:8787`). Détails, routes et modèle de sécurité dans
+[`worker/README.md`](./worker/README.md).
+
 ## Branches et déploiement
 
 - `develop` — branche d'intégration. Chaque pull request et chaque push y
@@ -45,5 +60,9 @@ Stack : **React 19 + Vite 8 + Sass**. Aucun framework CSS : le thème
 
 ## Feuille de route
 
-Les vues **Joueurs** et **Mines** ont été retirées car elles dépendaient d'API
-OGame qui ont changé. Elles sont à reconstruire — détails dans [`TODO.md`](./TODO.md).
+Les vues **Joueurs** et **Mines** ont été retirées lors de la refonte, au motif
+que les API OGame dont elles dépendaient avaient changé. **Ce diagnostic était
+faux** : l'API publique de Gameforge répond normalement (vérifié le 25 juillet
+2026), et le seul blocage est le **CORS navigateur** — il faut donc un proxy.
+Détails, endpoints testés et fonctionnalités à ajouter dans
+[`TODO.md`](./TODO.md).
