@@ -9,6 +9,7 @@ export const translations = {
 		'nav.label': 'Outils',
 		'nav.trader': 'Commerce',
 		'nav.moonbreak': 'Destruction de lune',
+		'nav.expeditions': 'Expéditions',
 		'nav.server': 'Réglages serveur',
 
 		'common.yes': 'Oui',
@@ -78,6 +79,34 @@ export const translations = {
 		'mb.error.rip': 'Entre le nombre de RIP de chaque attaquant pour voir le résultat.',
 		'mb.error.attackers': 'Il faut entre 1 et 4 attaquants.',
 
+		'exp.intro':
+			"Combien une expédition peut-elle rapporter, et combien de vaisseaux faut-il envoyer pour tout ramener ? La trouvaille maximale dépend de l'univers (vitesse d'économie et score du premier), la capacité de tes vaisseaux de ton niveau d'hyperespace.",
+
+		'exp.step.universe': 'Choisir un univers',
+		'exp.step.universe.help':
+			"La trouvaille maximale se calcule à partir des réglages de l'univers : sa vitesse d'économie et le score du joueur numéro 1.",
+
+		'exp.step.fleet': 'Ta flotte',
+		'exp.step.fleet.help':
+			"Ton niveau d'hyperespace augmente le fret de chaque vaisseau, et un pathfinder dans la flotte double la trouvaille.",
+		'exp.hyperspace.label': 'Hyperespace',
+		'exp.hyperspace.range': 'Niveau de la technologie hyperespace, de 0 à {max}.',
+		'exp.pathfinder': 'Un pathfinder dans la flotte',
+		'exp.pathfinder.help':
+			'Le pathfinder double la trouvaille maximale. Sans lui, tu ne ramènes que la moitié.',
+
+		'exp.result.title': "Fret d'expédition",
+		'exp.result.find': 'de ressources au maximum par expédition',
+		'exp.result.capacity': '{capacity} de fret chacun',
+		'exp.result.top': 'Univers {universe} · le premier a {score} points',
+
+		'exp.ship.largeCargo': 'grands transporteurs',
+		'exp.ship.smallCargo': 'petits transporteurs',
+
+		'exp.error.universe': 'Choisis un univers pour voir le résultat.',
+		'exp.error.data': "Cet univers ne renvoie pas les réglages nécessaires au calcul.",
+		'exp.error.level': "Entre ton niveau d'hyperespace pour voir le résultat.",
+
 		'srv.intro':
 			"Les réglages d'un univers : vitesses, débris, taille de la galaxie, score du premier. Utile pour savoir à quoi s'attendre avant de s'y installer, ou pour régler les autres calculateurs.",
 
@@ -138,6 +167,7 @@ export const translations = {
 		'nav.label': 'Tools',
 		'nav.trader': 'Trade',
 		'nav.moonbreak': 'Moonbreak',
+		'nav.expeditions': 'Expeditions',
 		'nav.server': 'Server settings',
 
 		'common.yes': 'Yes',
@@ -206,6 +236,34 @@ export const translations = {
 		'mb.error.size': 'Enter a valid moon size to see the result.',
 		'mb.error.rip': "Enter each attacker's Deathstar count to see the result.",
 		'mb.error.attackers': 'You need between 1 and 4 attackers.',
+
+		'exp.intro':
+			'How much can one expedition bring back, and how many ships does it take to carry it home? The maximum find comes from the universe (economy speed and top score); your ships’ capacity comes from your hyperspace technology.',
+
+		'exp.step.universe': 'Pick a universe',
+		'exp.step.universe.help':
+			'The maximum find is derived from the universe settings: its economy speed and the score of the number one player.',
+
+		'exp.step.fleet': 'Your fleet',
+		'exp.step.fleet.help':
+			'Hyperspace technology raises every ship’s cargo, and a Pathfinder in the fleet doubles the find.',
+		'exp.hyperspace.label': 'Hyperspace',
+		'exp.hyperspace.range': 'Hyperspace technology level, from 0 to {max}.',
+		'exp.pathfinder': 'A Pathfinder in the fleet',
+		'exp.pathfinder.help':
+			'The Pathfinder doubles the maximum find. Without one you only bring back half of it.',
+
+		'exp.result.title': 'Expedition freight',
+		'exp.result.find': 'resources at most per expedition',
+		'exp.result.capacity': '{capacity} cargo each',
+		'exp.result.top': 'Universe {universe} · the top player has {score} points',
+
+		'exp.ship.largeCargo': 'Large Cargos',
+		'exp.ship.smallCargo': 'Small Cargos',
+
+		'exp.error.universe': 'Pick a universe to see the result.',
+		'exp.error.data': 'This universe does not report the settings the calculation needs.',
+		'exp.error.level': 'Enter your hyperspace level to see the result.',
 
 		'srv.intro':
 			"A universe's settings: speeds, debris, galaxy size, top score. Handy to know what you are getting into before settling in, or to configure the other calculators.",

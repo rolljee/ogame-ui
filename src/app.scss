@@ -766,6 +766,114 @@ input[type='range'].slider {
 }
 
 // ---------------------------------------------------------------------------
+// Expeditions
+// ---------------------------------------------------------------------------
+
+.exp-fleet {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	.help {
+		margin: 0;
+	}
+}
+
+.exp-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 6px;
+	font-size: 14.5px;
+	color: var(--text);
+	cursor: pointer;
+
+	input {
+		appearance: none;
+		width: 18px;
+		height: 18px;
+		flex: none;
+		border: 1px solid var(--border-strong);
+		border-radius: 5px;
+		background: var(--surface-2);
+		cursor: pointer;
+		transition: all 0.16s ease;
+
+		&:checked {
+			background: var(--accent);
+			border-color: var(--accent);
+			box-shadow: 0 0 14px var(--glow);
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(55, 200, 255, 0.24);
+		}
+	}
+}
+
+.exp-find {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	margin: 4px 0 20px;
+
+	strong {
+		font-family: var(--font-display);
+		font-size: 40px;
+		font-weight: 700;
+		line-height: 1;
+		color: var(--accent);
+		text-shadow: 0 0 26px var(--glow);
+	}
+
+	span {
+		font-size: 13px;
+		color: var(--text-muted);
+	}
+}
+
+.exp-ships {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	li {
+		display: flex;
+		align-items: baseline;
+		gap: 12px;
+		padding: 12px 16px;
+		border-radius: var(--radius-sm);
+		background: var(--surface);
+		border: 1px solid var(--border);
+	}
+}
+
+.exp-ship-count {
+	font-family: var(--font-display);
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--text);
+	min-width: 64px;
+}
+
+.exp-ship-name {
+	flex: 1;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.exp-ship-capacity {
+	font-size: 12.5px;
+	color: var(--text-dim);
+	text-align: right;
+}
+
+// ---------------------------------------------------------------------------
 // Server settings
 // ---------------------------------------------------------------------------
 

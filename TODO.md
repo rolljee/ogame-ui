@@ -141,8 +141,8 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 | `!ogc` | calculateur de commerce | ✅ fait |
 | `!mb` | proba de moonbreak + pertes RIP estimées (1 à 4 attaquants) | ✅ fait (`src/Moonbreak/`) |
 | `!ogs` | réglages serveur (vitesses, débris, galaxies, top score…) | ✅ fait (`src/ServerSettings/`) |
-| `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | **1** |
-| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | 2 |
+| `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | ✅ fait (`src/Expeditions/`) |
+| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | **1** |
 | `!ogp` | planètes + lunes + points d'un joueur | = vue Joueurs (§1) |
 | `!oga` | membres d'une alliance | 3 — `searchAlliances()` est prête |
 
@@ -157,7 +157,11 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
       proxy, avec `UniversePicker` (réutilisable) et le hook `useApiData`.
       Affiche aussi le taux d'échange officiel de l'univers, directement
       utilisable dans le calculateur de commerce.
-- [ ] **Fret d'expédition** (`expeditions.js`) — formule copiable telle quelle.
+- [x] **Fret d'expédition** (`expeditions.js`) — porté dans
+      `src/Expeditions/formulas.js`, parité numérique vérifiée avec le bot.
+      Deux ajouts : le pathfinder devient un interrupteur (le bot le suppose
+      toujours présent) et le plancher de 200 unités du bot est omis, il ne peut
+      jamais s'appliquer avec une base minimale de 40 000.
 - [ ] **Verrou de lune / lien galaxie** (`create-link.js`) — utilise
       `Ogame.models.Destroyable` pour le coût des clés/sondes.
 - [ ] **Alliances** (`alliances.utils.js`).
