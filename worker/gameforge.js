@@ -165,6 +165,49 @@ export function parseAlliances(xml) {
 	};
 }
 
+// --- universe.xml (scanned, not parsed) ------------------------------------
+//
+// This is the only document giving every player's coordinates, and the largest
+// by far (3.2 MB on s172 against 0.4 MB on s282). Only two attributes are
+// wanted out of it — `player` and `coords` — plus whether the planet carries a
+// moon, so it is scanned rather than parsed into an object tree: 7 ms instead of
+// 136 ms on s172, which is what makes a galaxy filter affordable at all.
+//
+// A quoted attribute value can never contain a raw `"` (XML escapes it as
+// `&quot;`), so the pattern cannot run past the end of an attribute.
+const PLANET_RE = /<planet\b[^>]*\bplayer="(\d+)"[^>]*\bcoords="([\d:]+)"\s*(\/?)>/g;
+const UNIVERSE_TIMESTAMP_RE = /<universe\b[^>]*\btimestamp="(\d+)"/;
+
+// Map of player id → their planets, each sorted by coordinates. Players absent
+// from the map have no planet in this document: it is regenerated every few
+// days, so anyone who registered since is simply not in it yet.
+export function scanPlanets(xml) {
+	if (!UNIVERSE_TIMESTAMP_RE.test(xml)) {
+		throw new UpstreamError('unexpected universe payload', 502);
+	}
+
+	const byPlayer = new Map();
+	PLANET_RE.lastIndex = 0;
+	let match;
+
+	while ((match = PLANET_RE.exec(xml)) !== null) {
+		const [, player, coords, selfClosing] = match;
+		// A self-closed element has no children, so no moon; otherwise the moon is
+		// the first child when there is one.
+		const moon = selfClosing !== '/' && xml.startsWith('<moon', PLANET_RE.lastIndex);
+		const planets = byPlayer.get(player);
+		if (planets) planets.push({ coords, moon });
+		else byPlayer.set(player, [{ coords, moon }]);
+	}
+
+	for (const planets of byPlayer.values()) planets.sort(byCoords);
+	return byPlayer;
+}
+
+export function universeTimestamp(xml) {
+	return toNumber(UNIVERSE_TIMESTAMP_RE.exec(xml)?.[1]);
+}
+
 // --- Joins between documents -----------------------------------------------
 //
 // Gameforge splits what a view needs across two documents: players.xml knows

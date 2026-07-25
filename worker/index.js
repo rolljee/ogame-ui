@@ -4,9 +4,11 @@
 // endpoints send no Access-Control-Allow-Origin header. This worker fetches
 // them server-side, normalizes the XML to JSON and serves it with CORS.
 //
-// It also keeps the heavy documents off the wire — players.xml is 245 kB and
-// universe.xml 3.4 MB — by filtering upstream and returning only what a view
-// needs.
+// It also keeps the heavy documents off the wire by filtering upstream and
+// returning only what a view needs: a name search is 236 B rather than the
+// 245 kB of players.xml, and a player's planets come from playerData.xml rather
+// than the whole galaxy dump. The one route that does read universe.xml scans it
+// for two attributes instead of parsing it (see `scanPlanets`).
 
 import {
 	LOBBY_URL,
@@ -20,8 +22,10 @@ import {
 	parsePlayers,
 	parseServerData,
 	resolveMembers,
+	scanPlanets,
 	serverBaseUrl,
 	summarizeAlliance,
+	universeTimestamp,
 } from './gameforge.js';
 
 // Upstream regenerates these documents roughly once a day, so caching for an
@@ -156,11 +160,48 @@ function requireId(params) {
 	return id;
 }
 
+// The whole roster of a universe, so the browser can filter and sort it without
+// a round trip per keystroke: names, alliances, statuses and coordinates in one
+// document. About 520 kB of JSON on s282, which gzips to 51 kB and is cached for
+// an hour — cheaper than it looks, and it is what lets the view offer a galaxy
+// filter, which no single upstream document supports.
+async function handleRoster(params) {
+	const base = resolveBase(params);
+	const [{ timestamp, players }, { alliances }, universeXml] = await Promise.all([
+		fetchPlayers(base),
+		fetchAlliances(base),
+		fetchUpstream(`${base}/api/universe.xml`).then((response) => response.text()),
+	]);
+
+	const byAlliance = indexById(alliances);
+	const planetsByPlayer = scanPlanets(universeXml);
+
+	return {
+		timestamp,
+		// universe.xml lags the other documents by days, so the view can say how
+		// old the coordinates are instead of implying they are live.
+		coordsTimestamp: universeTimestamp(universeXml),
+		total: players.length,
+		players: players
+			.map((player) => {
+				const alliance = player.alliance ? byAlliance.get(player.alliance) : undefined;
+				return {
+					...player,
+					alliance: alliance
+						? { id: alliance.id, name: alliance.name, tag: alliance.tag }
+						: null,
+					planets: planetsByPlayer.get(player.id) ?? [],
+				};
+			})
+			.sort((a, b) => a.name.localeCompare(b.name)),
+	};
+}
+
 async function handlePlayer(params) {
 	const id = requireId(params);
 
-	// playerData.xml already carries the planets and their moons, and is fresher
-	// than universe.xml — no need to download the 3.4 MB galaxy dump.
+	// playerData.xml already carries the planets and their moons, with names and
+	// moon sizes universe.xml does not have, and it is days fresher.
 	const response = await fetchUpstream(`${resolveBase(params)}/api/playerData.xml?id=${id}`);
 	return parsePlayerData(await response.text());
 }
@@ -205,6 +246,7 @@ const ROUTES = {
 	'/universes': handleUniverses,
 	'/server-data': handleServerData,
 	'/players': handlePlayers,
+	'/roster': handleRoster,
 	'/player': handlePlayer,
 	'/alliances': handleAlliances,
 	'/alliance': handleAlliance,

@@ -15,11 +15,29 @@ Il évite aussi d'expédier les gros documents au navigateur :
 | Ce que le navigateur devrait charger | Ce que le proxy renvoie |
 | --- | --- |
 | `players.xml` — 245 Ko | recherche `?search=tara` → **236 o** |
-| `universe.xml` — 3,4 Mo | `?id=100010` → **2,7 Ko** |
+| `universe.xml` — 3,4 Mo (s172) | `/player?id=100010` → **2,7 Ko** |
 
-Les planètes et les lunes viennent de `playerData.xml`, qui les contient déjà et
-qui est **plus frais** qu'`universe.xml` (~2 jours d'écart sur les timestamps
-observés). `universe.xml` n'est jamais téléchargé.
+Les planètes et les lunes d'un joueur viennent de `playerData.xml`, qui les
+contient déjà avec les noms et les tailles de lune, et qui est **plus frais**
+qu'`universe.xml` (~3 jours d'écart observés).
+
+### `universe.xml` : scanné, pas parsé
+
+`/roster` est la seule route qui lit `universe.xml` — le seul document donnant les
+coordonnées de **tous** les joueurs, donc le seul qui permette un filtre par
+galaxie. Il est aussi le plus gros : 0,4 Mo sur s282, 3,2 Mo sur s172. Deux
+attributs suffisent (`player`, `coords`) plus la présence d'une `<moon>`, donc il
+est **scanné par expression régulière** au lieu d'être parsé en arbre d'objets :
+
+| Document | Parse complet | Scan ciblé |
+| --- | --- | --- |
+| `universe.xml` s282 (0,4 Mo) | 16 ms | **1 ms** |
+| `universe.xml` s172 (3,2 Mo) | 136 ms | **7 ms** |
+
+C'est ce qui rend le filtre par galaxie tenable dans le budget CPU d'un Worker.
+Une valeur d'attribut XML ne peut pas contenir de `"` brut (échappé en
+`&quot;`), donc le motif ne peut pas déborder d'un attribut — un nom de planète
+malicieux ne le trompe pas.
 
 ## Routes
 
@@ -30,12 +48,19 @@ Toutes en `GET`, réponses en JSON, `Cache-Control: public, max-age=3600`.
 | `/universes` | `lang` (optionnel) | les univers ouverts, triés par langue puis numéro, avec leurs réglages |
 | `/server-data` | `universe`, `lang` | réglages du serveur (`speed`, `topScore`, `debrisFactor`…) |
 | `/players` | `universe`, `lang`, `search` | joueurs dont le nom correspond (50 max, nom exact en premier), alliance résolue |
+| `/roster` | `universe`, `lang` | **tous** les joueurs de l'univers : nom, alliance, statut, coordonnées |
 | `/player` | `universe`, `lang`, `id` | scores par catégorie + planètes et lunes triées par coordonnées |
 | `/alliances` | `universe`, `lang`, `search` | alliances par nom ou par tag (tag exact en premier, puis les plus nombreuses), avec `memberCount` |
 | `/alliance` | `universe`, `lang`, `id` | une alliance et ses membres résolus en joueurs (nom + statut) |
 
 `search` est **obligatoire** sur `/players` et `/alliances` : un univers compte
-des milliers de joueurs, on ne renvoie pas la liste entière.
+des milliers de joueurs, et ces routes ne lisent qu'un ou deux documents.
+
+`/roster` renvoie au contraire la liste entière, en connaissance de cause : c'est
+la vue Joueurs qui filtre, trie et cherche ensuite **sans requête**. Sur s282,
+2 242 joueurs et 5 460 planètes font 520 Ko de JSON, soit **51 Ko gzip**, cachés
+une heure — moins qu'une image du site. `/players` reste la route légère (un seul
+document au lieu de trois) pour une simple recherche par nom.
 
 Les recherches ignorent la casse et les accents (`elysee` trouve `Élysée`).
 
@@ -54,6 +79,15 @@ retour en pratique — et le navigateur ne voit jamais un id non résolu :
 Les deux documents sont générés à quelques minutes d'écart : un membre peut
 manquer de `players.xml`. Il garde alors sa ligne avec `name: null` et
 `status: null`, en fin de liste, pour que le compte annoncé reste juste.
+
+### Jointures et fraîcheur
+
+`/roster` recoupe trois documents, dont les dates de génération diffèrent : sur
+s282, `players.xml` avait 12 h, `alliances.xml` 8 h et `universe.xml` **85 h**.
+La réponse porte donc deux horodatages, `timestamp` (les joueurs) et
+`coordsTimestamp` (les coordonnées), pour que la vue puisse dire l'âge des
+positions au lieu de les faire passer pour fraîches. Un joueur inscrit depuis le
+dernier relevé n'a simplement pas de coordonnées : `planets: []`.
 
 ### Statuts de joueur
 
