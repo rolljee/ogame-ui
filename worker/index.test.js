@@ -9,6 +9,10 @@ const SERVER_DATA_XML = `<serverData timestamp="3"><name>Tucana</name><speed>10<
 // Member 99 is deliberately absent from players.xml: Gameforge generates the
 // two documents minutes apart, so a member can be unresolvable.
 const ALLIANCES_XML = `<alliances timestamp="4"><alliance id="1" name="The Wolf Army" tag="TWA" founder="1" foundDate="5"><player id="1"/><player id="2"/><player id="99"/></alliance><alliance id="2" name="Other" tag="OTH" founder="4" foundDate="6"><player id="4"/></alliance></alliances>`;
+// One player with two planets (one carrying a moon), one with a single planet,
+// and Luke deliberately absent: universe.xml lags by days, so a recent player
+// has no coordinates yet.
+const UNIVERSE_XML = `<universe timestamp="7" serverId="fr172"><planet id="1" player="1" name="Home" coords="1:1:1"><moon id="9" name="" size="8544"/></planet><planet id="2" player="1" name="Colo" coords="4:212:8"/><planet id="3" player="4" name="Solo" coords="2:194:8"/></universe>`;
 const LOBBY_JSON = [
 	{ language: 'fr', number: 172, name: 'Tucana', serverClosed: 0, settings: { economySpeed: 8 } },
 	{ language: 'en', number: 101, name: 'Quantum', serverClosed: 0, settings: {} },
@@ -42,6 +46,7 @@ beforeEach(() => {
 		'/api/playerData.xml': PLAYER_DATA_XML,
 		'/api/serverData.xml': SERVER_DATA_XML,
 		'/api/alliances.xml': ALLIANCES_XML,
+		'/api/universe.xml': UNIVERSE_XML,
 		'lobby.ogame.gameforge.com': JSON.stringify(LOBBY_JSON),
 	});
 });
@@ -212,6 +217,65 @@ describe('GET /players', () => {
 		});
 		const { players } = await (await get('/players?universe=172&lang=fr&search=vader')).json();
 		expect(players.every((player) => player.alliance === null)).toBe(true);
+	});
+});
+
+describe('GET /roster', () => {
+	const roster = (query = '') => get(`/roster?universe=172&lang=fr${query}`);
+
+	it('returns every player of the universe, sorted by name', async () => {
+		const { players, total } = await (await roster()).json();
+		expect(total).toBe(5);
+		expect(players.map((p) => p.name)).toEqual([
+			'Anakin Vader',
+			'Darth Vader',
+			'Luke',
+			'Vader',
+			'Vader Junior',
+		]);
+	});
+
+	it('carries the alliance and the status of each player', async () => {
+		const { players } = await (await roster()).json();
+		const vader = players.find((p) => p.name === 'Darth Vader');
+		expect(vader.alliance).toEqual({ id: '1', name: 'The Wolf Army', tag: 'TWA' });
+		expect(vader.status).toMatchObject({ active: true });
+	});
+
+	// The coordinates are the whole point: no other document has them for
+	// everyone, which is what a galaxy filter needs.
+	it('carries the coordinates, sorted, with the moons flagged', async () => {
+		const { players } = await (await roster()).json();
+		expect(players.find((p) => p.name === 'Darth Vader').planets).toEqual([
+			{ coords: '1:1:1', moon: true },
+			{ coords: '4:212:8', moon: false },
+		]);
+	});
+
+	it('keeps a player universe.xml does not know yet, without coordinates', async () => {
+		const { players } = await (await roster()).json();
+		expect(players.find((p) => p.name === 'Luke').planets).toEqual([]);
+	});
+
+	// universe.xml lags the other documents by days; the view says so, so it has
+	// to be told.
+	it('reports when the coordinates were generated', async () => {
+		const data = await (await roster()).json();
+		expect(data.coordsTimestamp).toBe(7);
+		expect(data.timestamp).toBe(1);
+	});
+
+	it('needs no search term, unlike /players', async () => {
+		expect((await roster()).status).toBe(200);
+	});
+
+	it('reports an upstream galaxy dump failure as 502', async () => {
+		stubUpstream({
+			'/api/players.xml': PLAYERS_XML,
+			'/api/alliances.xml': ALLIANCES_XML,
+			'/api/universe.xml': 503,
+		});
+		expect((await roster()).status).toBe(502);
 	});
 });
 

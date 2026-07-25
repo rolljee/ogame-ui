@@ -48,10 +48,11 @@ export function fetchServerData({ universe, lang }, options) {
 	return request('/server-data', { universe, lang }, options);
 }
 
-// `search` is required by the proxy: a universe holds thousands of players.
-export async function searchPlayers({ universe, lang, search }, options) {
-	const { players, total } = await request('/players', { universe, lang, search }, options);
-	return { players, total };
+// The whole roster of a universe in one document — names, alliances, statuses
+// and coordinates — so the view can filter and sort without a request per
+// keystroke. Around 51 kB gzipped on s282, cached for an hour.
+export function fetchRoster({ universe, lang }, options) {
+	return request('/roster', { universe, lang }, options);
 }
 
 export function fetchPlayer({ universe, lang, id }, options) {

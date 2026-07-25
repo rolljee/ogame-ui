@@ -10,8 +10,10 @@ import {
 	parsePlayers,
 	parseServerData,
 	resolveMembers,
+	scanPlanets,
 	serverBaseUrl,
 	summarizeAlliance,
+	universeTimestamp,
 } from './gameforge';
 
 // Fixtures trimmed from live responses of s172-fr (July 2026).
@@ -189,6 +191,56 @@ describe('parseAlliances', () => {
 
 	it('reads a missing open attribute as closed', () => {
 		expect(parseAlliances(ALLIANCES_XML).alliances[1].open).toBe(false);
+	});
+});
+
+// Trimmed from the live universe.xml of s282: a self-closed planet, a planet
+// with a moon, two planets for one player, and coordinates out of order.
+const UNIVERSE_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<universe timestamp="1784702404" serverId="fr282"><planet id="1" player="100" name="Arakis" coords="4:212:8"/><planet id="2" player="100" name="Home" coords="1:1:1"><moon id="9" name="" size="8544"/></planet><planet id="3" player="200" name="Solo" coords="2:194:8"/></universe>`;
+
+describe('scanPlanets', () => {
+	it('indexes the planets by player', () => {
+		const index = scanPlanets(UNIVERSE_XML);
+		expect([...index.keys()]).toEqual(['100', '200']);
+		expect(index.get('200')).toEqual([{ coords: '2:194:8', moon: false }]);
+	});
+
+	it('sorts a player planets by coordinates', () => {
+		expect(scanPlanets(UNIVERSE_XML).get('100').map((p) => p.coords)).toEqual([
+			'1:1:1',
+			'4:212:8',
+		]);
+	});
+
+	// A self-closed element has no children, so no moon; the moon is the first
+	// child of the others.
+	it('flags the planet carrying a moon', () => {
+		const index = scanPlanets(UNIVERSE_XML);
+		expect(index.get('100').find((p) => p.coords === '1:1:1').moon).toBe(true);
+		expect(index.get('100').find((p) => p.coords === '4:212:8').moon).toBe(false);
+	});
+
+	it('leaves out a player without a planet', () => {
+		expect(scanPlanets(UNIVERSE_XML).has('300')).toBe(false);
+	});
+
+	// A planet name is free text; XML escapes any quote it contains, so the scan
+	// cannot be walked out of an attribute by a crafted name.
+	it('is not fooled by a name that looks like an attribute', () => {
+		const xml =
+			'<universe timestamp="1"><planet id="1" player="7" name="coords=&quot;9:9:9&quot;" coords="3:3:3"/></universe>';
+		expect(scanPlanets(xml).get('7')).toEqual([{ coords: '3:3:3', moon: false }]);
+	});
+
+	it('rejects a document that is not universe.xml', () => {
+		expect(() => scanPlanets('<something-else/>')).toThrow(UpstreamError);
+	});
+});
+
+describe('universeTimestamp', () => {
+	it('reads the generation date of the document', () => {
+		expect(universeTimestamp(UNIVERSE_XML)).toBe(1784702404);
 	});
 });
 
