@@ -22,11 +22,40 @@ describe('<App />', () => {
 	it('translates the whole page when the language changes', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />, { lang: 'en' });
-		expect(screen.getByText('Resource exchange calculator')).toBeInTheDocument();
+		expect(screen.getByText('Calculators for OGame')).toBeInTheDocument();
 
 		await user.click(screen.getByRole('button', { name: 'FR' }));
 
-		expect(screen.getByText("Calculateur d'échange de ressources")).toBeInTheDocument();
+		expect(screen.getByText('Outils de calcul pour OGame')).toBeInTheDocument();
 		expect(screen.getByRole('button', { name: 'Deutérium' })).toBeInTheDocument();
+	});
+
+	it('opens on the trade calculator', () => {
+		renderWithI18n(<App />);
+		expect(screen.getByRole('button', { name: 'Trade' })).toHaveAttribute('aria-current', 'page');
+	});
+
+	it('switches to the moonbreak tool', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('button', { name: 'Moonbreak' }));
+
+		expect(screen.getByText('Moon size')).toBeInTheDocument();
+		expect(screen.queryByRole('button', { name: 'Deuterium' })).not.toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Moonbreak' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+	});
+
+	it('comes back to the trade calculator', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('button', { name: 'Moonbreak' }));
+		await user.click(screen.getByRole('button', { name: 'Trade' }));
+
+		expect(screen.getByRole('button', { name: 'Deuterium' })).toBeInTheDocument();
 	});
 });

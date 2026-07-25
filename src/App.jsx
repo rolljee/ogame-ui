@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useI18n } from './i18n/I18nContext';
 import { LANGUAGES } from './i18n/translations';
 import Trader from './Trader/Trader';
+import Moonbreak from './Moonbreak/Moonbreak';
+
+const TOOLS = [
+	{ id: 'trader', labelKey: 'nav.trader', Component: Trader },
+	{ id: 'moonbreak', labelKey: 'nav.moonbreak', Component: Moonbreak },
+];
 
 function LangToggle() {
 	const { lang, setLang, t } = useI18n();
@@ -22,8 +28,30 @@ function LangToggle() {
 	);
 }
 
+function ToolNav({ current, onSelect }) {
+	const { t } = useI18n();
+	return (
+		<nav className="tool-nav" aria-label={t('nav.label')}>
+			{TOOLS.map(({ id, labelKey }) => (
+				<button
+					key={id}
+					type="button"
+					className={id === current ? 'is-active' : ''}
+					aria-current={id === current ? 'page' : undefined}
+					onClick={() => onSelect(id)}
+				>
+					{t(labelKey)}
+				</button>
+			))}
+		</nav>
+	);
+}
+
 function App() {
 	const { t } = useI18n();
+	const [tool, setTool] = useState(TOOLS[0].id);
+	const { Component } = TOOLS.find(({ id }) => id === tool);
+
 	return (
 		<>
 			<div className="starfield" aria-hidden="true" />
@@ -39,8 +67,10 @@ function App() {
 					<LangToggle />
 				</header>
 
+				<ToolNav current={tool} onSelect={setTool} />
+
 				<main className="card">
-					<Trader />
+					<Component />
 				</main>
 
 				<footer className="app-footer">
