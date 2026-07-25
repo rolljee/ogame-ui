@@ -2,6 +2,8 @@
 
 Deux vues ont été **retirées** lors de la refonte UI/UX (juillet 2026), au motif
 que les API de Gameforge/OGame dont elles dépendaient ne fonctionnaient plus.
+La vue Joueurs a été reconstruite ; la vue Mines / Production a été **abandonnée**
+(décision du 25 juillet 2026, voir plus bas).
 
 > **Ce diagnostic était faux** — voir « État réel de l'API » ci-dessous. L'API
 > publique est vivante ; le seul blocage est le **CORS navigateur**. Les vues
@@ -72,7 +74,8 @@ C'est exactement le sélecteur d'univers dynamique demandé plus bas. Seul
 
 **✅ Fait** — Cloudflare Worker dans [`worker/`](./worker/), documenté dans
 [`worker/README.md`](./worker/README.md). Routes : `/universes`, `/server-data`,
-`/players`, `/player`, `/alliances`. Client front dans `src/api/ogame.js`.
+`/players`, `/player`, `/alliances`, `/alliance`. Client front dans
+`src/api/ogame.js`.
 
 - [x] Fonction serverless proxifiant les endpoints Gameforge (Cloudflare Worker,
       `wrangler.toml` à la racine).
@@ -92,6 +95,10 @@ C'est exactement le sélecteur d'univers dynamique demandé plus bas. Seul
       `.env.production`.
 - [x] `ALLOWED_ORIGIN` restreint à `https://blog.rolljee.fr` +
       `http://localhost:3000`, avec `Vary: Origin` sur les réponses cachées.
+- [x] **Jointures côté serveur** : Gameforge répartit l'information sur deux
+      documents (`players.xml` ne connaît qu'un id d'alliance, `alliances.xml`
+      que des ids de membres). Le proxy les recoupe, le navigateur ne voit
+      jamais un id non résolu.
 
 ---
 
@@ -113,30 +120,45 @@ inutile : `playerData.xml` porte déjà les planètes et les lunes.
       frappe : le proxy doit lire `players.xml` en entier pour filtrer.
 - [x] Les catégories de score non documentées par Gameforge (types 8 à 21,
       `key: null`) sont ignorées plutôt qu'affichées sous un libellé inventé.
-- [ ] Reste possible : le nom de l'alliance. `players.xml` ne donne que son id,
-      il faudrait croiser avec `alliances.xml` — à faire avec la vue Alliances.
+- [x] Le tag de l'alliance sur chaque ligne de résultat. `players.xml` ne donne
+      que l'id : le proxy croise avec `alliances.xml` côté serveur, donc le
+      navigateur ne voit jamais un id non résolu.
 
-## 2. Mines / Production (`Mining`)
+## 2. Alliances (`Alliances`) — ✅ fait (`src/Alliances/`)
 
-**But :** à partir des niveaux de mines, calculer la production et la
-consommation d'énergie de chaque mine (métal, cristal, synthétiseur de
-deutérium) par planète.
+**But :** trouver une alliance par son nom ou son tag, et voir son effectif
+complet : chaque membre avec son statut, le fondateur, et la part de l'alliance
+encore active.
 
-La vitesse d'univers est disponible sans effort : `economySpeed` dans l'API
-lobby, ou `speed` dans `serverData.xml`. Le point coûteux est l'UI, pas les
-données.
+- [x] Deux routes proxy plutôt qu'une : `/alliances` renvoie des résumés avec
+      `memberCount` (les ids de membres seuls n'apprennent rien au navigateur),
+      `/alliance?id=` renvoie l'alliance avec ses membres résolus en joueurs.
+- [x] La jointure `alliances.xml` × `players.xml` est faite côté serveur, les
+      deux documents étant cachés côté edge.
+- [x] Un membre absent de `players.xml` (les deux documents sont générés à
+      quelques minutes d'écart) garde sa ligne, étiquetée par son id, en fin de
+      liste : le compte annoncé reste juste.
+- [x] Répartition par statut : ce que le bot Discord ne peut pas montrer, et la
+      vraie question quand on regarde une alliance (« combien jouent encore ? »).
+- [x] Filtres de statut sur les membres, réutilisés depuis la vue Joueurs
+      (`src/components/status.js`, `StatusBadges`).
+- [x] La `homepage` d'alliance est du texte saisi par un tiers : seul un lien
+      `http(s)` est rendu, jamais un `javascript:` ni une URL relative.
 
-- [ ] Saisie **guidée** des niveaux de mines par planète (formulaire simple)
-      plutôt qu'un copier-coller du format « infocompte »
-      (`Ogame.Building.parseInfoCompteData`) — barrière technique forte.
-- [ ] Afficher production/énergie avec les icônes de ressources et un thème
-      cohérent avec le reste de l'app.
-- [ ] Colonnes « énergie totale » / satellites solaires / centrale de fusion
-      laissées en placeholder (`edit / Pas edit`) à écrire entièrement.
+## 3. Mines / Production (`Mining`) — ❌ abandonné
+
+Vue **non reconstruite**, décision du 25 juillet 2026 : peu d'intérêt en
+pratique. Le jeu affiche déjà la production de chaque mine, et la seule valeur
+ajoutée aurait été la simulation — pour un coût d'UI élevé (saisie des niveaux
+de mines planète par planète, satellites solaires, centrale de fusion).
+
+Les données ne sont pas le problème si le sujet revient un jour : la vitesse
+d'univers est dans `economySpeed` (API lobby) ou `speed` (`serverData.xml`), et
+les formules sont dans `Ogame.Building`.
 
 ---
 
-## 3. Fonctionnalités à porter depuis le bot Discord
+## 4. Fonctionnalités à porter depuis le bot Discord
 
 Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-discord).
 
@@ -148,15 +170,18 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 | `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | ✅ fait (`src/Expeditions/`) |
 | `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | ✅ fait (`src/MoonLock/`) |
 | `!ogp` | planètes + lunes + points d'un joueur | ✅ fait — vue Joueurs (§1) |
-| `!oga` | membres d'une alliance | **1** — `searchAlliances()` est prête |
+| `!oga` | membres d'une alliance | ✅ fait (`src/Alliances/`) |
 
 - [x] **Moonbreak** (`mb.js`) — porté dans `src/Moonbreak/formulas.js`, parité
       numérique vérifiée avec le bot. Un écart volontaire : le bot ne plafonne
       pas la probabilité par vague à 1 dans `getLosses`, ce qui donne des pertes
       négatives et des `NaN` dès ~6 RIP par vague sur une petite lune
-      (`!mb 3464 200`). **Correctif à remonter au bot.**
-- [ ] Courbe de proba selon le nombre de RIP — la visualisation que Discord ne
-      peut pas offrir. Pas encore faite.
+      (`!mb 3464 200`). **Correctif remonté au bot** et mergé, voir §5.
+- [x] Courbe de proba selon le nombre de RIP — la visualisation que Discord ne
+      peut pas offrir, dans `src/Moonbreak/components/MoonbreakCurve.jsx` (SVG
+      inline, sans dépendance). L'axe s'arrête au palier des 95 % : aller jusqu'à
+      99 % l'étirerait à 585 RIP sur une lune de 8 944 km et écraserait toute la
+      zone utile. Le seuil des 99 % reste donné en chiffre sous le graphique.
 - [x] **Réglages serveur** (`serverData.js`) — première vue branchée sur le
       proxy, avec `UniversePicker` (réutilisable) et le hook `useApiData`.
       Affiche aussi le taux d'échange officiel de l'univers, directement
@@ -173,7 +198,22 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
       `Ogame.i18n.getName()` fournit les noms FR/EN sans clés à écrire.
       Ajouts par rapport au bot : les coordonnées sont validées contre la taille
       réelle de l'univers, et le lien est copiable.
-- [ ] **Alliances** (`alliances.utils.js`).
+- [x] **Alliances** (`alliances.utils.js`) — porté dans `src/Alliances/`, voir
+      §2. Le bot liste les membres à plat ; la vue y ajoute la répartition par
+      statut et le filtrage, qu'une réponse Discord ne peut pas offrir.
+
+---
+
+## 5. Reste ouvert
+
+Rien. Le dernier point ouvert est retombé :
+
+- [x] **Correctif remonté au bot** — `getLosses` ne plafonnait pas la
+      probabilité par vague à 1, d'où des pertes négatives et des `NaN` dès ~6
+      RIP par vague sur une petite lune (`!mb 3464 200`).
+      [`og-bot-discord` PR #2](https://github.com/rolljee/og-bot-discord/pull/2),
+      mergée le 25 juillet 2026 (commit `ff13189`), avec un test de
+      non-régression.
 
 ---
 
