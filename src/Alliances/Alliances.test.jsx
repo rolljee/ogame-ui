@@ -147,6 +147,37 @@ describe('<Alliances />', () => {
 		expect(screen.getByText(/1 Inactive \(28 d\)/)).toBeInTheDocument();
 	});
 
+	// The fixture has no member carrying two flags, so the note must stay away.
+	it('does not warn about overlapping statuses when there is no overlap', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Alliances />, { lang: 'en' });
+		await screen.findByLabelText('Community');
+		await search(user);
+		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
+
+		await screen.findByText('Breakdown');
+		expect(screen.queryByText(/Statuses stack/)).not.toBeInTheDocument();
+	});
+
+	// `vi` counts as both, so the chips add up past the roster: say it.
+	it('warns when a member carries two statuses at once', async () => {
+		const user = userEvent.setup();
+		fetchAlliance.mockResolvedValue({
+			...ALLIANCE,
+			members: [
+				ALLIANCE.members[0],
+				{ id: '2', name: 'Anakin', status: status({ vacation: true, inactive: true }), founder: false },
+				ALLIANCE.members[2],
+			],
+		});
+		renderWithI18n(<Alliances />, { lang: 'en' });
+		await screen.findByLabelText('Community');
+		await search(user);
+		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
+
+		expect(await screen.findByText(/Statuses stack/)).toBeInTheDocument();
+	});
+
 	it('filters the members by status, without a new request', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Alliances />, { lang: 'en' });

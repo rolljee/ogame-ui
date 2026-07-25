@@ -2,7 +2,13 @@ import React from 'react';
 import { useI18n } from '../../i18n/I18nContext';
 import StatusBadges from '../../components/StatusBadges';
 import { STATUS_FLAGS, filterByStatus } from '../../components/status';
-import { countStatuses, describeMembers, foundYear, safeHomepage } from '../model';
+import {
+	countStatuses,
+	countsOverlap,
+	describeMembers,
+	foundYear,
+	safeHomepage,
+} from '../model';
 
 function MemberFilters({ statuses, onToggle }) {
 	const { t } = useI18n();
@@ -53,6 +59,10 @@ function AllianceDetail({ alliance, statuses, onToggleStatus }) {
 			{breakdown.length > 0 && (
 				<section className="srv-group">
 					<h3 className="srv-group-title">{t('al.detail.breakdown')}</h3>
+					{/* The flags overlap, so say so instead of looking like a bad sum. */}
+					{countsOverlap(alliance.members) && (
+						<p className="help">{t('al.detail.breakdown.overlap')}</p>
+					)}
 					<div className="al-breakdown">
 						{breakdown.map(({ key, labelKey, icon, count }) => (
 							<span key={key} className="al-breakdown-item">

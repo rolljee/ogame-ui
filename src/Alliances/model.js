@@ -20,6 +20,19 @@ export function countStatuses(members) {
 	})).filter((flag) => flag.count > 0);
 }
 
+// Gameforge's flags are not exclusive: a member away on holiday who also stopped
+// logging in is `vi`, so they land in two counts and the chips add up to more
+// than the roster. True when that happens, so the view can say it rather than
+// look like it cannot count.
+//
+// Counted against the members that carry a status, not the roster size: an
+// unresolved member has none, and would otherwise hide the overlap.
+export function countsOverlap(members) {
+	if (!members) return false;
+	const badged = members.filter((member) => describeStatus(member.status).length > 0).length;
+	return countStatuses(members).reduce((sum, flag) => sum + flag.count, 0) > badged;
+}
+
 // A member row. `name` is null when players.xml did not have that id — the two
 // documents are generated minutes apart — and the id is all we can show.
 export function describeMembers(members) {
