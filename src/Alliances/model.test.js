@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { countStatuses, describeMembers, foundYear, safeHomepage } from './model';
+import {
+	countStatuses,
+	countsOverlap,
+	describeMembers,
+	foundYear,
+	safeHomepage,
+} from './model';
 
 const status = (over = {}) => ({
 	raw: '',
@@ -42,6 +48,35 @@ describe('countStatuses', () => {
 
 	it('handles a missing member list', () => {
 		expect(countStatuses(undefined)).toEqual([]);
+	});
+});
+
+describe('countsOverlap', () => {
+	// `vi` — away and no longer logging in — lands in two counts at once.
+	const members = [
+		member('1', 'Ada', { active: true }),
+		member('2', 'Bo', { vacation: true, inactive: true }),
+	];
+
+	it('reports the overlap when the counts exceed the members counted', () => {
+		expect(countsOverlap(members)).toBe(true);
+	});
+
+	it('stays quiet when every member carries a single status', () => {
+		const exclusive = [member('1', 'Ada', { active: true }), member('2', 'Bo', { vacation: true })];
+		expect(countsOverlap(exclusive)).toBe(false);
+	});
+
+	// An unresolved member carries no status: it must not offset the overlap of
+	// another member, nor be mistaken for one on its own.
+	it('ignores a member without a status', () => {
+		const unknown = { id: '9', name: null, status: null };
+		expect(countsOverlap([...members, unknown])).toBe(true);
+		expect(countsOverlap([member('1', 'Ada', { active: true }), unknown])).toBe(false);
+	});
+
+	it('handles a missing member list', () => {
+		expect(countsOverlap(undefined)).toBe(false);
 	});
 });
 

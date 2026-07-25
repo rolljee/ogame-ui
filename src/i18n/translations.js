@@ -203,6 +203,8 @@ export const translations = {
 		'al.detail.closed': 'recrutement fermé',
 		'al.detail.homepage': 'Site de l’alliance',
 		'al.detail.breakdown': 'Répartition',
+		'al.detail.breakdown.overlap':
+			"Les statuts se cumulent — un membre en vacances qui ne se connecte plus est les deux à la fois — donc le total dépasse l'effectif.",
 		'al.detail.members': 'Membres',
 		'al.detail.founder': 'Fondateur',
 		'al.members.empty': 'Aucun membre ne correspond au filtre.',
@@ -484,6 +486,8 @@ export const translations = {
 		'al.detail.closed': 'closed to new members',
 		'al.detail.homepage': 'Alliance homepage',
 		'al.detail.breakdown': 'Breakdown',
+		'al.detail.breakdown.overlap':
+			'Statuses stack — a member on holiday who also stopped logging in is both at once — so the counts add up to more than the roster.',
 		'al.detail.members': 'Members',
 		'al.detail.founder': 'Founder',
 		'al.members.empty': 'No member matches the filter.',
