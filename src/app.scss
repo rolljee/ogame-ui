@@ -1029,6 +1029,87 @@ input[type='range'].slider {
 	color: var(--text-muted);
 }
 
+.pl-row-alliance {
+	margin-left: 8px;
+	font-family: var(--font-display);
+	font-size: 12.5px;
+	font-weight: 400;
+	color: var(--text-dim);
+}
+
+// ---------------------------------------------------------------------------
+// Alliances
+// ---------------------------------------------------------------------------
+
+.al-tag {
+	font-family: var(--font-display);
+	color: var(--accent);
+}
+
+.al-count {
+	font-size: 12.5px;
+	color: var(--text-muted);
+	white-space: nowrap;
+}
+
+.al-breakdown {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.al-breakdown-item {
+	font-size: 12.5px;
+	color: var(--text-muted);
+	padding: 4px 10px;
+	border-radius: var(--radius-pill);
+	background: rgba(4, 6, 13, 0.4);
+	border: 1px solid var(--border);
+	white-space: nowrap;
+}
+
+.al-members {
+	list-style: none;
+	margin: 12px 0 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	// A large alliance runs to a hundred members: keep the page navigable.
+	max-height: 420px;
+	overflow-y: auto;
+
+	li {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px;
+		padding: 9px 12px;
+		border-radius: var(--radius-sm);
+		background: rgba(4, 6, 13, 0.3);
+	}
+
+	li.is-unknown {
+		opacity: 0.7;
+	}
+}
+
+.al-member-name {
+	flex: 1;
+	font-weight: 600;
+}
+
+.al-founder {
+	font-size: 11.5px;
+	color: var(--accent);
+	white-space: nowrap;
+}
+
+.al-unknown {
+	font-size: 11.5px;
+	color: var(--text-dim);
+}
+
 // ---------------------------------------------------------------------------
 // Moon lock
 // ---------------------------------------------------------------------------

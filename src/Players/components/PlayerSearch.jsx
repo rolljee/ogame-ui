@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useI18n } from '../../i18n/I18nContext';
-import { STATUS_FLAGS } from '../model';
+import { STATUS_FLAGS } from '../../components/status';
 
 // The proxy needs a `search` term — a universe holds thousands of players — so
 // the request is fired on submit rather than on every keystroke.

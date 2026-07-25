@@ -165,6 +165,52 @@ export function parseAlliances(xml) {
 	};
 }
 
+// --- Joins between documents -----------------------------------------------
+//
+// Gameforge splits what a view needs across two documents: players.xml knows
+// names and statuses but only an alliance id, alliances.xml knows alliance
+// names but only member ids. Both are cheap to fetch server-side, so the proxy
+// joins them and the browser never sees an unresolved id.
+
+export function indexById(items) {
+	return new Map(items.map((item) => [item.id, item]));
+}
+
+// A row for an alliance list: everything but the member ids, which are only
+// useful once resolved into names by `resolveMembers`.
+export function summarizeAlliance({ members, ...alliance }) {
+	return { ...alliance, memberCount: members.length };
+}
+
+// The alliance with its members turned into real players. A member missing from
+// players.xml (the two documents are generated minutes apart) still gets a row,
+// so the count always matches what the alliance itself claims.
+export function resolveMembers(alliance, players) {
+	const byId = indexById(players);
+	const members = alliance.members.map((id) => {
+		const player = byId.get(id);
+		return {
+			id,
+			name: player?.name ?? null,
+			status: player?.status ?? null,
+			founder: id === alliance.founder,
+		};
+	});
+
+	return {
+		...alliance,
+		memberCount: members.length,
+		// The founder leads the list; the rest are alphabetical. An unresolved
+		// member has no name to sort on and lands at the end.
+		members: members.sort(
+			(a, b) =>
+				Number(b.founder) - Number(a.founder) ||
+				Number(a.name === null) - Number(b.name === null) ||
+				String(a.name).localeCompare(String(b.name)),
+		),
+	};
+}
+
 // The lobby list is already JSON; we only trim it to what a picker needs and
 // drop the universes nobody can join any more.
 export function normalizeUniverses(servers) {

@@ -9,7 +9,9 @@ import {
 	parsePlayerData,
 	parsePlayers,
 	parseServerData,
+	resolveMembers,
 	serverBaseUrl,
+	summarizeAlliance,
 } from './gameforge';
 
 // Fixtures trimmed from live responses of s172-fr (July 2026).
@@ -187,6 +189,49 @@ describe('parseAlliances', () => {
 
 	it('reads a missing open attribute as closed', () => {
 		expect(parseAlliances(ALLIANCES_XML).alliances[1].open).toBe(false);
+	});
+});
+
+describe('summarizeAlliance', () => {
+	it('trades the member ids for their count', () => {
+		const summary = summarizeAlliance(parseAlliances(ALLIANCES_XML).alliances[0]);
+		expect(summary.memberCount).toBe(2);
+		expect(summary).not.toHaveProperty('members');
+		expect(summary.name).toBe('Staff OGame');
+	});
+});
+
+describe('resolveMembers', () => {
+	const [alliance] = parseAlliances(ALLIANCES_XML).alliances;
+	const players = [
+		{ id: '115238', name: 'Adam', status: decodeStatus('') },
+		{ id: '100121', name: 'Zoé', status: decodeStatus('a') },
+	];
+
+	it('turns member ids into players and flags the founder', () => {
+		const { members, memberCount } = resolveMembers(alliance, players);
+		expect(memberCount).toBe(2);
+		expect(members[0]).toEqual({
+			id: '100121',
+			name: 'Zoé',
+			status: decodeStatus('a'),
+			founder: true,
+		});
+	});
+
+	// The founder outranks alphabetical order, otherwise "Adam" would lead.
+	it('puts the founder first', () => {
+		expect(resolveMembers(alliance, players).members.map((m) => m.name)).toEqual(['Zoé', 'Adam']);
+	});
+
+	// The two documents are generated minutes apart, so this really happens.
+	it('keeps a member that players.xml does not know, at the end', () => {
+		const { members, memberCount } = resolveMembers(
+			{ ...alliance, members: [...alliance.members, '999'] },
+			players,
+		);
+		expect(memberCount).toBe(3);
+		expect(members[2]).toEqual({ id: '999', name: null, status: null, founder: false });
 	});
 });
 

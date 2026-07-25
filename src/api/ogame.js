@@ -58,7 +58,13 @@ export function fetchPlayer({ universe, lang, id }, options) {
 	return request('/player', { universe, lang, id }, options);
 }
 
+// Summaries only (no member ids): use `fetchAlliance` for the member list.
 export async function searchAlliances({ universe, lang, search }, options) {
 	const { alliances, total } = await request('/alliances', { universe, lang, search }, options);
 	return { alliances, total };
+}
+
+// One alliance with its members already resolved to names and statuses.
+export function fetchAlliance({ universe, lang, id }, options) {
+	return request('/alliance', { universe, lang, id }, options);
 }

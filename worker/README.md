@@ -29,14 +29,31 @@ Toutes en `GET`, réponses en JSON, `Cache-Control: public, max-age=3600`.
 | --- | --- | --- |
 | `/universes` | `lang` (optionnel) | les univers ouverts, triés par langue puis numéro, avec leurs réglages |
 | `/server-data` | `universe`, `lang` | réglages du serveur (`speed`, `topScore`, `debrisFactor`…) |
-| `/players` | `universe`, `lang`, `search` | joueurs dont le nom correspond (50 max, nom exact en premier) |
+| `/players` | `universe`, `lang`, `search` | joueurs dont le nom correspond (50 max, nom exact en premier), alliance résolue |
 | `/player` | `universe`, `lang`, `id` | scores par catégorie + planètes et lunes triées par coordonnées |
-| `/alliances` | `universe`, `lang`, `search` | alliances par nom ou par tag, avec les ids des membres |
+| `/alliances` | `universe`, `lang`, `search` | alliances par nom ou par tag (tag exact en premier, puis les plus nombreuses), avec `memberCount` |
+| `/alliance` | `universe`, `lang`, `id` | une alliance et ses membres résolus en joueurs (nom + statut) |
 
 `search` est **obligatoire** sur `/players` et `/alliances` : un univers compte
 des milliers de joueurs, on ne renvoie pas la liste entière.
 
 Les recherches ignorent la casse et les accents (`elysee` trouve `Élysée`).
+
+### Jointures entre documents
+
+Gameforge répartit l'information sur deux documents : `players.xml` connaît les
+noms et les statuts mais seulement un **id** d'alliance, `alliances.xml` connaît
+les noms d'alliance mais seulement des **ids** de membres. Le proxy fait la
+jointure — les deux documents sont cachés côté edge, donc c'est un seul aller-
+retour en pratique — et le navigateur ne voit jamais un id non résolu :
+
+- `/players` renvoie `alliance: { id, name, tag }` (ou `null`).
+- `/alliance` renvoie `members: [{ id, name, status, founder }]`, fondateur en
+  tête puis par ordre alphabétique.
+
+Les deux documents sont générés à quelques minutes d'écart : un membre peut
+manquer de `players.xml`. Il garde alors sa ligne avec `name: null` et
+`status: null`, en fin de liste, pour que le compte annoncé reste juste.
 
 ### Statuts de joueur
 

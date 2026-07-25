@@ -4,37 +4,12 @@
 // the documented score categories; what is left is deciding what to show, in
 // which order, and how to filter it. All pure, so it is tested without
 // rendering anything.
+//
+// The status flags themselves live in `../components/status`: the alliance view
+// shows the same badges on its members.
 
 import { groupDigits } from '../components/format';
 import { formatCoordinates, galaxyUrl, parseCoordinates } from '../components/galaxy';
-
-// Order matters: this is also the order of the filter chips.
-export const STATUS_FLAGS = [
-	{ key: 'active', labelKey: 'pl.status.active', icon: '🟢' },
-	{ key: 'inactive', labelKey: 'pl.status.inactive', icon: '💤' },
-	{ key: 'longInactive', labelKey: 'pl.status.longInactive', icon: '🪦' },
-	{ key: 'vacation', labelKey: 'pl.status.vacation', icon: '🏝️' },
-	{ key: 'banned', labelKey: 'pl.status.banned', icon: '🚫' },
-	{ key: 'outlaw', labelKey: 'pl.status.outlaw', icon: '☠️' },
-	{ key: 'admin', labelKey: 'pl.status.admin', icon: '🛡️' },
-];
-
-// Badges to show on a player row. Gameforge sets both `i` and `I` past 28 days
-// of inactivity; only the longer one is worth a badge.
-export function describeStatus(status) {
-	if (!status) return [];
-	return STATUS_FLAGS.filter((flag) => {
-		if (!status[flag.key]) return false;
-		return !(flag.key === 'inactive' && status.longInactive);
-	});
-}
-
-// No selected chip means "everything"; several chips mean "any of these".
-export function filterPlayers(players, selected) {
-	if (!players) return [];
-	if (!selected || selected.length === 0) return players;
-	return players.filter((player) => selected.some((key) => player.status?.[key]));
-}
 
 // The categories worth a row, in the order the game shows them. Types 8 to 21
 // are undocumented and arrive with `key: null`; they are dropped rather than

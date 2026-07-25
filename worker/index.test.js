@@ -3,10 +3,12 @@ import worker from './index';
 
 // "Anakin Vader" sorts before "Vader" alphabetically, so the exact-match rule
 // is the only thing that can put "Vader" first.
-const PLAYERS_XML = `<players timestamp="1"><player id="1" name="Darth Vader"/><player id="2" name="Anakin Vader"/><player id="3" name="Vader Junior"/><player id="4" name="Vader"/><player id="5" name="Luke"/></players>`;
+const PLAYERS_XML = `<players timestamp="1"><player id="1" name="Darth Vader" alliance="1"/><player id="2" name="Anakin Vader" alliance="1"/><player id="3" name="Vader Junior"/><player id="4" name="Vader" alliance="2"/><player id="5" name="Luke"/></players>`;
 const PLAYER_DATA_XML = `<playerData id="1" name="Darth Vader" timestamp="2"><positions><position type="0" score="10">3</position></positions><planets><planet id="9" name="Home" coords="1:1:1"/></planets></playerData>`;
 const SERVER_DATA_XML = `<serverData timestamp="3"><name>Tucana</name><speed>10</speed></serverData>`;
-const ALLIANCES_XML = `<alliances timestamp="4"><alliance id="1" name="The Wolf Army" tag="TWA" founder="1" foundDate="5"><player id="1"/></alliance><alliance id="2" name="Other" tag="OTH" founder="2" foundDate="6"/></alliances>`;
+// Member 99 is deliberately absent from players.xml: Gameforge generates the
+// two documents minutes apart, so a member can be unresolvable.
+const ALLIANCES_XML = `<alliances timestamp="4"><alliance id="1" name="The Wolf Army" tag="TWA" founder="1" foundDate="5"><player id="1"/><player id="2"/><player id="99"/></alliance><alliance id="2" name="Other" tag="OTH" founder="4" foundDate="6"><player id="4"/></alliance></alliances>`;
 const LOBBY_JSON = [
 	{ language: 'fr', number: 172, name: 'Tucana', serverClosed: 0, settings: { economySpeed: 8 } },
 	{ language: 'en', number: 101, name: 'Quantum', serverClosed: 0, settings: {} },
@@ -194,6 +196,23 @@ describe('GET /players', () => {
 		expect(response.status).toBe(400);
 		expect((await response.json()).error).toMatch(/search/);
 	});
+
+	// players.xml only knows the alliance id, so the name comes from the join.
+	it('resolves the alliance of each match', async () => {
+		const { players } = await (await get('/players?universe=172&lang=fr&search=vader')).json();
+		const byName = Object.fromEntries(players.map((p) => [p.name, p.alliance]));
+		expect(byName['Darth Vader']).toEqual({ id: '1', name: 'The Wolf Army', tag: 'TWA' });
+		expect(byName['Vader Junior']).toBeNull();
+	});
+
+	it('leaves the alliance null when alliances.xml does not know that id', async () => {
+		stubUpstream({
+			'/api/players.xml': PLAYERS_XML,
+			'/api/alliances.xml': '<alliances timestamp="4"/>',
+		});
+		const { players } = await (await get('/players?universe=172&lang=fr&search=vader')).json();
+		expect(players.every((player) => player.alliance === null)).toBe(true);
+	});
 });
 
 describe('GET /player', () => {
@@ -227,11 +246,52 @@ describe('GET /alliances', () => {
 		expect(byName.alliances[0].tag).toBe('TWA');
 	});
 
-	it('lists the member ids', async () => {
+	// The ids alone are useless to the browser; /alliance resolves them instead.
+	it('counts the members instead of shipping their ids', async () => {
 		const { alliances } = await (
 			await get('/alliances?universe=172&lang=fr&search=TWA')
 		).json();
-		expect(alliances[0].members).toEqual(['1']);
+		expect(alliances[0].memberCount).toBe(3);
+		expect(alliances[0].members).toBeUndefined();
+	});
+
+	it('ranks an exact tag first, then the biggest alliances', async () => {
+		const { alliances } = await (await get('/alliances?universe=172&lang=fr&search=oth')).json();
+		expect(alliances[0].tag).toBe('OTH');
+	});
+
+	it('requires a search term', async () => {
+		expect((await get('/alliances?universe=172&lang=fr')).status).toBe(400);
+	});
+});
+
+describe('GET /alliance', () => {
+	const alliance = (id = 1) => get(`/alliance?universe=172&lang=fr&id=${id}`);
+
+	it('returns the alliance with its members resolved to players', async () => {
+		const data = await (await alliance()).json();
+		expect(data).toMatchObject({ id: '1', name: 'The Wolf Army', tag: 'TWA', memberCount: 3 });
+		expect(data.members[0]).toMatchObject({ id: '1', name: 'Darth Vader', founder: true });
+		expect(data.members[0].status).toMatchObject({ active: true });
+	});
+
+	// The founder leads, then alphabetical order — "Anakin" would otherwise be
+	// first — and a member missing from players.xml closes the list.
+	it('orders founder, then names, then the unresolvable members', async () => {
+		const { members } = await (await alliance()).json();
+		expect(members.map((member) => member.name)).toEqual(['Darth Vader', 'Anakin Vader', null]);
+		expect(members[2]).toMatchObject({ id: '99', status: null, founder: false });
+	});
+
+	it('answers 404 for an alliance the universe does not have', async () => {
+		const response = await alliance(404);
+		expect(response.status).toBe(404);
+		expect((await response.json()).error).toMatch(/unknown alliance/);
+	});
+
+	it('requires a numeric id', async () => {
+		expect((await alliance('1;drop')).status).toBe(400);
+		expect((await get('/alliance?universe=172&lang=fr')).status).toBe(400);
 	});
 });
 

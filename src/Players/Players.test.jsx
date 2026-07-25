@@ -31,7 +31,13 @@ const status = (over = {}) => ({
 const RESULTS = {
 	total: 3,
 	players: [
-		{ id: '100010', name: 'Élysée', alliance: '5', status: status({ active: true }) },
+		{
+			id: '100010',
+			name: 'Élysée',
+			// The proxy resolves the alliance id against alliances.xml for us.
+			alliance: { id: '5', name: 'The Wolf Army', tag: 'TWA' },
+			status: status({ active: true }),
+		},
 		{ id: '100011', name: 'Elysium', alliance: null, status: status({ vacation: true }) },
 		{
 			id: '100012',
@@ -123,6 +129,19 @@ describe('<Players />', () => {
 		// Both `i` and `I` are set, but only the 28-day badge is shown.
 		expect(rows.getByText(/Inactive \(28 d\)/)).toBeInTheDocument();
 		expect(rows.queryByText(/Inactive \(7 d\)/)).not.toBeInTheDocument();
+	});
+
+	it('shows the tag of the alliance each player belongs to', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByLabelText('Community');
+
+		await search(user);
+
+		const rows = within(screen.getByRole('list'));
+		expect(await rows.findByText('[TWA]')).toHaveAttribute('title', 'The Wolf Army');
+		// A player without an alliance simply has no tag.
+		expect(rows.getByRole('button', { name: /Elysium/ })).not.toHaveTextContent('[');
 	});
 
 	it('filters the results by status, without a new request', async () => {
