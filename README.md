@@ -16,14 +16,32 @@ npm run build    # build de production dans dist/
 npm run preview  # prévisualise le build
 ```
 
+## Tests
+
+Vitest + Testing Library, en environnement jsdom (configuration dans la section
+`test` de `vite.config.js`).
+
+```bash
+npm test            # une passe
+npm run test:watch  # mode watch
+npm run test:coverage
+```
+
+Les tests vivent à côté du code qu'ils couvrent (`*.test.js{,x}`). Les
+composants se rendent via l'utilitaire `renderWithI18n` de
+`src/test/utils.jsx`, qui fournit le contexte i18n et fixe la langue.
+
 Stack : **React 19 + Vite 8 + Sass**. Aucun framework CSS : le thème
 « spatial » est un design system maison (`src/app.scss`).
 
-## Déploiement
+## Branches et déploiement
 
-Un workflow GitHub Actions publie `dist/` sur la branche `gh-pages` à chaque
-push sur `develop` (voir `.github/workflows/deploy.yml`). Site :
-<https://blog.rolljee.fr/ogame-ui/>.
+- `develop` — branche d'intégration. Chaque pull request et chaque push y
+  déclenche les tests puis un build de vérification, sans déploiement
+  (`.github/workflows/ci.yml`).
+- `master` — branche de release. Un push publie `dist/` sur la branche
+  `gh-pages` (`.github/workflows/deploy.yml`). Site :
+  <https://blog.rolljee.fr/ogame-ui/>.
 
 ## Feuille de route
 
