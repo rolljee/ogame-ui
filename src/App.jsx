@@ -4,12 +4,14 @@ import { LANGUAGES } from './i18n/translations';
 import Trader from './Trader/Trader';
 import Moonbreak from './Moonbreak/Moonbreak';
 import Expeditions from './Expeditions/Expeditions';
+import MoonLock from './MoonLock/MoonLock';
 import ServerSettings from './ServerSettings/ServerSettings';
 
 const TOOLS = [
 	{ id: 'trader', labelKey: 'nav.trader', Component: Trader },
 	{ id: 'moonbreak', labelKey: 'nav.moonbreak', Component: Moonbreak },
 	{ id: 'expeditions', labelKey: 'nav.expeditions', Component: Expeditions },
+	{ id: 'moonlock', labelKey: 'nav.moonlock', Component: MoonLock },
 	{ id: 'server', labelKey: 'nav.server', Component: ServerSettings },
 ];
 

@@ -142,7 +142,7 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 | `!mb` | proba de moonbreak + pertes RIP estimées (1 à 4 attaquants) | ✅ fait (`src/Moonbreak/`) |
 | `!ogs` | réglages serveur (vitesses, débris, galaxies, top score…) | ✅ fait (`src/ServerSettings/`) |
 | `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | ✅ fait (`src/Expeditions/`) |
-| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | **1** |
+| `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | ✅ fait (`src/MoonLock/`) |
 | `!ogp` | planètes + lunes + points d'un joueur | = vue Joueurs (§1) |
 | `!oga` | membres d'une alliance | 3 — `searchAlliances()` est prête |
 
@@ -162,8 +162,13 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
       Deux ajouts : le pathfinder devient un interrupteur (le bot le suppose
       toujours présent) et le plancher de 200 unités du bot est omis, il ne peut
       jamais s'appliquer avec une base minimale de 40 000.
-- [ ] **Verrou de lune / lien galaxie** (`create-link.js`) — utilise
-      `Ogame.models.Destroyable` pour le coût des clés/sondes.
+- [x] **Verrou de lune / lien galaxie** (`create-link.js`) — porté dans
+      `src/MoonLock/`, parité numérique vérifiée avec le bot. `Ogame.models`
+      n'a pas bougé entre la v3 et la v4 : `Destroyable[1]` (chasseur léger) et
+      `Destroyable[15]` (sonde) sont toujours aux mêmes identifiants, et
+      `Ogame.i18n.getName()` fournit les noms FR/EN sans clés à écrire.
+      Ajouts par rapport au bot : les coordonnées sont validées contre la taille
+      réelle de l'univers, et le lien est copiable.
 - [ ] **Alliances** (`alliances.utils.js`).
 
 ---

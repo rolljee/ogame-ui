@@ -10,6 +10,7 @@ export const translations = {
 		'nav.trader': 'Commerce',
 		'nav.moonbreak': 'Destruction de lune',
 		'nav.expeditions': 'Expéditions',
+		'nav.moonlock': 'Verrou de lune',
 		'nav.server': 'Réglages serveur',
 
 		'common.yes': 'Oui',
@@ -107,6 +108,30 @@ export const translations = {
 		'exp.error.data': "Cet univers ne renvoie pas les réglages nécessaires au calcul.",
 		'exp.error.level': "Entre ton niveau d'hyperespace pour voir le résultat.",
 
+		'ml.intro':
+			"Une lune apparaît quand un combat laisse des débris sur la position, et les chances plafonnent à 20 % à partir de 2 000 000 de débris. Voici combien de vaisseaux il faut sacrifier pour atteindre ce plafond dans ton univers, et le lien direct vers la position.",
+
+		'ml.step.universe': 'Choisir un univers',
+		'ml.step.universe.help':
+			"Le taux de débris de l'univers décide du nombre de vaisseaux à casser : plus il est élevé, moins il en faut.",
+
+		'ml.step.coords': 'Coordonnées',
+		'ml.coords.label': 'Position',
+		'ml.coords.help': 'Format galaxie:système:position, par exemple 4:212:8.',
+		'ml.step.coords.help':
+			'La position visée, pour générer le lien vers la vue galaxie de ton univers.',
+		'ml.coords.range':
+			'Format galaxie:système:position — de 1:1:1 à {galaxies}:{systems}:{positions}.',
+
+		'ml.result.title': 'Verrou de lune',
+		'ml.result.debris': 'Débris des vaisseaux : {percent} %',
+		'ml.result.threshold': 'Pour atteindre {debris} de débris, soit {chance} % de chances de lune.',
+		'ml.result.copy': 'Copier le lien',
+
+		'ml.error.universe': 'Choisis un univers pour voir le résultat.',
+		'ml.error.data': 'Cet univers ne renvoie pas son taux de débris.',
+		'ml.error.coordinates': 'Entre des coordonnées valides pour voir le résultat.',
+
 		'srv.intro':
 			"Les réglages d'un univers : vitesses, débris, taille de la galaxie, score du premier. Utile pour savoir à quoi s'attendre avant de s'y installer, ou pour régler les autres calculateurs.",
 
@@ -168,6 +193,7 @@ export const translations = {
 		'nav.trader': 'Trade',
 		'nav.moonbreak': 'Moonbreak',
 		'nav.expeditions': 'Expeditions',
+		'nav.moonlock': 'Moon lock',
 		'nav.server': 'Server settings',
 
 		'common.yes': 'Yes',
@@ -264,6 +290,30 @@ export const translations = {
 		'exp.error.universe': 'Pick a universe to see the result.',
 		'exp.error.data': 'This universe does not report the settings the calculation needs.',
 		'exp.error.level': 'Enter your hyperspace level to see the result.',
+
+		'ml.intro':
+			'A moon appears when a battle leaves debris on the position, and the odds cap at 20% once the field holds 2,000,000 units. Here is how many ships you have to blow up to reach that cap in your universe, plus a direct link to the position.',
+
+		'ml.step.universe': 'Pick a universe',
+		'ml.step.universe.help':
+			'The universe’s debris factor decides how many ships you need: the higher it is, the fewer it takes.',
+
+		'ml.step.coords': 'Coordinates',
+		'ml.coords.label': 'Position',
+		'ml.coords.help': 'Format galaxy:system:position, for example 4:212:8.',
+		'ml.step.coords.help':
+			'The position you are aiming at, used to build the link into your universe’s galaxy view.',
+		'ml.coords.range':
+			'Format galaxy:system:position — from 1:1:1 to {galaxies}:{systems}:{positions}.',
+
+		'ml.result.title': 'Moon lock',
+		'ml.result.debris': 'Ship debris: {percent}%',
+		'ml.result.threshold': 'To reach {debris} debris, i.e. a {chance}% moon chance.',
+		'ml.result.copy': 'Copy the link',
+
+		'ml.error.universe': 'Pick a universe to see the result.',
+		'ml.error.data': 'This universe does not report its debris factor.',
+		'ml.error.coordinates': 'Enter valid coordinates to see the result.',
 
 		'srv.intro':
 			"A universe's settings: speeds, debris, galaxy size, top score. Handy to know what you are getting into before settling in, or to configure the other calculators.",

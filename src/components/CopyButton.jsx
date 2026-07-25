@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
-import { useI18n } from '../../i18n/I18nContext';
+import { useI18n } from '../i18n/I18nContext';
 
-function CopyButton({ text }) {
+// `labelKey` lets a view name what is being copied; the confirmation is shared.
+function CopyButton({ text, labelKey = 'result.copy' }) {
 	const { t } = useI18n();
 	const [copied, setCopied] = useState(false);
 
@@ -18,7 +19,7 @@ function CopyButton({ text }) {
 			className={`btn btn-copy ${copied ? 'is-copied' : ''}`}
 			onClick={handleClick}
 		>
-			{copied ? `✓ ${t('result.copied')}` : t('result.copy')}
+			{copied ? `✓ ${t('result.copied')}` : t(labelKey)}
 		</button>
 	);
 }

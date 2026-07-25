@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { act } from 'react';
-import { renderWithI18n, screen, fireEvent, userEvent } from '../../test/utils';
+import { renderWithI18n, screen, fireEvent, userEvent } from '../test/utils';
 import CopyButton from './CopyButton';
 
 vi.mock('copy-to-clipboard', () => ({ default: vi.fn() }));
