@@ -5,6 +5,7 @@ import Trader from './Trader/Trader';
 import Moonbreak from './Moonbreak/Moonbreak';
 import Expeditions from './Expeditions/Expeditions';
 import MoonLock from './MoonLock/MoonLock';
+import Players from './Players/Players';
 import ServerSettings from './ServerSettings/ServerSettings';
 
 const TOOLS = [
@@ -12,6 +13,7 @@ const TOOLS = [
 	{ id: 'moonbreak', labelKey: 'nav.moonbreak', Component: Moonbreak },
 	{ id: 'expeditions', labelKey: 'nav.expeditions', Component: Expeditions },
 	{ id: 'moonlock', labelKey: 'nav.moonlock', Component: MoonLock },
+	{ id: 'players', labelKey: 'nav.players', Component: Players },
 	{ id: 'server', labelKey: 'nav.server', Component: ServerSettings },
 ];
 

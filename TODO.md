@@ -95,22 +95,26 @@ C'est exactement le sélecteur d'univers dynamique demandé plus bas. Seul
 
 ---
 
-## 1. Joueurs (`Players`)
+## 1. Joueurs (`Players`) — ✅ fait (`src/Players/`)
 
 **But :** lister les joueurs d'un univers, filtrer par statut (actif, inactif,
 vacances, banni…), recherche floue par nom, et afficher le détail d'un joueur
 (scores par catégorie, planètes et lunes avec coordonnées).
 
-**Les données sont prêtes** : `searchPlayers()` et `fetchPlayer()` dans
-`src/api/ogame.js`. Il ne reste que l'UI. La fusion avec `universe.xml` du bot
-(`mergePlanets`) est inutile : `playerData.xml` est déjà complet.
+La fusion avec `universe.xml` du bot (`mergePlanets`) s'est bien avérée
+inutile : `playerData.xml` porte déjà les planètes et les lunes.
 
-- [ ] Sélection d'univers via **liste déroulante** — `fetchUniverses({ lang })`
-      renvoie déjà les univers ouverts, triés, avec leurs réglages.
-- [ ] Statuts : le proxy renvoie déjà des booléens (`vacation`, `inactive`,
-      `longInactive`, `banned`, `admin`, `outlaw`) au lieu des codes bruts. Reste
-      à choisir libellés + icônes.
-- [ ] Lien cliquable vers la galaxie pour chaque coordonnée.
+- [x] Sélection d'univers via **liste déroulante** (`UniversePicker`).
+- [x] Statuts en booléens, avec libellés et icônes. `i` et `I` arrivent
+      ensemble au-delà de 28 jours : seul le badge le plus long est affiché,
+      mais le filtre « inactif » attrape bien les deux.
+- [x] Lien cliquable vers la galaxie pour chaque coordonnée.
+- [x] La recherche part sur **soumission** (Entrée ou bouton), pas à chaque
+      frappe : le proxy doit lire `players.xml` en entier pour filtrer.
+- [x] Les catégories de score non documentées par Gameforge (types 8 à 21,
+      `key: null`) sont ignorées plutôt qu'affichées sous un libellé inventé.
+- [ ] Reste possible : le nom de l'alliance. `players.xml` ne donne que son id,
+      il faudrait croiser avec `alliances.xml` — à faire avec la vue Alliances.
 
 ## 2. Mines / Production (`Mining`)
 
@@ -143,8 +147,8 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 | `!ogs` | réglages serveur (vitesses, débris, galaxies, top score…) | ✅ fait (`src/ServerSettings/`) |
 | `!oge` | fret d'expédition (capacité max, nb de GT/PT selon hyperespace) | ✅ fait (`src/Expeditions/`) |
 | `!ogl` | lien galaxie + nb de clés/sondes pour le seuil de lune à 2 M de débris | ✅ fait (`src/MoonLock/`) |
-| `!ogp` | planètes + lunes + points d'un joueur | = vue Joueurs (§1) |
-| `!oga` | membres d'une alliance | 3 — `searchAlliances()` est prête |
+| `!ogp` | planètes + lunes + points d'un joueur | ✅ fait — vue Joueurs (§1) |
+| `!oga` | membres d'une alliance | **1** — `searchAlliances()` est prête |
 
 - [x] **Moonbreak** (`mb.js`) — porté dans `src/Moonbreak/formulas.js`, parité
       numérique vérifiée avec le bot. Un écart volontaire : le bot ne plafonne
