@@ -2,7 +2,7 @@ import React from 'react';
 import { useI18n } from '../../i18n/I18nContext';
 import { RESOURCE_ORDER, RESOURCE_META, prettify } from '../resources';
 import ResourceIcon from '../../components/ResourceIcon';
-import CopyButton from './CopyButton';
+import CopyButton from '../../components/CopyButton';
 
 function ResultPanel({ selected, amount, rate, outputs }) {
 	const { t } = useI18n();

@@ -4,6 +4,8 @@
 // actually ask about and groups them. Formatting stays pure so it can be tested
 // without rendering anything.
 
+import { groupDigits } from '../components/format';
+
 export const SETTING_GROUPS = [
 	{
 		key: 'universe',
@@ -61,10 +63,7 @@ export const SETTING_GROUPS = [
 	},
 ];
 
-// Group thousands with dots, the way OGame itself does.
-export function groupDigits(value) {
-	return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
+export { groupDigits };
 
 // Trailing zeros are noise on a rate like 2.5 : 1.5 : 1.
 function trim(value) {

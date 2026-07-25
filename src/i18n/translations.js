@@ -9,6 +9,9 @@ export const translations = {
 		'nav.label': 'Outils',
 		'nav.trader': 'Commerce',
 		'nav.moonbreak': 'Destruction de lune',
+		'nav.expeditions': 'Expéditions',
+		'nav.moonlock': 'Verrou de lune',
+		'nav.players': 'Joueurs',
 		'nav.server': 'Réglages serveur',
 
 		'common.yes': 'Oui',
@@ -78,6 +81,105 @@ export const translations = {
 		'mb.error.rip': 'Entre le nombre de RIP de chaque attaquant pour voir le résultat.',
 		'mb.error.attackers': 'Il faut entre 1 et 4 attaquants.',
 
+		'exp.intro':
+			"Combien une expédition peut-elle rapporter, et combien de vaisseaux faut-il envoyer pour tout ramener ? La trouvaille maximale dépend de l'univers (vitesse d'économie et score du premier), la capacité de tes vaisseaux de ton niveau d'hyperespace.",
+
+		'exp.step.universe': 'Choisir un univers',
+		'exp.step.universe.help':
+			"La trouvaille maximale se calcule à partir des réglages de l'univers : sa vitesse d'économie et le score du joueur numéro 1.",
+
+		'exp.step.fleet': 'Ta flotte',
+		'exp.step.fleet.help':
+			"Ton niveau d'hyperespace augmente le fret de chaque vaisseau, et un pathfinder dans la flotte double la trouvaille.",
+		'exp.hyperspace.label': 'Hyperespace',
+		'exp.hyperspace.range': 'Niveau de la technologie hyperespace, de 0 à {max}.',
+		'exp.pathfinder': 'Un pathfinder dans la flotte',
+		'exp.pathfinder.help':
+			'Le pathfinder double la trouvaille maximale. Sans lui, tu ne ramènes que la moitié.',
+
+		'exp.result.title': "Fret d'expédition",
+		'exp.result.find': 'de ressources au maximum par expédition',
+		'exp.result.capacity': '{capacity} de fret chacun',
+		'exp.result.top': 'Univers {universe} · le premier a {score} points',
+
+		'exp.ship.largeCargo': 'grands transporteurs',
+		'exp.ship.smallCargo': 'petits transporteurs',
+
+		'exp.error.universe': 'Choisis un univers pour voir le résultat.',
+		'exp.error.data': "Cet univers ne renvoie pas les réglages nécessaires au calcul.",
+		'exp.error.level': "Entre ton niveau d'hyperespace pour voir le résultat.",
+
+		'pl.intro':
+			"Cherche un joueur par son nom pour voir ses scores par catégorie, ses planètes et ses lunes. Chaque coordonnée est un lien direct vers la vue galaxie de ton univers.",
+
+		'pl.step.universe': 'Choisir un univers',
+		'pl.step.universe.help':
+			"Les joueurs sont propres à un univers : commence par choisir le tien.",
+
+		'pl.step.search': 'Chercher un joueur',
+		'pl.step.search.help':
+			"Un univers compte des milliers de joueurs : la recherche est obligatoire. Elle ignore la casse et les accents (« elysee » trouve « Élysée »). Les filtres de statut s'appliquent aux résultats.",
+		'pl.search.label': 'Nom',
+		'pl.search.placeholder': 'Nom du joueur',
+		'pl.search.submit': 'Chercher',
+		'pl.filter.label': 'Filtrer par statut',
+
+		'pl.status.active': 'Actif',
+		'pl.status.inactive': 'Inactif (7 j)',
+		'pl.status.longInactive': 'Inactif (28 j)',
+		'pl.status.vacation': 'Vacances',
+		'pl.status.banned': 'Banni',
+		'pl.status.outlaw': 'Hors-la-loi',
+		'pl.status.admin': 'Administrateur',
+
+		'pl.list.count': '{shown} joueur(s) affiché(s) sur {total} trouvé(s).',
+		'pl.list.empty': 'Aucun joueur ne correspond.',
+
+		'pl.loading': 'Recherche en cours…',
+		'pl.loading.detail': 'Chargement du joueur…',
+		'pl.error.search': 'La recherche a échoué.',
+		'pl.error.detail': 'Impossible de charger ce joueur.',
+
+		'pl.detail.title': 'Joueur',
+		'pl.detail.pick': 'Choisis un joueur dans la liste pour voir son détail.',
+		'pl.detail.searchFirst': 'Cherche un joueur pour voir son détail.',
+		'pl.detail.summary': '{planets} planète(s) · {moons} lune(s)',
+		'pl.detail.scores': 'Scores',
+		'pl.detail.planets': 'Planètes et lunes',
+
+		'pl.score.total': 'Général',
+		'pl.score.economy': 'Économie',
+		'pl.score.research': 'Recherche',
+		'pl.score.military': 'Militaire',
+		'pl.score.militaryBuilt': 'Militaire construit',
+		'pl.score.militaryDestroyed': 'Militaire détruit',
+		'pl.score.militaryLost': 'Militaire perdu',
+		'pl.score.honour': 'Honneur',
+
+		'ml.intro':
+			"Une lune apparaît quand un combat laisse des débris sur la position, et les chances plafonnent à 20 % à partir de 2 000 000 de débris. Voici combien de vaisseaux il faut sacrifier pour atteindre ce plafond dans ton univers, et le lien direct vers la position.",
+
+		'ml.step.universe': 'Choisir un univers',
+		'ml.step.universe.help':
+			"Le taux de débris de l'univers décide du nombre de vaisseaux à casser : plus il est élevé, moins il en faut.",
+
+		'ml.step.coords': 'Coordonnées',
+		'ml.coords.label': 'Position',
+		'ml.coords.help': 'Format galaxie:système:position, par exemple 4:212:8.',
+		'ml.step.coords.help':
+			'La position visée, pour générer le lien vers la vue galaxie de ton univers.',
+		'ml.coords.range':
+			'Format galaxie:système:position — de 1:1:1 à {galaxies}:{systems}:{positions}.',
+
+		'ml.result.title': 'Verrou de lune',
+		'ml.result.debris': 'Débris des vaisseaux : {percent} %',
+		'ml.result.threshold': 'Pour atteindre {debris} de débris, soit {chance} % de chances de lune.',
+		'ml.result.copy': 'Copier le lien',
+
+		'ml.error.universe': 'Choisis un univers pour voir le résultat.',
+		'ml.error.data': 'Cet univers ne renvoie pas son taux de débris.',
+		'ml.error.coordinates': 'Entre des coordonnées valides pour voir le résultat.',
+
 		'srv.intro':
 			"Les réglages d'un univers : vitesses, débris, taille de la galaxie, score du premier. Utile pour savoir à quoi s'attendre avant de s'y installer, ou pour régler les autres calculateurs.",
 
@@ -138,6 +240,9 @@ export const translations = {
 		'nav.label': 'Tools',
 		'nav.trader': 'Trade',
 		'nav.moonbreak': 'Moonbreak',
+		'nav.expeditions': 'Expeditions',
+		'nav.moonlock': 'Moon lock',
+		'nav.players': 'Players',
 		'nav.server': 'Server settings',
 
 		'common.yes': 'Yes',
@@ -206,6 +311,104 @@ export const translations = {
 		'mb.error.size': 'Enter a valid moon size to see the result.',
 		'mb.error.rip': "Enter each attacker's Deathstar count to see the result.",
 		'mb.error.attackers': 'You need between 1 and 4 attackers.',
+
+		'exp.intro':
+			'How much can one expedition bring back, and how many ships does it take to carry it home? The maximum find comes from the universe (economy speed and top score); your ships’ capacity comes from your hyperspace technology.',
+
+		'exp.step.universe': 'Pick a universe',
+		'exp.step.universe.help':
+			'The maximum find is derived from the universe settings: its economy speed and the score of the number one player.',
+
+		'exp.step.fleet': 'Your fleet',
+		'exp.step.fleet.help':
+			'Hyperspace technology raises every ship’s cargo, and a Pathfinder in the fleet doubles the find.',
+		'exp.hyperspace.label': 'Hyperspace',
+		'exp.hyperspace.range': 'Hyperspace technology level, from 0 to {max}.',
+		'exp.pathfinder': 'A Pathfinder in the fleet',
+		'exp.pathfinder.help':
+			'The Pathfinder doubles the maximum find. Without one you only bring back half of it.',
+
+		'exp.result.title': 'Expedition freight',
+		'exp.result.find': 'resources at most per expedition',
+		'exp.result.capacity': '{capacity} cargo each',
+		'exp.result.top': 'Universe {universe} · the top player has {score} points',
+
+		'exp.ship.largeCargo': 'Large Cargos',
+		'exp.ship.smallCargo': 'Small Cargos',
+
+		'exp.error.universe': 'Pick a universe to see the result.',
+		'exp.error.data': 'This universe does not report the settings the calculation needs.',
+		'exp.error.level': 'Enter your hyperspace level to see the result.',
+
+		'pl.intro':
+			'Look a player up by name to see their scores per category, their planets and their moons. Every coordinate links straight into your universe’s galaxy view.',
+
+		'pl.step.universe': 'Pick a universe',
+		'pl.step.universe.help': 'Players belong to a universe: start by picking yours.',
+
+		'pl.step.search': 'Find a player',
+		'pl.step.search.help':
+			'A universe holds thousands of players, so a search term is required. It ignores case and accents (“elysee” finds “Élysée”). Status filters apply to the results.',
+		'pl.search.label': 'Name',
+		'pl.search.placeholder': 'Player name',
+		'pl.search.submit': 'Search',
+		'pl.filter.label': 'Filter by status',
+
+		'pl.status.active': 'Active',
+		'pl.status.inactive': 'Inactive (7 d)',
+		'pl.status.longInactive': 'Inactive (28 d)',
+		'pl.status.vacation': 'Vacation',
+		'pl.status.banned': 'Banned',
+		'pl.status.outlaw': 'Outlaw',
+		'pl.status.admin': 'Administrator',
+
+		'pl.list.count': 'Showing {shown} of {total} matching player(s).',
+		'pl.list.empty': 'No player matches.',
+
+		'pl.loading': 'Searching…',
+		'pl.loading.detail': 'Loading the player…',
+		'pl.error.search': 'The search failed.',
+		'pl.error.detail': 'Could not load this player.',
+
+		'pl.detail.title': 'Player',
+		'pl.detail.pick': 'Pick a player from the list to see the details.',
+		'pl.detail.searchFirst': 'Search for a player to see the details.',
+		'pl.detail.summary': '{planets} planet(s) · {moons} moon(s)',
+		'pl.detail.scores': 'Scores',
+		'pl.detail.planets': 'Planets and moons',
+
+		'pl.score.total': 'Overall',
+		'pl.score.economy': 'Economy',
+		'pl.score.research': 'Research',
+		'pl.score.military': 'Military',
+		'pl.score.militaryBuilt': 'Military built',
+		'pl.score.militaryDestroyed': 'Military destroyed',
+		'pl.score.militaryLost': 'Military lost',
+		'pl.score.honour': 'Honour',
+
+		'ml.intro':
+			'A moon appears when a battle leaves debris on the position, and the odds cap at 20% once the field holds 2,000,000 units. Here is how many ships you have to blow up to reach that cap in your universe, plus a direct link to the position.',
+
+		'ml.step.universe': 'Pick a universe',
+		'ml.step.universe.help':
+			'The universe’s debris factor decides how many ships you need: the higher it is, the fewer it takes.',
+
+		'ml.step.coords': 'Coordinates',
+		'ml.coords.label': 'Position',
+		'ml.coords.help': 'Format galaxy:system:position, for example 4:212:8.',
+		'ml.step.coords.help':
+			'The position you are aiming at, used to build the link into your universe’s galaxy view.',
+		'ml.coords.range':
+			'Format galaxy:system:position — from 1:1:1 to {galaxies}:{systems}:{positions}.',
+
+		'ml.result.title': 'Moon lock',
+		'ml.result.debris': 'Ship debris: {percent}%',
+		'ml.result.threshold': 'To reach {debris} debris, i.e. a {chance}% moon chance.',
+		'ml.result.copy': 'Copy the link',
+
+		'ml.error.universe': 'Pick a universe to see the result.',
+		'ml.error.data': 'This universe does not report its debris factor.',
+		'ml.error.coordinates': 'Enter valid coordinates to see the result.',
 
 		'srv.intro':
 			"A universe's settings: speeds, debris, galaxy size, top score. Handy to know what you are getting into before settling in, or to configure the other calculators.",
