@@ -9,7 +9,10 @@ compatibility_date = "2026-07-25"
 # Comma-separated allowlist, or "*" to answer any caller. A listed origin is
 # echoed back, since a browser rejects a list. Note this only constrains
 # browsers: CORS is not an authentication mechanism.
-ALLOWED_ORIGIN = "https://blog.rolljee.fr, http://localhost:3000"
+# The site is reachable on two origins: the custom domain and the GitHub Pages
+# one (`homepage` in package.json). Both must be listed, or the API calls are
+# blocked on whichever is missing.
+ALLOWED_ORIGIN = "https://blog.rolljee.fr, https://rolljee.github.io, http://localhost:3000"
 
 [observability]
 enabled = true
