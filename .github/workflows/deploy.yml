@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
+  # master is the release branch: whatever lands here goes live
   push:
     branches:
-      - develop
+      - master
   # Allow manual runs from the Actions tab
   workflow_dispatch:
 

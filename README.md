@@ -19,11 +19,14 @@ npm run preview  # prévisualise le build
 Stack : **React 19 + Vite 8 + Sass**. Aucun framework CSS : le thème
 « spatial » est un design system maison (`src/app.scss`).
 
-## Déploiement
+## Branches et déploiement
 
-Un workflow GitHub Actions publie `dist/` sur la branche `gh-pages` à chaque
-push sur `develop` (voir `.github/workflows/deploy.yml`). Site :
-<https://blog.rolljee.fr/ogame-ui/>.
+- `develop` — branche d'intégration. Chaque pull request et chaque push y
+  déclenche un build de vérification, sans déploiement
+  (`.github/workflows/ci.yml`).
+- `master` — branche de release. Un push publie `dist/` sur la branche
+  `gh-pages` (`.github/workflows/deploy.yml`). Site :
+  <https://blog.rolljee.fr/ogame-ui/>.
 
 ## Feuille de route
 
