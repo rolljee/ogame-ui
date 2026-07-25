@@ -24,10 +24,10 @@ export default defineConfig({
 		environment: 'jsdom',
 		globals: true,
 		setupFiles: './src/test/setup.js',
-		include: ['src/**/*.test.{js,jsx}'],
+		include: ['src/**/*.test.{js,jsx}', 'worker/**/*.test.js'],
 		coverage: {
 			provider: 'v8',
-			include: ['src/**/*.{js,jsx}'],
+			include: ['src/**/*.{js,jsx}', 'worker/**/*.js'],
 			exclude: ['src/index.jsx', 'src/test/**'],
 		},
 	},

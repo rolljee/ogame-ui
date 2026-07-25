@@ -1,0 +1,178 @@
+// CORS proxy for Gameforge's public OGame API.
+//
+// The browser cannot call `s{n}-{lang}.ogame.gameforge.com` directly: those
+// endpoints send no Access-Control-Allow-Origin header. This worker fetches
+// them server-side, normalizes the XML to JSON and serves it with CORS.
+//
+// It also keeps the heavy documents off the wire — players.xml is 245 kB and
+// universe.xml 3.4 MB — by filtering upstream and returning only what a view
+// needs.
+
+import {
+	LOBBY_URL,
+	UpstreamError,
+	matchesSearch,
+	normalizeForSearch,
+	normalizeUniverses,
+	parseAlliances,
+	parsePlayerData,
+	parsePlayers,
+	parseServerData,
+	serverBaseUrl,
+} from './gameforge.js';
+
+// Upstream regenerates these documents roughly once a day, so caching for an
+// hour is both safe and a big win: one edge fetch serves every visitor.
+const CACHE_TTL = 3600;
+
+// Enough to fill a picker without shipping thousands of rows to the browser.
+const MAX_RESULTS = 50;
+
+// ALLOWED_ORIGIN is either `*` or a comma-separated allowlist. A browser only
+// accepts an exact origin, so a listed caller gets its own origin echoed back.
+function corsHeaders(request, env) {
+	const allowed = String(env?.ALLOWED_ORIGIN || '*')
+		.split(',')
+		.map((origin) => origin.trim())
+		.filter(Boolean);
+	const origin = request.headers.get('Origin');
+	const allowOrigin = allowed.includes('*')
+		? '*'
+		: (origin && allowed.includes(origin) ? origin : allowed[0]);
+
+	return {
+		'Access-Control-Allow-Origin': allowOrigin,
+		'Access-Control-Allow-Methods': 'GET, OPTIONS',
+		'Access-Control-Allow-Headers': 'Content-Type',
+		'Access-Control-Max-Age': '86400',
+		// Responses are cacheable and this header depends on the caller, so the
+		// cache must not serve one origin's copy to another.
+		Vary: 'Origin',
+	};
+}
+
+function json(data, { status = 200, ttl = 0, cors = {} } = {}) {
+	return new Response(JSON.stringify(data), {
+		status,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			'Cache-Control': ttl ? `public, max-age=${ttl}` : 'no-store',
+			...cors,
+		},
+	});
+}
+
+// Every upstream document is public and immutable for the day, so we let the
+// Cloudflare edge cache hold it (`cf` is ignored outside Workers).
+async function fetchUpstream(url) {
+	const response = await fetch(url, {
+		cf: { cacheTtl: CACHE_TTL, cacheEverything: true },
+		headers: { Accept: 'application/xml, application/json' },
+	});
+	if (!response.ok) {
+		throw new UpstreamError(
+			`upstream ${url} responded ${response.status}`,
+			response.status === 404 ? 404 : 502,
+		);
+	}
+	return response;
+}
+
+function requireParam(params, name) {
+	const value = params.get(name);
+	if (!value) throw new UpstreamError(`missing parameter: ${name}`, 400);
+	return value;
+}
+
+// A universe is always addressed the same way, so resolve it once per route.
+function resolveBase(params) {
+	return serverBaseUrl(requireParam(params, 'universe'), requireParam(params, 'lang'));
+}
+
+async function handleUniverses(params) {
+	const response = await fetchUpstream(LOBBY_URL);
+	const universes = normalizeUniverses(await response.json());
+	const lang = params.get('lang');
+	return { universes: lang ? universes.filter((u) => u.language === lang) : universes };
+}
+
+async function handleServerData(params) {
+	const response = await fetchUpstream(`${resolveBase(params)}/api/serverData.xml`);
+	return parseServerData(await response.text());
+}
+
+async function handlePlayers(params) {
+	const search = requireParam(params, 'search');
+	const response = await fetchUpstream(`${resolveBase(params)}/api/players.xml`);
+	const { timestamp, players } = parsePlayers(await response.text());
+	const matches = players.filter((player) => matchesSearch(player.name, search));
+	const needle = normalizeForSearch(search);
+	const isExact = (player) => (normalizeForSearch(player.name) === needle ? 0 : 1);
+
+	return {
+		timestamp,
+		total: matches.length,
+		// An exact name first — that is usually the player being looked up.
+		players: matches
+			.sort((a, b) => isExact(a) - isExact(b) || a.name.localeCompare(b.name))
+			.slice(0, MAX_RESULTS),
+	};
+}
+
+async function handlePlayer(params) {
+	const id = requireParam(params, 'id');
+	if (!/^\d{1,12}$/.test(id)) throw new UpstreamError(`invalid id: ${id}`, 400);
+
+	// playerData.xml already carries the planets and their moons, and is fresher
+	// than universe.xml — no need to download the 3.4 MB galaxy dump.
+	const response = await fetchUpstream(`${resolveBase(params)}/api/playerData.xml?id=${id}`);
+	return parsePlayerData(await response.text());
+}
+
+async function handleAlliances(params) {
+	const search = requireParam(params, 'search');
+	const response = await fetchUpstream(`${resolveBase(params)}/api/alliances.xml`);
+	const { timestamp, alliances } = parseAlliances(await response.text());
+	const matches = alliances.filter(
+		(alliance) => matchesSearch(alliance.name, search) || matchesSearch(alliance.tag, search),
+	);
+
+	return { timestamp, total: matches.length, alliances: matches.slice(0, MAX_RESULTS) };
+}
+
+const ROUTES = {
+	'/universes': handleUniverses,
+	'/server-data': handleServerData,
+	'/players': handlePlayers,
+	'/player': handlePlayer,
+	'/alliances': handleAlliances,
+};
+
+export default {
+	async fetch(request, env) {
+		const cors = corsHeaders(request, env);
+
+		if (request.method === 'OPTIONS') {
+			return new Response(null, { status: 204, headers: cors });
+		}
+		if (request.method !== 'GET') {
+			return json({ error: 'method not allowed' }, { status: 405, cors });
+		}
+
+		const url = new URL(request.url);
+		const handler = ROUTES[url.pathname.replace(/\/$/, '')];
+
+		if (!handler) {
+			return json({ error: 'not found', routes: Object.keys(ROUTES) }, { status: 404, cors });
+		}
+
+		try {
+			const data = await handler(url.searchParams);
+			return json(data, { ttl: CACHE_TTL, cors });
+		} catch (error) {
+			const status = error instanceof UpstreamError ? error.status : 500;
+			// Upstream failures are the interesting ones; surface the reason.
+			return json({ error: error.message }, { status, cors });
+		}
+	},
+};

@@ -1,0 +1,15 @@
+name = "ogame-api"
+main = "worker/index.js"
+compatibility_date = "2026-07-25"
+
+# The proxy is stateless and read-only: no KV, no D1, no secrets. Caching is
+# handled by the Cloudflare edge through the `cf.cacheTtl` hint in the worker.
+
+[vars]
+# Comma-separated allowlist, or "*" to answer any caller. A listed origin is
+# echoed back, since a browser rejects a list. Note this only constrains
+# browsers: CORS is not an authentication mechanism.
+ALLOWED_ORIGIN = "https://blog.rolljee.fr, http://localhost:3000"
+
+[observability]
+enabled = true

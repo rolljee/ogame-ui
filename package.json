@@ -6,6 +6,7 @@
   "homepage": "http://rolljee.github.io/ogame-ui",
   "dependencies": {
     "copy-to-clipboard": "^4.0.2",
+    "fast-xml-parser": "^5.10.1",
     "ogamejs": "^4.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
@@ -13,6 +14,8 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
+    "api:dev": "wrangler dev",
+    "api:deploy": "wrangler deploy",
     "build": "vite build",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -31,6 +34,7 @@
     "jsdom": "^29.1.1",
     "sass": "^1.101.3",
     "vite": "^8.1.5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wrangler": "^4.114.0"
   }
 }
