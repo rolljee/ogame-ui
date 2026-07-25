@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import {
+	CURVE_TARGETS,
+	breakProbability,
 	computeMoonbreak,
+	describeCurve,
+	distribute,
+	ripForProbability,
 	splitWaves,
 	MIN_MOON_SIZE,
 	MAX_MOON_SIZE,
@@ -115,5 +120,102 @@ describe('computeMoonbreak', () => {
 		const small = computeMoonbreak({ moonSize: 4000, attackers: [100] });
 		const big = computeMoonbreak({ moonSize: 8944, attackers: [100] });
 		expect(big.losses.mean).toBeGreaterThan(small.losses.mean);
+	});
+});
+
+describe('distribute', () => {
+	it('splits evenly when it divides', () => {
+		expect(distribute(120, 4)).toEqual([30, 30, 30, 30]);
+	});
+
+	it('gives the leftovers to the first attackers', () => {
+		expect(distribute(10, 4)).toEqual([3, 3, 2, 2]);
+	});
+
+	it('leaves an attacker empty rather than fail on a tiny fleet', () => {
+		expect(distribute(2, 4)).toEqual([1, 1, 0, 0]);
+	});
+});
+
+describe('breakProbability', () => {
+	// Same input as the headline figure of computeMoonbreak, as a fraction.
+	it('agrees with the headline probability', () => {
+		const { probability } = computeMoonbreak({ moonSize: 8944, attackers: [100] });
+		expect(breakProbability(8944, [100]) * 100).toBeCloseTo(probability, 1);
+	});
+
+	it('grows with the fleet', () => {
+		expect(breakProbability(8944, [50])).toBeLessThan(breakProbability(8944, [100]));
+	});
+
+	// An empty attacker contributes nothing, which is what makes distribute safe.
+	it('ignores an attacker without a Deathstar', () => {
+		expect(breakProbability(8944, [30, 0])).toBeCloseTo(breakProbability(8944, [30]), 10);
+	});
+});
+
+describe('ripForProbability', () => {
+	it('finds the smallest fleet reaching the target', () => {
+		const rip = ripForProbability(8944, 1, 95);
+		expect(breakProbability(8944, distribute(rip, 1)) * 100).toBeGreaterThanOrEqual(95);
+		expect(breakProbability(8944, distribute(rip - 1, 1)) * 100).toBeLessThan(95);
+	});
+
+	it('needs fewer Deathstars on a small moon', () => {
+		expect(ripForProbability(4000, 1, 95)).toBeLessThan(ripForProbability(8944, 1, 95));
+	});
+
+	it('needs fewer Deathstars when the waves are spread over more attackers', () => {
+		expect(ripForProbability(8944, 4, 95)).toBeLessThan(ripForProbability(8944, 1, 95));
+	});
+
+	it('reports an unreachable target instead of guessing', () => {
+		expect(ripForProbability(8944, 1, 100)).toBeNull();
+	});
+});
+
+describe('describeCurve', () => {
+	const curve = (over = {}) =>
+		describeCurve({ moonSize: 8944, attackerCount: 1, currentRip: 100, ...over });
+
+	it('rises from 1 Deathstar to the far end', () => {
+		const { points } = curve();
+		expect(points[0].rip).toBe(1);
+		expect(points[0].probability).toBeLessThan(points[points.length - 1].probability);
+	});
+
+	it('never grows past 100 %', () => {
+		for (const { probability } of curve().points) {
+			expect(probability).toBeLessThanOrEqual(100);
+			expect(probability).toBeGreaterThanOrEqual(0);
+		}
+	});
+
+	it('marks the fleet currently entered, exactly once', () => {
+		const marked = curve().points.filter((point) => point.current);
+		expect(marked).toHaveLength(1);
+		expect(marked[0].rip).toBe(100);
+	});
+
+	it('reaches at least the fleet entered, however big', () => {
+		expect(curve({ currentRip: 400 }).upTo).toBeGreaterThanOrEqual(400);
+	});
+
+	it('still plots a readable range for a single Deathstar', () => {
+		expect(curve({ currentRip: 1 }).upTo).toBeGreaterThan(1);
+	});
+
+	it('annotates every threshold', () => {
+		expect(curve().targets.map(({ target }) => target)).toEqual(CURVE_TARGETS);
+	});
+
+	// 60 points at most, so the inline SVG stays small.
+	it('caps the number of points', () => {
+		expect(curve({ currentRip: 600 }).points.length).toBeLessThanOrEqual(62);
+	});
+
+	it('keeps the points in order and free of duplicates', () => {
+		const rips = curve().points.map((point) => point.rip);
+		expect(rips).toEqual([...new Set(rips)].sort((a, b) => a - b));
 	});
 });

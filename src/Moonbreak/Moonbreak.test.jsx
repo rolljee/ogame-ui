@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { renderWithI18n, screen, userEvent } from '../test/utils';
+import { renderWithI18n, screen, userEvent, within } from '../test/utils';
 import Moonbreak from './Moonbreak';
 
 describe('<Moonbreak />', () => {
@@ -15,8 +15,9 @@ describe('<Moonbreak />', () => {
 
 		await user.type(screen.getByLabelText('Attacker 1'), '100');
 
-		// Default moon size is the 8944 km maximum.
-		expect(screen.getByText('77.75%')).toBeInTheDocument();
+		// Default moon size is the 8944 km maximum. Read the headline percentage
+		// next to its caption: the curve below plots the same figures.
+		expect(screen.getByText('chance to break the moon').closest('p')).toHaveTextContent('77.75%');
 		expect(screen.getByText('4 wave(s) of 17 and 2 wave(s) of 16 Deathstars.')).toBeInTheDocument();
 	});
 
@@ -89,13 +90,46 @@ describe('<Moonbreak />', () => {
 
 		await user.type(screen.getByLabelText('Attacker 1'), '100');
 
-		expect(screen.getByText('68%')).toBeInTheDocument();
-		expect(screen.getByText('95%')).toBeInTheDocument();
-		expect(screen.getByText('99%')).toBeInTheDocument();
+		// Scoped to the bands: the curve also labels its 95 % and 99 % thresholds.
+		const bands = within(screen.getByText('Estimated losses').nextElementSibling);
+		expect(bands.getByText('68%')).toBeInTheDocument();
+		expect(bands.getByText('95%')).toBeInTheDocument();
+		expect(bands.getByText('99%')).toBeInTheDocument();
 		expect(
 			screen.getByText('chance to lose between 23.33 and 31.98 Deathstars'),
 		).toBeInTheDocument();
 		expect(screen.getByText('27.66')).toBeInTheDocument();
+	});
+
+	it('plots the probability curve for the fleet entered', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Moonbreak />);
+
+		await user.type(screen.getByLabelText('Attacker 1'), '100');
+
+		const chart = screen.getByRole('img', { name: /Chance of breaking the moon/ });
+		expect(chart).toBeInTheDocument();
+		// The fleet entered is marked on the curve.
+		expect(chart).toHaveTextContent('100 RIP · 77.75 %');
+		// And the thresholds say how many Deathstars each one costs.
+		expect(screen.getByText(/95 % from \d+ RIP/)).toBeInTheDocument();
+	});
+
+	it('offers the curve values as a table', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Moonbreak />);
+
+		await user.type(screen.getByLabelText('Attacker 1'), '100');
+
+		await user.click(screen.getByText('Show the values'));
+		const table = within(screen.getByRole('table'));
+		expect(table.getByRole('columnheader', { name: 'RIP' })).toBeInTheDocument();
+		expect(table.getByRole('cell', { name: '77.75%' })).toBeInTheDocument();
+	});
+
+	it('has no curve while the form is unusable', () => {
+		renderWithI18n(<Moonbreak />);
+		expect(screen.queryByRole('img', { name: /Chance of breaking the moon/ })).not.toBeInTheDocument();
 	});
 
 	it('renders in French too', () => {

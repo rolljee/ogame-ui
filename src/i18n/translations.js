@@ -78,6 +78,19 @@ export const translations = {
 		'mb.waves.mixed': '{wavesA} vague(s) de {ripA} et {wavesB} vague(s) de {ripB} RIP.',
 		'mb.waves.partial': '{waves} vague(s) de 1 RIP.',
 
+		'mb.curve.title': 'Courbe de probabilité',
+		'mb.curve.help':
+			"Les mêmes {attackers} attaquant(s), avec une flotte plus ou moins grosse répartie équitablement entre eux. Passé le palier des 95 %, chaque RIP de plus ne rapporte presque rien : il vaut mieux un attaquant supplémentaire.",
+		'mb.curve.aria':
+			'Probabilité de casser la lune selon le nombre de RIP, de 1 à {rip} RIP, jusqu’à {probability} %.',
+		'mb.curve.axisX': '{rip} RIP',
+		'mb.curve.point': '{rip} RIP · {probability} %',
+		'mb.curve.target': '{target} % dès {rip} RIP',
+		'mb.curve.unreachable': '{target} % hors d’atteinte à {attackers} attaquant(s)',
+		'mb.curve.table': 'Voir les valeurs',
+		'mb.curve.col.rip': 'RIP',
+		'mb.curve.col.probability': 'Chances',
+
 		'mb.error.size': 'Entre une taille de lune valide pour voir le résultat.',
 		'mb.error.rip': 'Entre le nombre de RIP de chaque attaquant pour voir le résultat.',
 		'mb.error.attackers': 'Il faut entre 1 et 4 attaquants.',
@@ -347,6 +360,19 @@ export const translations = {
 		'mb.waves.uniform': '{waves} waves of {rip} Deathstars.',
 		'mb.waves.mixed': '{wavesA} wave(s) of {ripA} and {wavesB} wave(s) of {ripB} Deathstars.',
 		'mb.waves.partial': '{waves} wave(s) of 1 Deathstar.',
+
+		'mb.curve.title': 'Probability curve',
+		'mb.curve.help':
+			'The same {attackers} attacker(s), with a larger or smaller fleet spread evenly between them. Past the 95 % mark each extra Deathstar buys almost nothing: bring another attacker instead.',
+		'mb.curve.aria':
+			'Chance of breaking the moon by Deathstar count, from 1 to {rip} RIP, up to {probability} %.',
+		'mb.curve.axisX': '{rip} RIP',
+		'mb.curve.point': '{rip} RIP · {probability} %',
+		'mb.curve.target': '{target} % from {rip} RIP',
+		'mb.curve.unreachable': '{target} % out of reach with {attackers} attacker(s)',
+		'mb.curve.table': 'Show the values',
+		'mb.curve.col.rip': 'RIP',
+		'mb.curve.col.probability': 'Chance',
 
 		'mb.error.size': 'Enter a valid moon size to see the result.',
 		'mb.error.rip': "Enter each attacker's Deathstar count to see the result.",
