@@ -1000,20 +1000,46 @@ input[type='range'].slider {
 	gap: 12px;
 }
 
-.pl-search-form {
+.pl-filter-row {
 	display: flex;
 	align-items: stretch;
 	gap: 10px;
-
-	.field {
-		flex: 1;
-	}
 
 	input[type='search'] {
 		&::-webkit-search-cancel-button {
 			filter: invert(0.7);
 		}
 	}
+
+	@media (max-width: 560px) {
+		flex-wrap: wrap;
+	}
+}
+
+.pl-field-name {
+	flex: 1 1 220px;
+}
+
+// A galaxy is one digit, a system three: no need for a wide box.
+.pl-field-position {
+	flex: 0 0 96px;
+}
+
+.pl-sort {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.pl-sort-label {
+	font-size: 12.5px;
+	color: var(--text-dim);
+}
+
+.pl-coords-age {
+	margin: 12px 0 0;
+	font-size: 12.5px;
 }
 
 .pl-list {
@@ -1030,7 +1056,7 @@ input[type='range'].slider {
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		max-height: 320px;
+		max-height: 460px;
 		overflow-y: auto;
 	}
 }
@@ -1065,6 +1091,19 @@ input[type='range'].slider {
 
 .pl-row-name {
 	font-weight: 600;
+	flex: 1 1 auto;
+}
+
+.pl-row-coords {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+.pl-row-more {
+	font-size: 11.5px;
+	color: var(--text-dim);
 }
 
 .pl-badges {

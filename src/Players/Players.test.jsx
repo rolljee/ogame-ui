@@ -2,11 +2,11 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderWithI18n, screen, userEvent, waitFor, within } from '../test/utils';
 import Players from './Players';
-import { fetchPlayer, fetchUniverses, searchPlayers } from '../api/ogame';
+import { fetchPlayer, fetchRoster, fetchUniverses } from '../api/ogame';
 
 vi.mock('../api/ogame', () => ({
 	fetchUniverses: vi.fn(),
-	searchPlayers: vi.fn(),
+	fetchRoster: vi.fn(),
 	fetchPlayer: vi.fn(),
 	ApiError: class ApiError extends Error {},
 }));
@@ -28,22 +28,42 @@ const status = (over = {}) => ({
 	...over,
 });
 
-const RESULTS = {
-	total: 3,
+// Élysée straddles two galaxies, Elysium shares a system with her, Elyx sits
+// elsewhere, and Newcomer has no coordinates — the galaxy dump lags by days.
+const ROSTER = {
+	total: 4,
+	coordsTimestamp: Math.round(Date.now() / 1000) - 7200,
 	players: [
 		{
 			id: '100010',
 			name: 'Élysée',
-			// The proxy resolves the alliance id against alliances.xml for us.
 			alliance: { id: '5', name: 'The Wolf Army', tag: 'TWA' },
 			status: status({ active: true }),
+			planets: [
+				{ coords: '1:1:1', moon: false },
+				{ coords: '4:212:8', moon: true },
+			],
 		},
-		{ id: '100011', name: 'Elysium', alliance: null, status: status({ vacation: true }) },
+		{
+			id: '100011',
+			name: 'Elysium',
+			alliance: null,
+			status: status({ vacation: true }),
+			planets: [{ coords: '4:212:9', moon: false }],
+		},
 		{
 			id: '100012',
 			name: 'Elyx',
 			alliance: null,
 			status: status({ inactive: true, longInactive: true }),
+			planets: [{ coords: '2:194:8', moon: false }],
+		},
+		{
+			id: '100013',
+			name: 'Newcomer',
+			alliance: null,
+			status: status({ active: true }),
+			planets: [],
 		},
 	],
 };
@@ -67,103 +87,140 @@ const PLAYER = {
 	],
 };
 
-// Submitting with Enter keeps the helper language-agnostic; the button itself
-// is exercised in its own test below.
-async function search(user, term = 'elysee') {
-	await user.type(screen.getByRole('searchbox'), `${term}{enter}`);
-}
+const rows = () => within(screen.getByRole('list'));
+
+// Row order matters to the sort tests, so read the names off the DOM in order.
+const names = () =>
+	[...screen.getByRole('list').querySelectorAll('.pl-row-name')].map(
+		(node) => node.textContent,
+	);
 
 beforeEach(() => {
 	vi.clearAllMocks();
 	fetchUniverses.mockResolvedValue(UNIVERSES);
-	searchPlayers.mockResolvedValue(RESULTS);
+	fetchRoster.mockResolvedValue(ROSTER);
 	fetchPlayer.mockResolvedValue(PLAYER);
 });
 
 describe('<Players />', () => {
-	it('does not search until a term is submitted', async () => {
+	// The whole point of the roster: the list is there before anything is typed.
+	it('loads the whole universe as soon as one is picked', async () => {
 		renderWithI18n(<Players />, { lang: 'en' });
 		await screen.findByLabelText('Community');
-		expect(searchPlayers).not.toHaveBeenCalled();
-		expect(screen.getByText(/Search for a player/)).toBeInTheDocument();
-	});
-
-	it('searches the selected universe', async () => {
-		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-
-		await search(user);
 
 		await waitFor(() =>
-			expect(searchPlayers).toHaveBeenCalledWith(
-				{ lang: 'en', universe: '101', search: 'elysee' },
-				expect.anything(),
-			),
+			expect(fetchRoster).toHaveBeenCalledWith({ lang: 'en', universe: '101' }, expect.anything()),
 		);
-	});
-
-	it('searches from the button too', async () => {
-		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-
-		await user.type(screen.getByLabelText(/Name/), 'elysee');
-		await user.click(screen.getByRole('button', { name: 'Search' }));
-
-		await waitFor(() => expect(searchPlayers).toHaveBeenCalled());
-	});
-
-	it('lists the matches with their status badges', async () => {
-		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-
-		await search(user);
-
 		expect(await screen.findByText('Élysée')).toBeInTheDocument();
-		expect(screen.getByText('Showing 3 of 3 matching player(s).')).toBeInTheDocument();
-
-		const rows = within(screen.getByRole('list'));
-		expect(rows.getByText(/Vacation/)).toBeInTheDocument();
-		// Both `i` and `I` are set, but only the 28-day badge is shown.
-		expect(rows.getByText(/Inactive \(28 d\)/)).toBeInTheDocument();
-		expect(rows.queryByText(/Inactive \(7 d\)/)).not.toBeInTheDocument();
+		expect(screen.getByText('4 of the 4 players in the universe.')).toBeInTheDocument();
 	});
 
-	it('shows the tag of the alliance each player belongs to', async () => {
+	it('filters by name as you type, without a request', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-
-		await search(user);
-
-		const rows = within(screen.getByRole('list'));
-		expect(await rows.findByText('[TWA]')).toHaveAttribute('title', 'The Wolf Army');
-		// A player without an alliance simply has no tag.
-		expect(rows.getByRole('button', { name: /Elysium/ })).not.toHaveTextContent('[');
-	});
-
-	it('filters the results by status, without a new request', async () => {
-		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-		await search(user);
 		await screen.findByText('Élysée');
 
+		await user.type(screen.getByRole('searchbox'), 'elysee');
+
+		expect(names()).toEqual(['Élysée[TWA]']);
+		expect(fetchRoster).toHaveBeenCalledTimes(1);
+	});
+
+	it('filters by galaxy', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+
+		await user.type(screen.getByLabelText(/Galaxy/), '4');
+
+		expect(names()).toEqual(['Élysée[TWA]', 'Elysium']);
+	});
+
+	it('filters by system', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+
+		await user.type(screen.getByLabelText(/System/), '194');
+
+		expect(names()).toEqual(['Elyx']);
+	});
+
+	it('combines a galaxy with a status filter', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+
+		await user.type(screen.getByLabelText(/Galaxy/), '4');
 		const filters = within(screen.getByRole('group', { name: 'Filter by status' }));
 		await user.click(filters.getByRole('button', { name: /Vacation/ }));
 
-		expect(screen.getByText('Elysium')).toBeInTheDocument();
-		expect(screen.queryByText('Élysée')).not.toBeInTheDocument();
-		expect(searchPlayers).toHaveBeenCalledTimes(1);
+		expect(names()).toEqual(['Elysium']);
+	});
+
+	// Only the positions that matched are worth showing on a row.
+	it('shows the coordinates that matched, linked into the galaxy view', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+
+		await user.type(screen.getByLabelText(/Galaxy/), '4');
+
+		const link = rows().getByRole('link', { name: /4:212:8/ });
+		expect(link).toHaveAttribute(
+			'href',
+			'https://s101-en.ogame.gameforge.com/game/index.php' +
+				'?page=ingame&component=galaxy&galaxy=4&system=212&position=8',
+		);
+		expect(rows().queryByRole('link', { name: /1:1:1/ })).not.toBeInTheDocument();
+	});
+
+	it('sorts by position on request, and by name by default', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+		expect(names()).toEqual(['Élysée[TWA]', 'Elysium', 'Elyx', 'Newcomer']);
+
+		const sort = within(screen.getByRole('group', { name: 'Sort by' }));
+		await user.click(sort.getByRole('button', { name: 'Position' }));
+
+		// 1:1:1, then 2:194:8, then 4:212:9, and no coordinates last.
+		expect(names()).toEqual(['Élysée[TWA]', 'Elyx', 'Elysium', 'Newcomer']);
+	});
+
+	it('keeps a player without coordinates until a position is asked for', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Newcomer');
+
+		await user.type(screen.getByLabelText(/Galaxy/), '1');
+
+		expect(names()).not.toContain('Newcomer');
+	});
+
+	// The galaxy dump is days old; the view has to say so.
+	it('says how old the positions are', async () => {
+		renderWithI18n(<Players />, { lang: 'en' });
+		expect(await screen.findByText(/galaxy dump, 2 h old/)).toBeInTheDocument();
+	});
+
+	it('shows the alliance tag of each player', async () => {
+		renderWithI18n(<Players />, { lang: 'en' });
+		expect(await screen.findByText('[TWA]')).toHaveAttribute('title', 'The Wolf Army');
+	});
+
+	it('badges the statuses, keeping only the longer inactivity', async () => {
+		renderWithI18n(<Players />, { lang: 'en' });
+		await screen.findByText('Élysée');
+
+		expect(rows().getByText(/Vacation/)).toBeInTheDocument();
+		expect(rows().getByText(/Inactive \(28 d\)/)).toBeInTheDocument();
+		expect(rows().queryByText(/Inactive \(7 d\)/)).not.toBeInTheDocument();
 	});
 
 	it('loads a player and shows their scores and planets', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-		await search(user);
 
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 
@@ -174,32 +231,13 @@ describe('<Players />', () => {
 			),
 		);
 		expect(await screen.findByText('1.403.837')).toBeInTheDocument();
-		expect(screen.getByText('Overall')).toBeInTheDocument();
 		expect(screen.getByText('2 planet(s) · 1 moon(s)')).toBeInTheDocument();
 		expect(screen.getByText('Colonie')).toBeInTheDocument();
-		expect(screen.getByText(/Lune/)).toHaveTextContent('8.944 km');
-	});
-
-	it('links every coordinate into the galaxy view of the universe', async () => {
-		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-		await search(user);
-		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
-
-		const link = await screen.findByRole('link', { name: '[4:212:8]' });
-		expect(link).toHaveAttribute(
-			'href',
-			'https://s101-en.ogame.gameforge.com/game/index.php' +
-				'?page=ingame&component=galaxy&galaxy=4&system=212&position=8',
-		);
 	});
 
 	it('drops the score categories Gameforge does not document', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-		await search(user);
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 
 		await screen.findByText('Overall');
@@ -209,8 +247,6 @@ describe('<Players />', () => {
 	it('forgets the selected player when the universe changes', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-		await search(user);
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 		await screen.findByText('Overall');
 
@@ -219,37 +255,30 @@ describe('<Players />', () => {
 		expect(await screen.findByText(/Pick a player from the list/)).toBeInTheDocument();
 	});
 
-	it('reports a failed search', async () => {
-		const user = userEvent.setup();
-		searchPlayers.mockRejectedValue(new Error('upstream responded 502'));
+	it('reports a roster that could not be loaded', async () => {
+		fetchRoster.mockRejectedValue(new Error('upstream responded 502'));
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
-
-		await search(user);
 
 		const alert = await screen.findByRole('alert');
-		expect(alert).toHaveTextContent('The search failed');
+		expect(alert).toHaveTextContent("Could not load this universe's roster");
 		expect(alert).toHaveTextContent('upstream responded 502');
 	});
 
-	it('says so when nothing matches', async () => {
+	it('says so when nothing matches the filters', async () => {
 		const user = userEvent.setup();
-		searchPlayers.mockResolvedValue({ total: 0, players: [] });
 		renderWithI18n(<Players />, { lang: 'en' });
-		await screen.findByLabelText('Community');
+		await screen.findByText('Élysée');
 
-		await search(user, 'zzz');
+		await user.type(screen.getByRole('searchbox'), 'zzz');
 
-		expect(await screen.findByText('No player matches.')).toBeInTheDocument();
+		expect(screen.getByText('No player matches.')).toBeInTheDocument();
 	});
 
 	it('renders in French too', async () => {
-		const user = userEvent.setup();
 		renderWithI18n(<Players />, { lang: 'fr' });
-		await screen.findByLabelText('Communauté');
+		await screen.findByText('Élysée');
 
-		await search(user, 'elysee');
-
-		expect(await within(screen.getByRole('list')).findByText(/Vacances/)).toBeInTheDocument();
+		expect(rows().getByText(/Vacances/)).toBeInTheDocument();
+		expect(screen.getByLabelText(/Galaxie/)).toBeInTheDocument();
 	});
 });

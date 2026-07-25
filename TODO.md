@@ -123,6 +123,14 @@ inutile : `playerData.xml` porte déjà les planètes et les lunes.
 - [x] Le tag de l'alliance sur chaque ligne de résultat. `players.xml` ne donne
       que l'id : le proxy croise avec `alliances.xml` côté serveur, donc le
       navigateur ne voit jamais un id non résolu.
+- [x] **Annuaire complet** plutôt que recherche obligatoire : `/roster` renvoie
+      tous les joueurs de l'univers d'un coup (56 Ko gzip sur s282), la vue filtre
+      et trie en mémoire — nom, statut, **galaxie et système**, tri par nom ou par
+      position, sans une requête de plus.
+- [x] Les coordonnées viennent d'`universe.xml`, seul document à les donner pour
+      tout le monde. Il est **scanné** (2 attributs) et non parsé : 7 ms au lieu de
+      136 ms sur les 3,2 Mo de s172. Il est aussi le plus vieux des trois
+      documents (85 h observées), donc la vue affiche l'âge des positions.
 
 ## 2. Alliances (`Alliances`) — ✅ fait (`src/Alliances/`)
 

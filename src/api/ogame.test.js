@@ -4,10 +4,10 @@ import {
 	ApiError,
 	fetchAlliance,
 	fetchPlayer,
+	fetchRoster,
 	fetchServerData,
 	fetchUniverses,
 	searchAlliances,
-	searchPlayers,
 } from './ogame';
 
 function stubFetch(body, { status = 200 } = {}) {
@@ -51,19 +51,23 @@ describe('fetchServerData', () => {
 	});
 });
 
-describe('searchPlayers', () => {
-	it('returns the matches and the total', async () => {
-		stubFetch({ players: [{ id: '1', name: 'Vader' }], total: 1 });
-		await expect(searchPlayers({ universe: 172, lang: 'fr', search: 'vader' })).resolves.toEqual({
-			players: [{ id: '1', name: 'Vader' }],
-			total: 1,
-		});
+describe('fetchRoster', () => {
+	it('asks for the whole universe, with no search term', async () => {
+		const spy = stubFetch({ players: [], total: 0, coordsTimestamp: 1 });
+		await fetchRoster({ universe: 282, lang: 'fr' });
+		expect(spy.mock.calls[0][0].toString()).toBe(`${API_URL}/roster?universe=282&lang=fr`);
 	});
 
-	it('encodes a search term with spaces', async () => {
-		const spy = stubFetch({ players: [], total: 0 });
-		await searchPlayers({ universe: 172, lang: 'fr', search: 'darth vader' });
-		expect(spy.mock.calls[0][0].searchParams.get('search')).toBe('darth vader');
+	it('returns the payload as it comes, coordinates included', async () => {
+		stubFetch({
+			total: 1,
+			coordsTimestamp: 1784702404,
+			players: [{ id: '1', name: 'Vader', planets: [{ coords: '1:1:1', moon: true }] }],
+		});
+		await expect(fetchRoster({ universe: 282, lang: 'fr' })).resolves.toMatchObject({
+			total: 1,
+			coordsTimestamp: 1784702404,
+		});
 	});
 });
 
@@ -96,7 +100,7 @@ describe('fetchPlayer and searchAlliances', () => {
 describe('error handling', () => {
 	it('surfaces the error message sent by the proxy', async () => {
 		stubFetch({ error: 'missing parameter: search' }, { status: 400 });
-		await expect(searchPlayers({ universe: 172, lang: 'fr' })).rejects.toThrow(
+		await expect(searchAlliances({ universe: 172, lang: 'fr' })).rejects.toThrow(
 			'missing parameter: search',
 		);
 	});

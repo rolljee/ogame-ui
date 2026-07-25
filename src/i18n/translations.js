@@ -124,19 +124,25 @@ export const translations = {
 		'exp.error.level': "Entre ton niveau d'hyperespace pour voir le résultat.",
 
 		'pl.intro':
-			"Cherche un joueur par son nom pour voir ses scores par catégorie, ses planètes et ses lunes. Chaque coordonnée est un lien direct vers la vue galaxie de ton univers.",
+			"Tout l'annuaire de l'univers, chargé d'un coup : filtre par nom, par galaxie, par système solaire ou par statut, puis ouvre un joueur pour voir ses scores, ses planètes et ses lunes. Chaque coordonnée est un lien direct vers la vue galaxie.",
 
 		'pl.step.universe': 'Choisir un univers',
 		'pl.step.universe.help':
 			"Les joueurs sont propres à un univers : commence par choisir le tien.",
 
-		'pl.step.search': 'Chercher un joueur',
-		'pl.step.search.help':
-			"Un univers compte des milliers de joueurs : la recherche est obligatoire. Elle ignore la casse et les accents (« elysee » trouve « Élysée »). Les filtres de statut s'appliquent aux résultats.",
+		'pl.step.filter': 'Filtrer la liste',
+		'pl.step.filter.help':
+			"Tous les filtres agissent sur la liste déjà chargée : rien à valider, rien à recharger. Le nom ignore la casse et les accents (« elysee » trouve « Élysée »). Un joueur est retenu si l'une de ses planètes est dans la galaxie ou le système demandé.",
 		'pl.search.label': 'Nom',
 		'pl.search.placeholder': 'Nom du joueur',
-		'pl.search.submit': 'Chercher',
 		'pl.filter.label': 'Filtrer par statut',
+		'pl.filter.galaxy': 'Galaxie',
+		'pl.filter.system': 'Système',
+		'pl.sort.label': 'Trier par',
+		'pl.sort.name': 'Nom',
+		'pl.sort.position': 'Position',
+		'pl.coords.age':
+			"Positions issues du relevé de galaxie de l'univers, vieux de {hours} h : un joueur arrivé depuis n'a pas encore de coordonnées.",
 
 		'pl.status.active': 'Actif',
 		'pl.status.inactive': 'Inactif (7 j)',
@@ -146,17 +152,18 @@ export const translations = {
 		'pl.status.outlaw': 'Hors-la-loi',
 		'pl.status.admin': 'Administrateur',
 
-		'pl.list.count': '{shown} joueur(s) affiché(s) sur {total} trouvé(s).',
+		'pl.list.count': '{matching} joueur(s) sur {total} dans l’univers.',
+		'pl.list.capped':
+			'{shown} premiers affichés, sur {matching} joueur(s) retenus ({total} dans l’univers) — affine le filtre pour voir les autres.',
 		'pl.list.empty': 'Aucun joueur ne correspond.',
 
-		'pl.loading': 'Recherche en cours…',
+		'pl.loading': "Chargement de l'annuaire de l'univers…",
 		'pl.loading.detail': 'Chargement du joueur…',
-		'pl.error.search': 'La recherche a échoué.',
+		'pl.error.roster': "Impossible de charger l'annuaire de cet univers.",
 		'pl.error.detail': 'Impossible de charger ce joueur.',
 
 		'pl.detail.title': 'Joueur',
 		'pl.detail.pick': 'Choisis un joueur dans la liste pour voir son détail.',
-		'pl.detail.searchFirst': 'Cherche un joueur pour voir son détail.',
 		'pl.detail.summary': '{planets} planète(s) · {moons} lune(s)',
 		'pl.detail.scores': 'Scores',
 		'pl.detail.planets': 'Planètes et lunes',
@@ -409,18 +416,24 @@ export const translations = {
 		'exp.error.level': 'Enter your hyperspace level to see the result.',
 
 		'pl.intro':
-			'Look a player up by name to see their scores per category, their planets and their moons. Every coordinate links straight into your universe’s galaxy view.',
+			'The whole roster of the universe, loaded at once: filter by name, galaxy, solar system or status, then open a player for their scores, planets and moons. Every coordinate links straight into the galaxy view.',
 
 		'pl.step.universe': 'Pick a universe',
 		'pl.step.universe.help': 'Players belong to a universe: start by picking yours.',
 
-		'pl.step.search': 'Find a player',
-		'pl.step.search.help':
-			'A universe holds thousands of players, so a search term is required. It ignores case and accents (“elysee” finds “Élysée”). Status filters apply to the results.',
+		'pl.step.filter': 'Filter the list',
+		'pl.step.filter.help':
+			'Every control filters the list already loaded: nothing to submit, nothing to reload. The name ignores case and accents (“elysee” finds “Élysée”). A player is kept when any of their planets sits in the galaxy or the system asked for.',
 		'pl.search.label': 'Name',
 		'pl.search.placeholder': 'Player name',
-		'pl.search.submit': 'Search',
 		'pl.filter.label': 'Filter by status',
+		'pl.filter.galaxy': 'Galaxy',
+		'pl.filter.system': 'System',
+		'pl.sort.label': 'Sort by',
+		'pl.sort.name': 'Name',
+		'pl.sort.position': 'Position',
+		'pl.coords.age':
+			'Positions come from the universe’s galaxy dump, {hours} h old: a player who joined since has no coordinates yet.',
 
 		'pl.status.active': 'Active',
 		'pl.status.inactive': 'Inactive (7 d)',
@@ -430,17 +443,18 @@ export const translations = {
 		'pl.status.outlaw': 'Outlaw',
 		'pl.status.admin': 'Administrator',
 
-		'pl.list.count': 'Showing {shown} of {total} matching player(s).',
+		'pl.list.count': '{matching} of the {total} players in the universe.',
+		'pl.list.capped':
+			'First {shown} shown, out of {matching} matching player(s) ({total} in the universe) — narrow the filter to see the rest.',
 		'pl.list.empty': 'No player matches.',
 
-		'pl.loading': 'Searching…',
+		'pl.loading': "Loading the universe's roster…",
 		'pl.loading.detail': 'Loading the player…',
-		'pl.error.search': 'The search failed.',
+		'pl.error.roster': "Could not load this universe's roster.",
 		'pl.error.detail': 'Could not load this player.',
 
 		'pl.detail.title': 'Player',
 		'pl.detail.pick': 'Pick a player from the list to see the details.',
-		'pl.detail.searchFirst': 'Search for a player to see the details.',
 		'pl.detail.summary': '{planets} planet(s) · {moons} moon(s)',
 		'pl.detail.scores': 'Scores',
 		'pl.detail.planets': 'Planets and moons',
