@@ -75,6 +75,15 @@ describe('<App />', () => {
 		);
 	});
 
+	it('links to the support page in a new tab', () => {
+		renderWithI18n(<App />);
+
+		const link = screen.getByRole('link', { name: /Buy me a coffee/ });
+		expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/rolljee');
+		expect(link).toHaveAttribute('target', '_blank');
+		expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+	});
+
 	it('comes back to the trade calculator', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);
