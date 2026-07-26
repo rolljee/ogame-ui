@@ -293,6 +293,9 @@ export const translations = {
 		'srv.tradeRatio': "Taux d'échange officiel",
 
 		'lang.label': 'Langue',
+
+		'footer.fanMade': 'outil fait par un fan',
+		'footer.support': 'Offre-moi un café',
 	},
 	en: {
 		'brand': 'OGame Tools',
@@ -583,6 +586,9 @@ export const translations = {
 		'srv.tradeRatio': 'Official exchange rate',
 
 		'lang.label': 'Language',
+
+		'footer.fanMade': 'fan-made tool',
+		'footer.support': 'Buy me a coffee',
 	},
 };
 

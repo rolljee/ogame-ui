@@ -87,7 +87,15 @@ function App() {
 					<a href="https://ogame.gameforge.com" target="_blank" rel="noopener noreferrer">
 						OGame
 					</a>{' '}
-					· fan-made tool
+					· {t('footer.fanMade')}
+					<a
+						className="support-link"
+						href="https://buymeacoffee.com/rolljee"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<span aria-hidden="true">☕</span> {t('footer.support')}
+					</a>
 				</footer>
 			</div>
 		</>
