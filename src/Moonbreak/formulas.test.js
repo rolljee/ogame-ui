@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
 	CURVE_TARGETS,
+	attackWaves,
+	attackerWaves,
 	breakProbability,
 	computeMoonbreak,
 	describeCurve,
@@ -120,6 +122,55 @@ describe('computeMoonbreak', () => {
 		const small = computeMoonbreak({ moonSize: 4000, attackers: [100] });
 		const big = computeMoonbreak({ moonSize: 8944, attackers: [100] });
 		expect(big.losses.mean).toBeGreaterThan(small.losses.mean);
+	});
+
+	// The estimate used to pool the fleet into one average wave size, which made
+	// it blind to how the fleet was split: the same 101 Deathstars came out at
+	// the same losses whether they were 1 + 100 or 50 + 50, when the probability
+	// of breaking the moon was 79 % against 87 %.
+	describe('losses follow how the fleet is split', () => {
+		it('separates a lopsided attack from an even one', () => {
+			const lopsided = computeMoonbreak({ moonSize: 8944, attackers: [1, 100] });
+			const even = computeMoonbreak({ moonSize: 8944, attackers: [50, 51] });
+
+			expect(even.probability).toBeGreaterThan(lopsided.probability);
+			// Spread evenly, the waves are smaller and the moon falls sooner, so
+			// fewer of them ever fire.
+			expect(even.losses.mean).toBeLessThan(lopsided.losses.mean);
+		});
+
+		it('costs the big attacker more when they lead', () => {
+			// Attackers fire in the order they are listed. Sending the 100 first
+			// exposes its six full waves to a moon still standing.
+			const bigLast = computeMoonbreak({ moonSize: 8944, attackers: [1, 100] });
+			const bigFirst = computeMoonbreak({ moonSize: 8944, attackers: [100, 1] });
+
+			expect(bigFirst.probability).toBe(bigLast.probability);
+			expect(bigFirst.losses.mean).toBeGreaterThan(bigLast.losses.mean);
+		});
+	});
+});
+
+describe('attackWaves', () => {
+	it('gives each attacker six waves, the extras first', () => {
+		expect(attackerWaves(25)).toEqual([5, 4, 4, 4, 4, 4]);
+		expect(attackerWaves(24)).toEqual([4, 4, 4, 4, 4, 4]);
+	});
+
+	// Fewer Deathstars than waves: the empty ones neither threaten the moon nor
+	// lose a ship, so they can stay in the sequence.
+	it('pads an attacker smaller than six with empty waves', () => {
+		expect(attackerWaves(1)).toEqual([1, 0, 0, 0, 0, 0]);
+	});
+
+	it('chains the attackers in the order they are listed', () => {
+		expect(attackWaves([2, 12])).toEqual([1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2]);
+	});
+
+	it('accounts for every Deathstar sent', () => {
+		const fleets = [37, 8, 100];
+		const sum = attackWaves(fleets).reduce((a, b) => a + b, 0);
+		expect(sum).toBe(145);
 	});
 });
 

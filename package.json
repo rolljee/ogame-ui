@@ -7,7 +7,7 @@
   "dependencies": {
     "copy-to-clipboard": "^4.0.2",
     "fast-xml-parser": "^5.10.1",
-    "ogamejs": "^4.0.1",
+    "ogamejs": "^4.0.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

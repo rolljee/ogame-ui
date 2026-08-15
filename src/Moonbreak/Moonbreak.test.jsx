@@ -96,9 +96,9 @@ describe('<Moonbreak />', () => {
 		expect(bands.getByText('95%')).toBeInTheDocument();
 		expect(bands.getByText('99%')).toBeInTheDocument();
 		expect(
-			screen.getByText('chance to lose between 23.33 and 31.98 Deathstars'),
+			screen.getByText('chance to lose between 23.45 and 32.11 Deathstars'),
 		).toBeInTheDocument();
-		expect(screen.getByText('27.66')).toBeInTheDocument();
+		expect(screen.getByText('27.78')).toBeInTheDocument();
 	});
 
 	it('plots the probability curve for the fleet entered', async () => {
