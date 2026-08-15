@@ -65,7 +65,7 @@ export const translations = {
 
 		'mb.step.attackers': 'Étoiles de la mort',
 		'mb.step.attackers.help':
-			'Le nombre de RIP envoyées par chaque attaquant. Chacun répartit sa flotte sur 6 vagues. Jusqu\'à 4 attaquants.',
+			'Le nombre de RIP envoyées par chaque attaquant. Chacun répartit sa flotte sur 6 vagues. Jusqu\'à 4 attaquants. Ils tirent dans l\'ordre où tu les listes : ça ne change pas les chances de casser la lune, mais celui qui ouvre expose sa flotte entière et perd donc davantage.',
 		'mb.attacker': 'Attaquant {n}',
 		'mb.attacker.add': '+ Ajouter un attaquant',
 		'mb.attacker.remove': "Retirer l'attaquant {n}",
@@ -361,7 +361,7 @@ export const translations = {
 
 		'mb.step.attackers': 'Deathstars',
 		'mb.step.attackers.help':
-			'How many Deathstars each attacker sends. Every attacker splits their fleet over 6 waves. Up to 4 attackers.',
+			'How many Deathstars each attacker sends. Every attacker splits their fleet over 6 waves. Up to 4 attackers. They fire in the order you list them: that does not change the odds of breaking the moon, but whoever opens exposes their whole fleet and loses more.',
 		'mb.attacker': 'Attacker {n}',
 		'mb.attacker.add': '+ Add an attacker',
 		'mb.attacker.remove': 'Remove attacker {n}',
