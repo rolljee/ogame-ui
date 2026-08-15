@@ -51,7 +51,10 @@ export const SETTING_GROUPS = [
 		rows: [
 			{ key: 'topScore', labelKey: 'srv.topScore', format: 'integer' },
 			{ key: 'globalDeuteriumSaveFactor', labelKey: 'srv.deutSave', format: 'percent' },
-			{ key: 'probeCargo', labelKey: 'srv.probeCargo', format: 'bool' },
+			// A capacity in units, not a flag: 0 on most universes, 5 on the ones
+			// where probes can raid. Rendered as a yes/no it read "no" for every
+			// value but 1, i.e. "no" on exactly the universes where it is on.
+			{ key: 'probeCargo', labelKey: 'srv.probeCargo', format: 'integer' },
 			{
 				key: 'cargoHyperspaceTechMultiplier',
 				labelKey: 'srv.hyperspaceCargo',

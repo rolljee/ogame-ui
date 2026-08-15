@@ -99,6 +99,59 @@ describe('<Trader />', () => {
 		expect(screen.getByText('3.333')).toBeInTheDocument();
 	});
 
+	// The custom-rate fields are free-text numbers: emptied or zeroed, they used
+	// to reach the calculation and come back as 0 or as `Infinity`.
+	describe('unusable custom rates', () => {
+		function rateField(name) {
+			return screen.getAllByRole('spinbutton')[['Metal', 'Crystal', 'Deuterium'].indexOf(name)];
+		}
+
+		it('refuses a zeroed term instead of showing Infinity', async () => {
+			const user = userEvent.setup();
+			renderWithI18n(<Trader />);
+			await user.type(amountField(), '10000');
+
+			fireEvent.change(rateField('Metal'), { target: { value: '0' } });
+
+			expect(screen.getByRole('alert')).toHaveTextContent('Unusable rate');
+			expect(screen.queryByText('Infinity')).not.toBeInTheDocument();
+			expect(screen.getByText('Enter an amount to see the result.')).toBeInTheDocument();
+		});
+
+		it('refuses an emptied term instead of silently trading against zero', async () => {
+			const user = userEvent.setup();
+			renderWithI18n(<Trader />);
+			await user.type(amountField(), '10000');
+
+			fireEvent.change(rateField('Crystal'), { target: { value: '' } });
+
+			expect(screen.getByRole('alert')).toHaveTextContent('Unusable rate');
+			expect(screen.getByText('Enter an amount to see the result.')).toBeInTheDocument();
+		});
+
+		it('says nothing while the rate is usable', () => {
+			renderWithI18n(<Trader />);
+			expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+		});
+	});
+
+	// `4:3:2` is the same rate as `2:1.5:1`. The library only divided by the
+	// term being sold on the metal and crystal branches, so selling deuterium
+	// at `4:3:2` used to pay double.
+	it('treats a rescaled rate as the same rate, whichever resource is sold', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Trader />);
+		await user.type(amountField(), '10000');
+
+		fireEvent.change(screen.getAllByRole('spinbutton')[0], { target: { value: '4' } });
+		fireEvent.change(screen.getAllByRole('spinbutton')[1], { target: { value: '3' } });
+		fireEvent.change(screen.getAllByRole('spinbutton')[2], { target: { value: '2' } });
+
+		// Same as the 2:1.5:1 case: 10 000 metal and 7 500 crystal, not double.
+		expect(screen.getByText('10.000')).toBeInTheDocument();
+		expect(screen.getByText('7.500')).toBeInTheDocument();
+	});
+
 	it('clamps the split to 0-100 whatever the slider reports', () => {
 		renderWithI18n(<Trader />);
 

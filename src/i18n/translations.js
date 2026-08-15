@@ -33,6 +33,8 @@ export const translations = {
 			"Le taux compare la valeur des ressources (métal : cristal : deutérium). Par exemple 2 : 1,5 : 1 signifie que 2 métal ou 1,5 cristal valent 1 deutérium.",
 		'step.rate.presets': 'Taux courants',
 		'step.rate.custom': 'Taux personnalisé',
+		'step.rate.invalid':
+			'Taux inutilisable : les trois valeurs doivent être des nombres strictement positifs.',
 
 		'step.split': 'Répartition du résultat',
 		'step.split.help':
@@ -287,7 +289,7 @@ export const translations = {
 
 		'srv.topScore': 'Score du premier',
 		'srv.deutSave': 'Consommation de deutérium',
-		'srv.probeCargo': 'Fret dans les sondes',
+		'srv.probeCargo': 'Capacité de fret des sondes',
 		'srv.hyperspaceCargo': 'Fret par niveau d\'hyperespace',
 		'srv.marketplace': 'Place de marché',
 		'srv.tradeRatio': "Taux d'échange officiel",
@@ -328,6 +330,7 @@ export const translations = {
 			'The rate compares the value of resources (metal : crystal : deuterium). For example 2 : 1.5 : 1 means 2 metal or 1.5 crystal are worth 1 deuterium.',
 		'step.rate.presets': 'Common rates',
 		'step.rate.custom': 'Custom rate',
+		'step.rate.invalid': 'Unusable rate: all three values must be numbers greater than zero.',
 
 		'step.split': 'Split the result',
 		'step.split.help':
@@ -580,7 +583,7 @@ export const translations = {
 
 		'srv.topScore': 'Top score',
 		'srv.deutSave': 'Deuterium consumption',
-		'srv.probeCargo': 'Cargo on probes',
+		'srv.probeCargo': 'Probe cargo capacity',
 		'srv.hyperspaceCargo': 'Cargo per hyperspace level',
 		'srv.marketplace': 'Marketplace',
 		'srv.tradeRatio': 'Official exchange rate',

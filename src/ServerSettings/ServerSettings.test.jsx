@@ -28,7 +28,10 @@ const TUCANA = {
 	galaxies: 7,
 	debrisFactor: 0.5,
 	acs: 1,
-	probeCargo: 0,
+	defToTF: 0,
+	// A capacity in units, not a flag — 0 here, 5 on the universes where probes
+	// can raid.
+	probeCargo: 5,
 	topScore: 1403837599722.3,
 	marketplaceBasicTradeRatioMetal: 2.5,
 	marketplaceBasicTradeRatioCrystal: 1.5,
@@ -127,6 +130,15 @@ describe('<ServerSettings />', () => {
 		renderWithI18n(<ServerSettings />, { lang: 'en' });
 		expect(await screen.findByText('Yes')).toBeInTheDocument();
 		expect(screen.getByText('No')).toBeInTheDocument();
+	});
+
+	// probeCargo is how much a probe carries, not whether it carries anything.
+	// Read as a boolean it showed "No" for every value but 1 — including the 5
+	// of a universe where probes do raid.
+	it('shows the probe cargo capacity as a number, not a yes/no', async () => {
+		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		const row = (await screen.findByText('Probe cargo capacity')).closest('.srv-row');
+		expect(row).toHaveTextContent('5');
 	});
 
 	// s1-en omits <name> entirely, which used to render an empty heading.
