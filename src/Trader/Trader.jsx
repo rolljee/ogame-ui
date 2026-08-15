@@ -4,6 +4,7 @@ import OgameTrader from 'ogamejs/trades';
 import { useI18n } from '../i18n/I18nContext';
 import { RESOURCES } from '../components/constants';
 import { RESOURCE_ORDER } from './resources';
+import { isValidRate } from './rate';
 import ResourcePicker from './components/ResourcePicker';
 import AmountInput from './components/AmountInput';
 import RateSelector from './components/RateSelector';
@@ -17,10 +18,13 @@ function otherResources(selected) {
 }
 
 // Convert the selected resource amount into the two other resources using the
-// pure calculation helpers from ogamejs. Returns { resourceKey: amount }.
+// pure calculation helpers from ogamejs. Returns { resourceKey: amount }, or an
+// empty object when there is nothing to convert or the rate is unusable — the
+// library answers a zeroed or emptied rate with `Infinity` or 0, so it never
+// sees one (see `rate.js`).
 function computeOutputs(selected, amount, rate, percents) {
 	const value = Number(amount) || 0;
-	if (!value) return {};
+	if (!value || !isValidRate(rate)) return {};
 
 	if (selected === RESOURCES.deut) {
 		const { metal, crystal } = OgameTrader.sellDeut(value, percents.metal, percents.crystal, rate);
@@ -91,6 +95,13 @@ function Trader() {
 				</div>
 				<p className="help">{t('step.rate.help')}</p>
 				<RateSelector rate={rate} onChange={setRate} />
+				{/* An emptied or zeroed field used to reach the calculation and come
+				    back as 0 or Infinity; say the rate is unusable instead. */}
+				{!isValidRate(rate) && (
+					<p className="api-error" role="alert">
+						{t('step.rate.invalid')}
+					</p>
+				)}
 			</section>
 
 			<section className="section">
