@@ -1561,6 +1561,188 @@ input[type='range'].slider {
 }
 
 // ---------------------------------------------------------------------------
+// Galaxy heatmap
+// ---------------------------------------------------------------------------
+
+.gm-controls {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.gm-control {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.gm-map {
+	margin-top: 16px;
+}
+
+// A universe is hundreds of systems wide: the map scrolls sideways rather than
+// squeezing cells below the size of a pointer target.
+.gm-scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-bottom: 6px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+}
+
+.gm-rows {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	padding: 12px;
+	width: max-content;
+}
+
+.gm-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+// Pinned so the galaxy a row belongs to stays readable however far it is
+// scrolled.
+.gm-row-label {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	flex: 0 0 28px;
+	font-family: var(--font-display);
+	font-size: 12px;
+	color: var(--text-muted);
+	background: var(--bg-1);
+	padding: 2px 4px;
+	border-radius: 4px;
+}
+
+.gm-cells {
+	display: grid;
+	grid-template-columns: repeat(var(--gm-systems), 12px);
+	gap: 2px;
+}
+
+.gm-cell {
+	appearance: none;
+	padding: 0;
+	height: 16px;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: transform 0.1s ease, border-color 0.1s ease;
+
+	&:hover {
+		border-color: var(--text);
+		transform: scale(1.25);
+	}
+
+	&.is-selected {
+		border-color: var(--accent);
+		box-shadow: 0 0 10px var(--glow);
+	}
+}
+
+// One ramp for every metric: the legend says what is being counted, the shade
+// only says how much of it there is.
+.gm-level-0 {
+	background: rgba(120, 190, 255, 0.06);
+}
+
+.gm-level-1 {
+	background: rgba(55, 200, 255, 0.22);
+}
+
+.gm-level-2 {
+	background: rgba(55, 200, 255, 0.42);
+}
+
+.gm-level-3 {
+	background: rgba(124, 92, 255, 0.6);
+}
+
+.gm-level-4 {
+	background: rgba(255, 138, 122, 0.72);
+}
+
+.gm-level-5 {
+	background: rgba(255, 208, 96, 0.92);
+}
+
+.gm-axis {
+	margin-top: 4px;
+	height: 16px;
+
+	.gm-cells {
+		align-items: center;
+	}
+}
+
+.gm-tick {
+	font-size: 10.5px;
+	color: var(--text-dim);
+	white-space: nowrap;
+}
+
+.gm-legend {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 10px;
+	font-size: 12.5px;
+	color: var(--text-dim);
+}
+
+.gm-legend-swatch {
+	width: 16px;
+	height: 12px;
+	border-radius: 3px;
+}
+
+.gm-summary {
+	margin: 12px 0 0;
+	font-size: 12.5px;
+}
+
+.gm-detail-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: 380px;
+	overflow-y: auto;
+}
+
+.gm-detail-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 8px 12px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface-2);
+}
+
+.gm-detail-position {
+	flex: 0 0 24px;
+	font-family: var(--font-display);
+	font-size: 12px;
+	color: var(--text-dim);
+	text-align: right;
+}
+
+.gm-detail-name {
+	font-weight: 600;
+}
+
+// ---------------------------------------------------------------------------
 // Responsive
 // ---------------------------------------------------------------------------
 

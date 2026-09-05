@@ -12,6 +12,7 @@ export const translations = {
 		'nav.expeditions': 'Expéditions',
 		'nav.moonlock': 'Verrou de lune',
 		'nav.players': 'Joueurs',
+		'nav.galaxymap': 'Carte de la galaxie',
 		'nav.alliances': 'Alliances',
 		'nav.server': 'Réglages serveur',
 
@@ -179,6 +180,43 @@ export const translations = {
 		'pl.score.militaryLost': 'Militaire perdu',
 		'pl.score.honour': 'Honneur',
 
+		'gm.intro':
+			"Vois d'un coup d'œil où l'univers est peuplé : chaque case est un système, plus elle est claire plus il s'y passe des choses. Clique une case pour voir qui y habite.",
+
+		'gm.step.universe': 'Choisir un univers',
+		'gm.step.universe.help':
+			"La carte est propre à un univers : commence par choisir le tien.",
+
+		'gm.step.map': 'Lire la carte',
+		'gm.step.map.help':
+			"Une ligne par galaxie, une colonne par système. Choisis ce que la couleur compte, et éventuellement les statuts à retenir.",
+
+		'gm.metric.label': 'Colorer par',
+		'gm.metric.planets': 'Planètes',
+		'gm.metric.inactive': 'Inactifs',
+
+		'gm.filter.label': 'Ne compter que',
+
+		'gm.cell.planets':
+			'{coords} — {planets} planète(s), {players} joueur(s), {moons} lune(s)',
+		'gm.cell.inactive':
+			'{coords} — {inactive} planète(s) inactive(s) sur {planets}, {players} joueur(s)',
+
+		'gm.legend.less': 'Vide',
+		'gm.legend.more': 'Max : {max}',
+
+		'gm.summary':
+			'{planets} planète(s) placée(s) sur {galaxies} galaxie(s) × {systems} systèmes.',
+
+		'gm.loading': "Chargement de l'annuaire de l'univers…",
+		'gm.error.roster': "Impossible de charger l'annuaire de cet univers.",
+
+		'gm.detail.title': 'Système',
+		'gm.detail.pick': 'Clique une case de la carte pour voir qui habite ce système.',
+		'gm.detail.system': 'Système {coords}',
+		'gm.detail.empty': 'Personne dans ce système.',
+		'gm.detail.moon': 'Lune',
+
 		'al.intro':
 			"Cherche une alliance par son nom ou son tag pour voir son effectif complet : chaque membre avec son statut, le fondateur, et la part de l'alliance encore active.",
 
@@ -309,6 +347,7 @@ export const translations = {
 		'nav.expeditions': 'Expeditions',
 		'nav.moonlock': 'Moon lock',
 		'nav.players': 'Players',
+		'nav.galaxymap': 'Galaxy map',
 		'nav.alliances': 'Alliances',
 		'nav.server': 'Server settings',
 
@@ -473,6 +512,40 @@ export const translations = {
 		'pl.score.militaryDestroyed': 'Military destroyed',
 		'pl.score.militaryLost': 'Military lost',
 		'pl.score.honour': 'Honour',
+
+		'gm.intro':
+			'See at a glance where a universe is crowded: each cell is a system, the brighter it is the more goes on there. Click a cell to see who lives in it.',
+
+		'gm.step.universe': 'Pick a universe',
+		'gm.step.universe.help': 'The map belongs to a universe: start by picking yours.',
+
+		'gm.step.map': 'Read the map',
+		'gm.step.map.help':
+			'One row per galaxy, one column per system. Choose what the colour counts, and optionally which statuses to keep.',
+
+		'gm.metric.label': 'Colour by',
+		'gm.metric.planets': 'Planets',
+		'gm.metric.inactive': 'Inactives',
+
+		'gm.filter.label': 'Only count',
+
+		'gm.cell.planets': '{coords} — {planets} planet(s), {players} player(s), {moons} moon(s)',
+		'gm.cell.inactive':
+			'{coords} — {inactive} inactive planet(s) out of {planets}, {players} player(s)',
+
+		'gm.legend.less': 'Empty',
+		'gm.legend.more': 'Max: {max}',
+
+		'gm.summary': '{planets} placed planet(s) across {galaxies} galaxy(ies) × {systems} systems.',
+
+		'gm.loading': "Loading the universe's roster…",
+		'gm.error.roster': "Could not load this universe's roster.",
+
+		'gm.detail.title': 'System',
+		'gm.detail.pick': 'Click a cell on the map to see who lives in that system.',
+		'gm.detail.system': 'System {coords}',
+		'gm.detail.empty': 'Nobody in this system.',
+		'gm.detail.moon': 'Moon',
 
 		'al.intro':
 			'Search an alliance by name or tag to see its full roster: every member with their status, the founder, and how much of the alliance is still active.',
