@@ -56,7 +56,7 @@ Le front lit l'URL du proxy dans `VITE_API_URL` (défaut :
   (`.github/workflows/ci.yml`).
 - `master` — branche de release. Un push publie `dist/` sur la branche
   `gh-pages` (`.github/workflows/deploy.yml`). Site :
-  <https://blog.rolljee.fr/ogame-ui/>.
+  <https://ogame.rolljee.fr/> (domaine déclaré dans `public/CNAME`).
 
 ## Feuille de route
 

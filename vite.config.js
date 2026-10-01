@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-	// Base path for the GitHub Pages project site (http://rolljee.github.io/ogame-ui)
-	base: '/ogame-ui/',
+	// Served from the root of its own domain (public/CNAME → ogame.rolljee.fr)
+	base: '/',
 	plugins: [react()],
 	css: {
 		preprocessorOptions: {

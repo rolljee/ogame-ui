@@ -9,10 +9,10 @@ compatibility_date = "2026-07-25"
 # Comma-separated allowlist, or "*" to answer any caller. A listed origin is
 # echoed back, since a browser rejects a list. Note this only constrains
 # browsers: CORS is not an authentication mechanism.
-# The site is reachable on two origins: the custom domain and the GitHub Pages
-# one (`homepage` in package.json). Both must be listed, or the API calls are
-# blocked on whichever is missing.
-ALLOWED_ORIGIN = "https://blog.rolljee.fr, https://rolljee.github.io, http://localhost:3000"
+# The site lives on its own domain (public/CNAME, `homepage` in package.json).
+# The old blog.rolljee.fr/ogame-ui and rolljee.github.io origins now redirect
+# there, but stay listed so a cached old page keeps working meanwhile.
+ALLOWED_ORIGIN = "https://ogame.rolljee.fr, https://blog.rolljee.fr, https://rolljee.github.io, http://localhost:3000"
 
 [observability]
 enabled = true
