@@ -19,6 +19,11 @@ function waveSentence(t, { base, remainder }) {
 	});
 }
 
+// The odds read as a go / maybe / no-go: green once a single strike almost
+// surely works, red below a coin flip, brass in between.
+const HIGH_ODDS = 95;
+const LOW_ODDS = 50;
+
 function MoonbreakResult({ result }) {
 	const { t } = useI18n();
 
@@ -41,7 +46,11 @@ function MoonbreakResult({ result }) {
 				<h2 className="result-title">{t('mb.result.title')}</h2>
 			</div>
 
-			<p className="mb-probability">
+			<p
+				className={`mb-probability ${
+					probability >= HIGH_ODDS ? 'is-high' : probability < LOW_ODDS ? 'is-low' : ''
+				}`}
+			>
 				<strong className="figure" key={probability}>
 					{probability}%
 				</strong>

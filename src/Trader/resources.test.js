@@ -32,7 +32,7 @@ describe('resource metadata', () => {
 		for (const resource of RESOURCE_ORDER) {
 			expect(RESOURCE_META[resource]).toMatchObject({
 				key: resource,
-				color: expect.stringMatching(/^#[0-9a-f]{6}$/i),
+				color: expect.stringMatching(/^var\(--[a-z]+\)$/),
 				labelKey: `resource.${resource}`,
 			});
 		}

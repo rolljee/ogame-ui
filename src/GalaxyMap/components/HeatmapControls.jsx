@@ -32,7 +32,7 @@ function HeatmapControls({ metric, statuses, onMetric, onToggleStatus }) {
 					<button
 						key={key}
 						type="button"
-						className={`chip ${statuses.includes(key) ? 'is-active' : ''}`}
+						className={`chip st-${key} ${statuses.includes(key) ? 'is-active' : ''}`}
 						aria-pressed={statuses.includes(key)}
 						onClick={() => onToggleStatus(key)}
 					>

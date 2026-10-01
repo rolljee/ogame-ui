@@ -9,7 +9,7 @@ function StatusBadges({ status }) {
 	return (
 		<span className="pl-badges">
 			{describeStatus(status).map(({ key, labelKey, Icon }) => (
-				<span key={key} className={`pl-badge pl-badge-${key}`}>
+				<span key={key} className={`pl-badge pl-badge-${key} st-${key}`}>
 					<Icon size={13} aria-hidden="true" /> {t(labelKey)}
 				</span>
 			))}

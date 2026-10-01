@@ -20,7 +20,7 @@ function MemberFilters({ statuses, onToggle }) {
 				<button
 					key={key}
 					type="button"
-					className={`chip ${statuses.includes(key) ? 'is-active' : ''}`}
+					className={`chip st-${key} ${statuses.includes(key) ? 'is-active' : ''}`}
 					aria-pressed={statuses.includes(key)}
 					onClick={() => onToggle(key)}
 				>
@@ -71,7 +71,7 @@ function AllianceDetail({ alliance, statuses, onToggleStatus }) {
 					</div>
 					<div className="al-breakdown">
 						{breakdown.map(({ key, labelKey, Icon, count }) => (
-							<span key={key} className="al-breakdown-item">
+							<span key={key} className={`al-breakdown-item st-${key}`}>
 								<Icon size={15} aria-hidden="true" /> {count} {t(labelKey)}
 							</span>
 						))}
