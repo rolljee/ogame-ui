@@ -68,7 +68,7 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 					<button
 						key={key}
 						type="button"
-						className={`chip ${filters.statuses.includes(key) ? 'is-active' : ''}`}
+						className={`chip st-${key} ${filters.statuses.includes(key) ? 'is-active' : ''}`}
 						aria-pressed={filters.statuses.includes(key)}
 						onClick={() => onToggleStatus(key)}
 					>

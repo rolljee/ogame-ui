@@ -11,7 +11,6 @@ import Players from './Players/Players';
 import GalaxyMap from './GalaxyMap/GalaxyMap';
 import Alliances from './Alliances/Alliances';
 import ServerSettings from './ServerSettings/ServerSettings';
-import ThemeSelect from './theme/ThemeSelect';
 
 // Grouped as the index shows them: what you compute, then what you look up in
 // a universe's live data.
@@ -167,10 +166,7 @@ function App() {
 							<div className="brand-name">{t('brand')}</div>
 							<div className="brand-tagline">{t('tagline')}</div>
 						</div>
-						<div className="brand-settings">
-							<LangToggle />
-							<ThemeSelect />
-						</div>
+						<LangToggle />
 					</div>
 
 					<section className="index-universe" aria-label={t('universe.label')}>

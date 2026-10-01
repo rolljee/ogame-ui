@@ -9,17 +9,17 @@
 :root {
 	color-scheme: dark;
 
-	--ground: #111418;
-	--sheet: #181c22;
-	--sheet-2: #1f242c;
-	--sheet-3: #262c35;
+	--ground: #0d1320;
+	--sheet: #141b2a;
+	--sheet-2: #1a2234;
+	--sheet-3: #222b40;
 
-	--rule: #2c333d;
-	--rule-strong: #404956;
+	--rule: #283249;
+	--rule-strong: #3b4760;
 
 	--ink: #ece8dd;
-	--ink-2: #b9bcc2;
-	--ink-3: #8f96a0;
+	--ink-2: #bcc1cc;
+	--ink-3: #8e97aa;
 
 	--signal: #e0a43c;
 	--signal-soft: rgba(224, 164, 60, 0.14);
@@ -33,7 +33,7 @@
 	--crystal: #74c6ee;
 	--deut: #5fd6a4;
 
-	// Derived roles, remapped by each theme.
+	// Derived roles.
 	--btn-hover: #fffaf0;
 	--shadow-sheet: 0 12px 32px -18px rgba(0, 0, 0, 0.7);
 	--shadow-thumb: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -42,13 +42,28 @@
 	--crystal-line: rgba(116, 198, 238, 0.5);
 	--loss-line: rgba(236, 138, 111, 0.55);
 
+	// Report sheets sit warmer than the night-blue desk they lie on.
+	--report: #1a1b22;
+	--report-2: #22232b;
+	--report-rule: #32333d;
+
+	// Player statuses, each its own ink. Drawn as text, rule and tint, never
+	// as the only cue: every stamp also carries an icon and a word.
+	--st-active: #7fd492;
+	--st-inactive: #f4a582;
+	--st-long-inactive: #c9917a;
+	--st-vacation: #7cb8ff;
+	--st-banned: #ff6b6b;
+	--st-outlaw: #c49bff;
+	--st-admin: #5fd4cf;
+
 	// Galaxy heatmap, empty to crowded.
-	--heat-0: #1d2228;
-	--heat-1: #343a42;
-	--heat-2: #555b62;
-	--heat-3: #81848a;
-	--heat-4: #b4b3b0;
-	--heat-5: #ece8dd;
+	--heat-0: #172034;
+	--heat-1: #304068;
+	--heat-2: #47598a;
+	--heat-3: #7186b4;
+	--heat-4: #b1bcd6;
+	--heat-5: #f2ede0;
 
 	--radius: 3px;
 
@@ -212,7 +227,8 @@ button {
 }
 
 .lang-toggle {
-	flex-shrink: 0;
+	grid-area: lang;
+	justify-self: start;
 	display: inline-flex;
 	border: 1px solid var(--rule-strong);
 	border-radius: var(--radius);
@@ -316,57 +332,6 @@ button {
 
 	a {
 		color: var(--ink-2);
-	}
-}
-
-.brand-settings {
-	grid-area: lang;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	min-width: 0;
-}
-
-.visually-hidden {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	clip-path: inset(50%);
-	white-space: nowrap;
-}
-
-.theme-select {
-	flex: 1;
-	min-width: 0;
-	max-width: 160px;
-
-	select {
-		appearance: none;
-		width: 100%;
-		min-height: 30px;
-		padding: 4px 26px 4px 10px;
-		border: 1px solid var(--rule-strong);
-		border-radius: var(--radius);
-		background-color: transparent;
-		background-image:
-			linear-gradient(45deg, transparent 50%, var(--ink-3) 50%),
-			linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
-		background-position:
-			calc(100% - 14px) 52%,
-			calc(100% - 9px) 52%;
-		background-size: 5px 5px;
-		background-repeat: no-repeat;
-		font-size: 13px;
-		color: var(--ink-2);
-		cursor: pointer;
-		text-overflow: ellipsis;
-
-		&:hover,
-		&:focus {
-			border-color: var(--ink-3);
-			color: var(--ink);
-		}
 	}
 }
 
@@ -939,9 +904,10 @@ input::placeholder {
 // ---------------------------------------------------------------------------
 
 .result {
+	--rule: var(--report-rule);
 	border: 1px solid var(--rule-strong);
 	border-radius: var(--radius);
-	background: var(--sheet);
+	background: var(--report);
 	box-shadow: var(--shadow-sheet);
 
 	> :not(.result-head) {
@@ -976,7 +942,7 @@ input::placeholder {
 	gap: 8px 16px;
 	padding: 12px 22px;
 	border-bottom: 1px solid var(--rule-strong);
-	background: var(--sheet-2);
+	background: var(--report-2);
 }
 
 .result-title {
@@ -1642,34 +1608,48 @@ input::placeholder {
 	align-items: center;
 	gap: 4px;
 	padding: 1px 6px;
-	border: 1px solid var(--rule-strong);
+	border: 1px solid color-mix(in srgb, var(--st, var(--ink-3)) 55%, transparent);
 	border-radius: 2px;
+	background: color-mix(in srgb, var(--st, var(--ink-3)) 14%, transparent);
 	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: 0.02em;
 	white-space: nowrap;
-	color: var(--ink-2);
+	color: var(--st, var(--ink-2));
 }
 
-.pl-badge-active {
-	border-color: var(--ok-line);
-	color: var(--ok);
+// One ink per status, shared by stamps, filter chips and breakdowns.
+.st-active {
+	--st: var(--st-active);
+}
+.st-inactive {
+	--st: var(--st-inactive);
+}
+.st-longInactive {
+	--st: var(--st-long-inactive);
+}
+.st-vacation {
+	--st: var(--st-vacation);
+}
+.st-banned {
+	--st: var(--st-banned);
+}
+.st-outlaw {
+	--st: var(--st-outlaw);
+}
+.st-admin {
+	--st: var(--st-admin);
 }
 
-.pl-badge-vacation {
-	border-color: var(--crystal-line);
-	color: var(--crystal);
-}
+.chip[class*='st-'] {
+	svg {
+		color: var(--st);
+	}
 
-.pl-badge-banned,
-.pl-badge-outlaw {
-	border-color: var(--loss-line);
-	color: var(--loss);
-}
-
-.pl-badge-admin {
-	border-color: var(--ink-3);
-	color: var(--ink);
+	&.is-active {
+		border-color: var(--st);
+		background: color-mix(in srgb, var(--st) 16%, transparent);
+	}
 }
 
 .pl-name {
@@ -1800,6 +1780,10 @@ input::placeholder {
 	align-items: center;
 	gap: 6px;
 	color: var(--ink-2);
+
+	svg {
+		color: var(--st, var(--ink-3));
+	}
 }
 
 // ---------------------------------------------------------------------------
