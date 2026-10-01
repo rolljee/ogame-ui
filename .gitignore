@@ -36,3 +36,4 @@ yarn-error.log*
 /.impeccable/review
 /.impeccable/decision
 /.impeccable/config.local.json
+/.impeccable/questions
