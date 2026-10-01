@@ -15,6 +15,16 @@ export const translations = {
 		'nav.galaxymap': 'Carte de la galaxie',
 		'nav.alliances': 'Alliances',
 		'nav.server': 'Réglages serveur',
+		'nav.group.calc': 'Calculs',
+		'nav.group.data': "Données d'univers",
+
+		'universe.label': 'Univers',
+		'universe.age': 'relevé il y a {hours} h',
+		'universe.none': "Choisis un univers dans le menu pour charger ses données.",
+		'help.show': "Afficher l'aide",
+		'help.hide': "Masquer l'aide",
+		'intro.show': 'Comment ça marche ?',
+		'intro.hide': "Masquer l'explication",
 
 		'common.yes': 'Oui',
 		'common.no': 'Non',
@@ -350,6 +360,16 @@ export const translations = {
 		'nav.galaxymap': 'Galaxy map',
 		'nav.alliances': 'Alliances',
 		'nav.server': 'Server settings',
+		'nav.group.calc': 'Calculators',
+		'nav.group.data': 'Universe data',
+
+		'universe.label': 'Universe',
+		'universe.age': 'dump {hours} h old',
+		'universe.none': 'Pick a universe in the menu to load its data.',
+		'help.show': 'Show help',
+		'help.hide': 'Hide help',
+		'intro.show': 'How does it work?',
+		'intro.hide': 'Hide the explanation',
 
 		'common.yes': 'Yes',
 		'common.no': 'No',

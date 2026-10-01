@@ -1,4 +1,5 @@
 import React from 'react';
+import { Orbit, Search, Sun } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { STATUS_FLAGS } from '../../components/status';
 import { SORTS } from '../model';
@@ -19,7 +20,7 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 			<div className="pl-filter-row">
 				<label className="field pl-field-name">
 					<span className="field-label">
-						<span aria-hidden="true">🔎</span>
+						<Search size={18} aria-hidden="true" />
 						{t('pl.search.label')}
 					</span>
 					<input
@@ -33,13 +34,14 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 
 				<label className="field pl-field-position">
 					<span className="field-label">
-						<span aria-hidden="true">🌌</span>
+						<Orbit size={18} aria-hidden="true" />
 						{t('pl.filter.galaxy')}
 					</span>
 					<input
 						type="number"
 						inputMode="numeric"
 						min="1"
+						placeholder="—"
 						value={filters.galaxy}
 						onChange={set('galaxy')}
 					/>
@@ -47,13 +49,14 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 
 				<label className="field pl-field-position">
 					<span className="field-label">
-						<span aria-hidden="true">☀️</span>
+						<Sun size={18} aria-hidden="true" />
 						{t('pl.filter.system')}
 					</span>
 					<input
 						type="number"
 						inputMode="numeric"
 						min="1"
+						placeholder="—"
 						value={filters.system}
 						onChange={set('system')}
 					/>
@@ -61,7 +64,7 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 			</div>
 
 			<div className="chips" role="group" aria-label={t('pl.filter.label')}>
-				{STATUS_FLAGS.map(({ key, labelKey, icon }) => (
+				{STATUS_FLAGS.map(({ key, labelKey, Icon }) => (
 					<button
 						key={key}
 						type="button"
@@ -69,7 +72,7 @@ function PlayerFilters({ filters, onChange, onToggleStatus }) {
 						aria-pressed={filters.statuses.includes(key)}
 						onClick={() => onToggleStatus(key)}
 					>
-						<span aria-hidden="true">{icon}</span> {t(labelKey)}
+						<Icon size={15} aria-hidden="true" /> {t(labelKey)}
 					</button>
 				))}
 			</div>

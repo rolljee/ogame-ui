@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moon } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { MIN_MOON_SIZE, MAX_MOON_SIZE } from '../formulas';
 
@@ -15,7 +16,7 @@ function MoonSizeInput({ value, onChange }) {
 		<div className="moon-size">
 			<label className="field">
 				<span className="field-label">
-					<span aria-hidden="true">🌑</span>
+					<Moon size={18} aria-hidden="true" />
 					{t('mb.size.label')}
 				</span>
 				<input

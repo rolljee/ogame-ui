@@ -28,3 +28,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# impeccable engine binary (downloaded by the launcher on first run)
+/.claude/skills/impeccable/scripts/bin
+
+# impeccable working files (review captures, decision payloads)
+/.impeccable/review
+/.impeccable/decision
+/.impeccable/config.local.json
+/.impeccable/questions

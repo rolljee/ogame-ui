@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor, within } from '../test/utils';
+import { renderView, screen, userEvent, waitFor, within } from '../test/utils';
 import Alliances from './Alliances';
 import { fetchAlliance, fetchUniverses, searchAlliances } from '../api/ogame';
 
@@ -70,7 +70,7 @@ beforeEach(() => {
 
 describe('<Alliances />', () => {
 	it('does not search until a term is submitted', async () => {
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		expect(searchAlliances).not.toHaveBeenCalled();
 		expect(screen.getByText(/Search for an alliance/)).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('<Alliances />', () => {
 
 	it('searches the selected universe', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await search(user);
@@ -93,7 +93,7 @@ describe('<Alliances />', () => {
 
 	it('lists the matches with their tag and member count', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await search(user);
@@ -106,7 +106,7 @@ describe('<Alliances />', () => {
 
 	it('loads an alliance and shows its roster', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 
@@ -126,7 +126,7 @@ describe('<Alliances />', () => {
 
 	it('marks the founder', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -137,7 +137,7 @@ describe('<Alliances />', () => {
 	// This is what the Discord bot cannot show: how much of the alliance is alive.
 	it('breaks the roster down by status', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -150,7 +150,7 @@ describe('<Alliances />', () => {
 	// The fixture has no member carrying two flags, so the note must stay away.
 	it('does not warn about overlapping statuses when there is no overlap', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -170,7 +170,7 @@ describe('<Alliances />', () => {
 				ALLIANCE.members[2],
 			],
 		});
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -180,7 +180,7 @@ describe('<Alliances />', () => {
 
 	it('filters the members by status, without a new request', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -197,7 +197,7 @@ describe('<Alliances />', () => {
 	// A member listed by alliances.xml but absent from players.xml.
 	it('keeps a member it could not resolve, labelled by id', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -208,7 +208,7 @@ describe('<Alliances />', () => {
 
 	it('links the alliance homepage, but only an http(s) one', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -220,7 +220,7 @@ describe('<Alliances />', () => {
 	it('does not render a homepage the alliance filled with a script url', async () => {
 		const user = userEvent.setup();
 		fetchAlliance.mockResolvedValue({ ...ALLIANCE, homepage: 'javascript:alert(1)' });
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -231,7 +231,7 @@ describe('<Alliances />', () => {
 
 	it('forgets the selected alliance when the universe changes', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -245,7 +245,7 @@ describe('<Alliances />', () => {
 	it('reports a failed search', async () => {
 		const user = userEvent.setup();
 		searchAlliances.mockRejectedValue(new Error('upstream responded 502'));
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await search(user);
@@ -258,7 +258,7 @@ describe('<Alliances />', () => {
 	it('reports an alliance that could not be loaded', async () => {
 		const user = userEvent.setup();
 		fetchAlliance.mockRejectedValue(new Error('unknown alliance: 500006'));
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 		await search(user);
 		await user.click(await screen.findByRole('button', { name: /The Wolf Army/ }));
@@ -270,7 +270,7 @@ describe('<Alliances />', () => {
 	it('says so when nothing matches', async () => {
 		const user = userEvent.setup();
 		searchAlliances.mockResolvedValue({ total: 0, alliances: [] });
-		renderWithI18n(<Alliances />, { lang: 'en' });
+		renderView(<Alliances />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await search(user, 'zzz');
@@ -280,7 +280,7 @@ describe('<Alliances />', () => {
 
 	it('renders in French too', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Alliances />, { lang: 'fr' });
+		renderView(<Alliances />, { lang: 'fr' });
 		await screen.findByLabelText('Communauté');
 
 		await search(user);

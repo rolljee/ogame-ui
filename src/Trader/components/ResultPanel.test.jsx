@@ -64,6 +64,6 @@ describe('<ResultPanel />', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Copy summary' }));
 
-		expect(screen.getByRole('button', { name: '✓ Copied!' })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Copied!' })).toBeInTheDocument();
 	});
 });

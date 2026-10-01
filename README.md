@@ -31,8 +31,11 @@ Les tests vivent à côté du code qu'ils couvrent (`*.test.js{,x}`). Les
 composants se rendent via l'utilitaire `renderWithI18n` de
 `src/test/utils.jsx`, qui fournit le contexte i18n et fixe la langue.
 
-Stack : **React 19 + Vite 8 + Sass**. Aucun framework CSS : le thème
-« spatial » est un design system maison (`src/app.scss`).
+Stack : **React 19 + Vite 8 + Sass**, icônes `lucide-react`. Aucun framework
+CSS : le thème « rapport de combat » est un design system maison
+(`src/app.scss`), décrit dans `DESIGN.md`. Le contexte produit vit dans
+`PRODUCT.md`, et le skill de design [impeccable](https://impeccable.style) est
+installé dans `.claude/` (`/impeccable` dans Claude Code).
 
 ## Proxy API (`worker/`)
 

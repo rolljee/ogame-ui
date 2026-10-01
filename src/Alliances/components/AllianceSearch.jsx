@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Search } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 
 // Like the players search: the proxy needs a term — alliances.xml holds every
@@ -16,7 +17,7 @@ function AllianceSearch({ onSearch }) {
 		<form className="pl-search-form" onSubmit={handleSubmit} role="search">
 			<label className="field">
 				<span className="field-label">
-					<span aria-hidden="true">🔎</span>
+					<Search size={18} aria-hidden="true" />
 					{t('al.search.label')}
 				</span>
 				<input

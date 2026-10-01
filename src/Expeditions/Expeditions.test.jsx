@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor } from '../test/utils';
+import { renderView, screen, userEvent, waitFor } from '../test/utils';
 import Expeditions from './Expeditions';
 import { fetchServerData, fetchUniverses } from '../api/ogame';
 
@@ -32,14 +32,14 @@ beforeEach(() => {
 
 describe('<Expeditions />', () => {
 	it('asks for a hyperspace level before computing anything', async () => {
-		renderWithI18n(<Expeditions />, { lang: 'en' });
+		renderView(<Expeditions />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		expect(screen.getByText(/Enter your hyperspace level/)).toBeInTheDocument();
 	});
 
 	it('shows the maximum find and the ships needed to carry it', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Expeditions />, { lang: 'en' });
+		renderView(<Expeditions />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 
 		await user.type(screen.getByLabelText(/Hyperspace/), '10');
@@ -53,7 +53,7 @@ describe('<Expeditions />', () => {
 
 	it('halves the find when the Pathfinder is taken out of the fleet', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Expeditions />, { lang: 'en' });
+		renderView(<Expeditions />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		await user.type(screen.getByLabelText(/Hyperspace/), '10');
 
@@ -64,7 +64,7 @@ describe('<Expeditions />', () => {
 
 	it('recomputes when another universe is picked', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Expeditions />, { lang: 'fr' });
+		renderView(<Expeditions />, { lang: 'fr' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		await user.type(screen.getByLabelText(/Hyperespace/), '10');
 
@@ -76,7 +76,7 @@ describe('<Expeditions />', () => {
 
 	it('reports a failure to load the universe settings', async () => {
 		fetchServerData.mockRejectedValue(new Error('upstream responded 503'));
-		renderWithI18n(<Expeditions />, { lang: 'en' });
+		renderView(<Expeditions />, { lang: 'en' });
 
 		const alert = await screen.findByRole('alert');
 		expect(alert).toHaveTextContent('upstream responded 503');

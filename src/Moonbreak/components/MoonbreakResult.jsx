@@ -25,7 +25,9 @@ function MoonbreakResult({ result }) {
 	if (!result.ok) {
 		return (
 			<div className="result">
-				<h2 className="result-title">{t('mb.result.title')}</h2>
+				<div className="result-head">
+					<h2 className="result-title">{t('mb.result.title')}</h2>
+				</div>
 				<p className="result-empty">{t(`mb.error.${result.errors[0]}`)}</p>
 			</div>
 		);
@@ -35,10 +37,14 @@ function MoonbreakResult({ result }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('mb.result.title')}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('mb.result.title')}</h2>
+			</div>
 
 			<p className="mb-probability">
-				<strong>{probability}%</strong>
+				<strong className="figure" key={probability}>
+					{probability}%
+				</strong>
 				<span>{t('mb.result.probability')}</span>
 			</p>
 

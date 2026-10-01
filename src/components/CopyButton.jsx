@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
+import { Check, Copy } from 'lucide-react';
 import { useI18n } from '../i18n/I18nContext';
 
 // `labelKey` lets a view name what is being copied; the confirmation is shared.
@@ -19,7 +20,8 @@ function CopyButton({ text, labelKey = 'result.copy' }) {
 			className={`btn btn-copy ${copied ? 'is-copied' : ''}`}
 			onClick={handleClick}
 		>
-			{copied ? `✓ ${t('result.copied')}` : t(labelKey)}
+			{copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+			{copied ? t('result.copied') : t(labelKey)}
 		</button>
 	);
 }

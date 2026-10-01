@@ -1,9 +1,19 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
-import { renderWithI18n, screen, userEvent } from './test/utils';
+import { act, cleanup, render, renderWithI18n, screen, userEvent } from './test/utils';
+import { I18nProvider } from './i18n/I18nContext';
 import App from './App';
 
 vi.mock('copy-to-clipboard', () => ({ default: vi.fn() }));
+
+// The shell loads the universe list for its picker; the tests here are about
+// navigation, so the list stays empty.
+vi.mock('./api/ogame', () => ({
+	fetchUniverses: vi.fn(() => Promise.resolve([])),
+	fetchServerData: vi.fn(() => new Promise(() => {})),
+	fetchRoster: vi.fn(() => new Promise(() => {})),
+	ApiError: class ApiError extends Error {},
+}));
 
 describe('<App />', () => {
 	it('renders the shell and the calculator', () => {
@@ -32,18 +42,20 @@ describe('<App />', () => {
 
 	it('opens on the trade calculator', () => {
 		renderWithI18n(<App />);
-		expect(screen.getByRole('button', { name: 'Trade' })).toHaveAttribute('aria-current', 'page');
+		expect(screen.getByRole('link', { name: 'Trade' })).toHaveAttribute('aria-current', 'page');
+		expect(screen.getByRole('heading', { level: 1, name: 'Trade' })).toBeInTheDocument();
 	});
 
 	it('switches to the moonbreak tool', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);
 
-		await user.click(screen.getByRole('button', { name: 'Moonbreak' }));
+		await user.click(screen.getByRole('link', { name: 'Moonbreak' }));
 
 		expect(screen.getByText('Moon size')).toBeInTheDocument();
 		expect(screen.queryByRole('button', { name: 'Deuterium' })).not.toBeInTheDocument();
-		expect(screen.getByRole('button', { name: 'Moonbreak' })).toHaveAttribute(
+		expect(window.location.hash).toBe('#/moonbreak');
+		expect(screen.getByRole('link', { name: 'Moonbreak' })).toHaveAttribute(
 			'aria-current',
 			'page',
 		);
@@ -53,10 +65,10 @@ describe('<App />', () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);
 
-		await user.click(screen.getByRole('button', { name: 'Server settings' }));
+		await user.click(screen.getByRole('link', { name: 'Server settings' }));
 
-		expect(screen.getByText('Pick a universe')).toBeInTheDocument();
-		expect(screen.getByRole('button', { name: 'Server settings' })).toHaveAttribute(
+		expect(screen.getByRole('heading', { level: 1, name: 'Server settings' })).toBeInTheDocument();
+		expect(screen.getByRole('link', { name: 'Server settings' })).toHaveAttribute(
 			'aria-current',
 			'page',
 		);
@@ -66,10 +78,10 @@ describe('<App />', () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);
 
-		await user.click(screen.getByRole('button', { name: 'Alliances' }));
+		await user.click(screen.getByRole('link', { name: 'Alliances' }));
 
 		expect(screen.getByText('Find an alliance')).toBeInTheDocument();
-		expect(screen.getByRole('button', { name: 'Alliances' })).toHaveAttribute(
+		expect(screen.getByRole('link', { name: 'Alliances' })).toHaveAttribute(
 			'aria-current',
 			'page',
 		);
@@ -88,9 +100,60 @@ describe('<App />', () => {
 		const user = userEvent.setup();
 		renderWithI18n(<App />);
 
-		await user.click(screen.getByRole('button', { name: 'Moonbreak' }));
-		await user.click(screen.getByRole('button', { name: 'Trade' }));
+		await user.click(screen.getByRole('link', { name: 'Moonbreak' }));
+		await user.click(screen.getByRole('link', { name: 'Trade' }));
 
 		expect(screen.getByRole('button', { name: 'Deuterium' })).toBeInTheDocument();
+	});
+
+	it('opens the tool named in the address', () => {
+		renderWithI18n(<App />);
+		window.history.replaceState(null, '', '/#/expeditions');
+		cleanup();
+		render(
+			<I18nProvider>
+				<App />
+			</I18nProvider>,
+		);
+
+		expect(screen.getByRole('link', { name: 'Expeditions' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+	});
+
+	it('follows the browser history', async () => {
+		renderWithI18n(<App />);
+
+		window.history.pushState(null, '', '/#/moonbreak');
+		await act(async () => {
+			window.dispatchEvent(new HashChangeEvent('hashchange'));
+		});
+
+		expect(screen.getByText('Moon size')).toBeInTheDocument();
+	});
+
+	it('names the open tool in the window title', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('link', { name: 'Galaxy map' }));
+
+		expect(document.title).toBe('Galaxy map · OGame Tools');
+	});
+
+	it('keeps the explanation folded until asked for', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		const toggle = screen.getByRole('button', { name: 'How does it work?' });
+		expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+		await user.click(toggle);
+
+		expect(screen.getByRole('button', { name: 'Hide the explanation' })).toHaveAttribute(
+			'aria-expanded',
+			'true',
+		);
 	});
 });

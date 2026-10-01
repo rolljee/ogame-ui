@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useI18n } from '../i18n/I18nContext';
 import { fetchRoster, fetchServerData } from '../api/ogame';
 import { useApiData } from '../api/useApiData';
-import UniversePicker from '../components/UniversePicker';
+import { useDataAge, useUniverse } from '../universe/UniverseContext';
+import { Group, NeedsUniverse, ToolGrid } from '../components/Layout';
 import { coordsAge } from '../Players/model';
 import { buildHeatmap, describeSystem } from './model';
 import HeatmapControls from './components/HeatmapControls';
@@ -18,7 +19,7 @@ import SystemDetail from './components/SystemDetail';
 // whole map costs a single request.
 function GalaxyMap() {
 	const { t } = useI18n();
-	const [selection, setSelection] = useState({ lang: '', universe: '' });
+	const { selection } = useUniverse();
 	const [metric, setMetric] = useState('planets');
 	const [statuses, setStatuses] = useState([]);
 	const [system, setSystem] = useState(null);
@@ -35,10 +36,7 @@ function GalaxyMap() {
 		[selection.universe, selection.lang],
 	);
 
-	function handleUniverse(next) {
-		setSelection(next);
-		setSystem(null);
-	}
+	useEffect(() => setSystem(null), [selection.universe, selection.lang]);
 
 	function handleToggleStatus(key) {
 		setStatuses((prev) =>
@@ -68,65 +66,58 @@ function GalaxyMap() {
 	);
 
 	const age = coordsAge(roster.data?.coordsTimestamp);
+	useDataAge(age);
 
 	return (
-		<>
-			<p className="calc-intro">{t('gm.intro')}</p>
+		<ToolGrid
+			layout="stack"
+			settings={
+				<Group
+					title={t('gm.step.map')}
+					// The same caveat as the players view, for the same coordinates.
+					help={
+						age === null
+							? t('gm.step.map.help')
+							: `${t('gm.step.map.help')} ${t('pl.coords.age', { hours: age })}`
+					}
+				>
+					<NeedsUniverse>
+						{roster.loading && <p className="help">{t('gm.loading')}</p>}
+						{roster.error && (
+							<p className="api-error" role="alert">
+								{t('gm.error.roster')}{' '}
+								<span className="api-error-detail">{roster.error.message}</span>
+							</p>
+						)}
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">1</span>
-					<h2 className="section-title">{t('gm.step.universe')}</h2>
-				</div>
-				<p className="help">{t('gm.step.universe.help')}</p>
-				<UniversePicker value={selection} onChange={handleUniverse} />
-			</section>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">2</span>
-					<h2 className="section-title">{t('gm.step.map')}</h2>
-				</div>
-				<p className="help">{t('gm.step.map.help')}</p>
-
-				{roster.loading && <p className="help">{t('gm.loading')}</p>}
-				{roster.error && (
-					<p className="api-error" role="alert">
-						{t('gm.error.roster')}{' '}
-						<span className="api-error-detail">{roster.error.message}</span>
-					</p>
-				)}
-
-				{map && (
-					<>
-						<HeatmapControls
-							metric={metric}
-							statuses={statuses}
-							onMetric={setMetric}
-							onToggleStatus={handleToggleStatus}
-						/>
-						<HeatmapGrid
-							map={map}
-							metric={metric}
-							selected={system}
-							onSelect={setSystem}
-						/>
-						<p className="help gm-summary">
-							{t('gm.summary', {
-								planets: map.positioned,
-								galaxies: map.galaxies,
-								systems: map.systems,
-							})}
-						</p>
-						{/* universe.xml is regenerated every few days: the same caveat as
-						    the players view, for the same coordinates. */}
-						{age !== null && <p className="help pl-coords-age">{t('pl.coords.age', { hours: age })}</p>}
-					</>
-				)}
-			</section>
-
-			{map && <SystemDetail system={system} rows={rows} />}
-		</>
+						{map && (
+							<>
+								<HeatmapControls
+									metric={metric}
+									statuses={statuses}
+									onMetric={setMetric}
+									onToggleStatus={handleToggleStatus}
+								/>
+								<HeatmapGrid
+									map={map}
+									metric={metric}
+									selected={system}
+									onSelect={setSystem}
+								/>
+								<p className="help gm-summary">
+									{t('gm.summary', {
+										planets: map.positioned,
+										galaxies: map.galaxies,
+										systems: map.systems,
+									})}
+								</p>
+							</>
+						)}
+					</NeedsUniverse>
+				</Group>
+			}
+			report={map && <SystemDetail system={system} rows={rows} />}
+		/>
 	);
 }
 
