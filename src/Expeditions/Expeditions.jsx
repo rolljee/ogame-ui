@@ -8,12 +8,20 @@ import { Group, ToolGrid } from '../components/Layout';
 import { computeExpedition } from './formulas';
 import FleetInput from './components/FleetInput';
 import ExpeditionResult from './components/ExpeditionResult';
+import ClassPicker from './components/ClassPicker';
+import LifeformBonuses from './components/LifeformBonuses';
 
 function Expeditions() {
 	const { t } = useI18n();
 	const { selection } = useUniverse();
 	const [hyperspaceLevel, setHyperspaceLevel] = useState('');
 	const [pathfinder, setPathfinder] = useState(true);
+	const [characterClass, setCharacterClass] = useState('explorer');
+	const [bonuses, setBonuses] = useState({});
+
+	function handleBonus(field, value) {
+		setBonuses((prev) => ({ ...prev, [field]: value }));
+	}
 
 	const { data, error, loading } = useApiData(
 		selection.universe ? (signal) => fetchServerData(selection, { signal }) : null,
@@ -21,21 +29,29 @@ function Expeditions() {
 	);
 
 	const result = useMemo(
-		() => computeExpedition({ data, hyperspaceLevel, pathfinder }),
-		[data, hyperspaceLevel, pathfinder],
+		() => computeExpedition({ data, hyperspaceLevel, pathfinder, characterClass, bonuses }),
+		[data, hyperspaceLevel, pathfinder, characterClass, bonuses],
 	);
 
 	return (
 		<ToolGrid
 			settings={
-				<Group title={t('exp.step.fleet')} help={t('exp.step.fleet.help')}>
-					<FleetInput
-						hyperspaceLevel={hyperspaceLevel}
-						onLevelChange={setHyperspaceLevel}
-						pathfinder={pathfinder}
-						onPathfinderChange={setPathfinder}
-					/>
-				</Group>
+				<>
+					<Group title={t('exp.step.class')} help={t('exp.step.class.help')}>
+						<ClassPicker value={characterClass} onChange={setCharacterClass} />
+					</Group>
+					<Group title={t('exp.step.fleet')} help={t('exp.step.fleet.help')}>
+						<FleetInput
+							hyperspaceLevel={hyperspaceLevel}
+							onLevelChange={setHyperspaceLevel}
+							pathfinder={pathfinder}
+							onPathfinderChange={setPathfinder}
+						/>
+					</Group>
+					<Group title={t('exp.step.lifeform')} help={t('exp.step.lifeform.help')}>
+						<LifeformBonuses values={bonuses} onChange={handleBonus} characterClass={characterClass} />
+					</Group>
+				</>
 			}
 			report={
 				<>

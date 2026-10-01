@@ -8,7 +8,7 @@
     "copy-to-clipboard": "^4.0.2",
     "fast-xml-parser": "^5.10.1",
     "lucide-react": "^1.49.0",
-    "ogamejs": "^4.0.2",
+    "ogamejs": "^4.1.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

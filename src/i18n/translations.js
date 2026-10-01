@@ -115,6 +115,36 @@ export const translations = {
 		'exp.step.universe.help':
 			"La trouvaille maximale se calcule à partir des réglages de l'univers : sa vitesse d'économie et le score du joueur numéro 1.",
 
+		'exp.step.class': 'Ta classe',
+		'exp.step.class.help':
+			"Seul l'explorateur profite de la vitesse d'économie de l'univers et de son bonus de classe sur les trouvailles. Le collecteur emporte plus de fret par transporteur.",
+		'exp.class.label': 'Classe de personnage',
+		'exp.class.explorer': 'Explorateur',
+		'exp.class.collector': 'Collecteur',
+		'exp.class.general': 'Général',
+
+		'exp.step.lifeform': 'Bonus des formes de vie',
+		'exp.step.lifeform.help':
+			"Recopie les totaux de ta page « Bonus des formes de vie » dans le jeu, en pourcentage. Laisse vide ce que tu n'as pas.",
+		'exp.lf.resources': "Ressources trouvées en expédition",
+		'exp.lf.explorer': 'Bonus de classe Explorateur',
+		'exp.lf.cargo': 'Fret des transporteurs',
+		'exp.lf.info': 'Autres bonus d\'expédition',
+		'exp.lf.info.help':
+			"Ces bonus ne changent ni la trouvaille maximale ni le fret : ils sont rappelés dans le rapport, pour information.",
+		'exp.lf.ships': 'Vaisseaux trouvés',
+		'exp.lf.darkMatter': 'Antimatière trouvée',
+		'exp.lf.fleetLoss': 'Réduction des pertes de flotte',
+
+		'exp.applied': 'Calculé pour : {list}',
+		'exp.applied.explorer': 'classe +{value} %',
+		'exp.applied.resources': 'ressources +{value} %',
+		'exp.applied.cargo': 'fret +{value} %',
+		'exp.info.title': 'Tes autres bonus en expédition',
+		'exp.info.ships': 'Vaisseaux trouvés : +{value} %',
+		'exp.info.darkMatter': 'Antimatière trouvée : +{value} %',
+		'exp.info.fleetLoss': 'Pertes de flotte : −{value} %',
+
 		'exp.step.fleet': 'Ta flotte',
 		'exp.step.fleet.help':
 			"Ton niveau d'hyperespace augmente le fret de chaque vaisseau, et un pathfinder dans la flotte double la trouvaille.",
@@ -135,6 +165,7 @@ export const translations = {
 		'exp.error.universe': 'Choisis un univers pour voir le résultat.',
 		'exp.error.data': "Cet univers ne renvoie pas les réglages nécessaires au calcul.",
 		'exp.error.level': "Entre ton niveau d'hyperespace pour voir le résultat.",
+		'exp.error.bonus': '« {field} » doit être un pourcentage, par exemple 12,5.',
 
 		'pl.intro':
 			"Tout l'annuaire de l'univers, chargé d'un coup : filtre par nom, par galaxie, par système solaire ou par statut, puis ouvre un joueur pour voir ses scores, ses planètes et ses lunes. Chaque coordonnée est un lien direct vers la vue galaxie.",
@@ -459,6 +490,36 @@ export const translations = {
 		'exp.step.universe.help':
 			'The maximum find is derived from the universe settings: its economy speed and the score of the number one player.',
 
+		'exp.step.class': 'Your class',
+		'exp.step.class.help':
+			"Only the Discoverer's finds grow with the universe economy speed and the class bonus. The Collector carries more per cargo ship.",
+		'exp.class.label': 'Character class',
+		'exp.class.explorer': 'Discoverer',
+		'exp.class.collector': 'Collector',
+		'exp.class.general': 'General',
+
+		'exp.step.lifeform': 'Lifeform bonuses',
+		'exp.step.lifeform.help':
+			'Copy the totals from your in-game "Lifeform bonuses" page, as percentages. Leave empty what you do not have.',
+		'exp.lf.resources': 'Expedition resources found',
+		'exp.lf.explorer': 'Discoverer class bonus',
+		'exp.lf.cargo': 'Cargo ship capacity',
+		'exp.lf.info': 'Other expedition bonuses',
+		'exp.lf.info.help':
+			'These bonuses change neither the maximum find nor the cargo: the report lists them, for information.',
+		'exp.lf.ships': 'Ships found',
+		'exp.lf.darkMatter': 'Dark Matter found',
+		'exp.lf.fleetLoss': 'Fleet loss reduction',
+
+		'exp.applied': 'Computed for: {list}',
+		'exp.applied.explorer': 'class +{value} %',
+		'exp.applied.resources': 'resources +{value} %',
+		'exp.applied.cargo': 'cargo +{value} %',
+		'exp.info.title': 'Your other expedition bonuses',
+		'exp.info.ships': 'Ships found: +{value} %',
+		'exp.info.darkMatter': 'Dark Matter found: +{value} %',
+		'exp.info.fleetLoss': 'Fleet losses: −{value} %',
+
 		'exp.step.fleet': 'Your fleet',
 		'exp.step.fleet.help':
 			'Hyperspace technology raises every ship’s cargo, and a Pathfinder in the fleet doubles the find.',
@@ -479,6 +540,7 @@ export const translations = {
 		'exp.error.universe': 'Pick a universe to see the result.',
 		'exp.error.data': 'This universe does not report the settings the calculation needs.',
 		'exp.error.level': 'Enter your hyperspace level to see the result.',
+		'exp.error.bonus': '"{field}" must be a percentage, e.g. 12.5.',
 
 		'pl.intro':
 			'The whole roster of the universe, loaded at once: filter by name, galaxy, solar system or status, then open a player for their scores, planets and moons. Every coordinate links straight into the galaxy view.',

@@ -227,10 +227,20 @@ Rien. Le dernier point ouvert est retombé :
 
 ## Notes techniques
 
-- Les calculs métier restent fournis par la lib
-  [`ogamejs`](https://www.npmjs.com/package/ogamejs) : cette app est en **v4**
-  (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`, `models`) alors
-  que le bot est en **v3** — revérifier les accès `Ogame.models` avant de
-  recopier une formule.
+- Les calculs métier sont fournis par la lib
+  [`ogamejs`](https://www.npmjs.com/package/ogamejs), en **v4.1** ici comme dans
+  le bot (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`,
+  `models`). Depuis la 4.1, le moonbreak, le fret d'expédition et le verrou de
+  lune y vivent aussi (`Fleets.getMoonbreak*`, `getExpeditionMaxFind`,
+  `getCargoCapacity`, `getMoonLockShips`) : plus de copie à tenir à jour entre
+  le bot et le site.
+- **Expéditions : classe et formes de vie.** La vue prend la classe
+  (explorateur, collecteur, général) et les totaux de la page « Bonus des formes
+  de vie » du jeu (ressources trouvées, bonus de classe Explorateur, fret des
+  transporteurs ; vaisseaux trouvés, antimatière et pertes de flotte pour
+  information). Deux points de la formule viennent d'outils communautaires et
+  restent à confirmer sur de vrais rapports : hors explorateur, la vitesse
+  d'économie ne s'applique pas ; le bonus FdV de classe amplifie le bonus de
+  classe (×1,6 à 20 %), pas toute la trouvaille.
 - Le bot répond uniquement en français, en dur. Chaque vue portée demandera ses
   clés dans `src/i18n/translations.js` (FR + EN).

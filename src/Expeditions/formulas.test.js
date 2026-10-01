@@ -1,12 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-	cargoBonus,
-	computeExpedition,
-	findBase,
-	maxFind,
-	MAX_HYPERSPACE_LEVEL,
-	TOP_TIER_BASE,
-} from './formulas';
+import { computeExpedition, parsePercent, MAX_HYPERSPACE_LEVEL } from './formulas';
 
 // A universe the size of s172-fr: fast economy, a top player far past the last
 // tier, and the usual 5 % of extra cargo per hyperspace level.
@@ -18,41 +11,8 @@ const TUCANA = {
 	cargoHyperspaceTechMultiplier: 5,
 };
 
-describe('findBase', () => {
-	it('grows with the top score, by tier', () => {
-		expect(findBase(0)).toBe(40000);
-		expect(findBase(9999)).toBe(40000);
-		expect(findBase(10000)).toBe(500000);
-		expect(findBase(999999)).toBe(1200000);
-		expect(findBase(4999999)).toBe(1800000);
-		expect(findBase(99999999)).toBe(4200000);
-	});
-
-	it('caps at the top tier once the score passes 100 M', () => {
-		expect(findBase(100e6)).toBe(TOP_TIER_BASE);
-		expect(findBase(1403837599722)).toBe(TOP_TIER_BASE);
-	});
-});
-
-describe('maxFind', () => {
-	it('scales with the economy speed', () => {
-		expect(maxFind({ speed: 1, topScore: 200e6, pathfinder: false })).toBe(7500000);
-		expect(maxFind({ speed: 10, topScore: 200e6, pathfinder: false })).toBe(75000000);
-	});
-
-	it('doubles with a Pathfinder in the fleet', () => {
-		const without = maxFind({ speed: 8, topScore: 5e6, pathfinder: false });
-		expect(maxFind({ speed: 8, topScore: 5e6, pathfinder: true })).toBe(without * 2);
-	});
-});
-
-describe('cargoBonus', () => {
-	it('is the level times the server multiplier, as a ratio', () => {
-		expect(cargoBonus({ hyperspaceLevel: 0, hyperspaceMultiplier: 5 })).toBe(0);
-		expect(cargoBonus({ hyperspaceLevel: 10, hyperspaceMultiplier: 5 })).toBe(0.5);
-		expect(cargoBonus({ hyperspaceLevel: 20, hyperspaceMultiplier: 5 })).toBe(1);
-	});
-});
+// The tiers, the class and Pathfinder factors and the cargo bonus are tested
+// in ogamejs (`Fleets.getExpeditionMaxFind`, `Fleets.getCargoCapacity`).
 
 describe('computeExpedition', () => {
 	const run = (over) =>
@@ -72,6 +32,15 @@ describe('computeExpedition', () => {
 		const low = run({ hyperspaceLevel: '5' }).ships[0].count;
 		const high = run({ hyperspaceLevel: '20' }).ships[0].count;
 		expect(high).toBeLessThan(low);
+	});
+
+	it('scales with the economy speed', () => {
+		const slow = run({ data: { ...TUCANA, speed: 1 } }).maxFind;
+		expect(run().maxFind).toBe(slow * 10);
+	});
+
+	it('follows the top score tiers', () => {
+		expect(run({ data: { ...TUCANA, speed: 1, topScore: 5e5 } }).maxFind).toBe(3600000);
 	});
 
 	it('halves the find without a Pathfinder', () => {
@@ -108,5 +77,82 @@ describe('computeExpedition', () => {
 
 	it('accepts level 0', () => {
 		expect(run({ hyperspaceLevel: '0' }).ok).toBe(true);
+	});
+});
+
+describe('parsePercent', () => {
+	it('reads an empty field as no bonus', () => {
+		expect(parsePercent('')).toBe(0);
+		expect(parsePercent(undefined)).toBe(0);
+	});
+
+	it('turns a percentage into a fraction, with a comma or a dot', () => {
+		expect(parsePercent('20')).toBe(0.2);
+		expect(parsePercent('12,5')).toBe(0.125);
+		expect(parsePercent('12.5')).toBe(0.125);
+	});
+
+	it('rejects what cannot be a percentage', () => {
+		expect(parsePercent('abc')).toBeNull();
+		expect(parsePercent('1,2,3')).toBeNull();
+		expect(parsePercent('-5')).toBeNull();
+	});
+});
+
+describe('computeExpedition with a class and lifeform bonuses', () => {
+	const run = (over) =>
+		computeExpedition({ data: TUCANA, hyperspaceLevel: '10', pathfinder: true, ...over });
+
+	it('defaults to a Discoverer without lifeform bonus, the historic figure', () => {
+		expect(run().maxFind).toBe(run({ characterClass: 'explorer', bonuses: {} }).maxFind);
+		expect(run().characterClass).toBe('explorer');
+	});
+
+	it('leaves the economy speed out for another class', () => {
+		expect(run({ characterClass: 'general' }).maxFind).toBe(10000000);
+		expect(run({ characterClass: 'collector' }).maxFind).toBe(10000000);
+	});
+
+	it('reads the class bonuses from the universe', () => {
+		const data = {
+			...TUCANA,
+			explorerBonusIncreasedExpeditionOutcome: 1,
+			minerBonusIncreasedCargoCapacityForTradingShips: 0.5,
+		};
+		expect(run({ data }).maxFind).toBe(5000000 * 2 * 10 * 2);
+		expect(run({ data, characterClass: 'collector' }).ships[0].capacity).toBe(50000);
+	});
+
+	it('gives the Collector cargo bonus to the cargo ships only for a Collector', () => {
+		expect(run({ characterClass: 'collector' }).ships[0].capacity).toBe(43750);
+		expect(run({ characterClass: 'general' }).ships[0].capacity).toBe(37500);
+	});
+
+	it('amplifies the Discoverer bonus, and only for a Discoverer', () => {
+		expect(run({ bonuses: { explorer: '20' } }).maxFind).toBeCloseTo(160000000, 6);
+		expect(run({ characterClass: 'general', bonuses: { explorer: '20' } }).maxFind).toBe(10000000);
+	});
+
+	it('multiplies the find with the resource bonus, for every class', () => {
+		expect(run({ bonuses: { resources: '10' } }).maxFind).toBeCloseTo(165000000, 6);
+		expect(run({ characterClass: 'general', bonuses: { resources: '10' } }).maxFind).toBeCloseTo(11000000, 6);
+	});
+
+	it('adds the lifeform cargo bonus to the other cargo bonuses', () => {
+		// 25 000 × (1 + 50 % hyperspace + 25 % Collector + 10 % lifeform)
+		expect(run({ characterClass: 'collector', bonuses: { cargo: '10' } }).ships[0].capacity).toBeCloseTo(46250, 6);
+	});
+
+	it('lists the informative bonuses the player has, without changing the figures', () => {
+		const result = run({ bonuses: { darkMatter: '3,5', fleetLoss: '12' } });
+		expect(result.info).toEqual([
+			{ key: 'darkMatter', value: 0.035 },
+			{ key: 'fleetLoss', value: 0.12 },
+		]);
+		expect(result.maxFind).toBe(150000000);
+	});
+
+	it('names the field that is not a percentage', () => {
+		expect(run({ bonuses: { cargo: 'x' } })).toEqual({ ok: false, error: 'bonus', field: 'cargo' });
 	});
 });
