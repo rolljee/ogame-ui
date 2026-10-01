@@ -1434,19 +1434,50 @@ input::placeholder {
 	gap: 12px;
 }
 
+// Labels wrap to one or two lines depending on their length: each field spans
+// two rows of the grid (label, input), shared through subgrid, so the inputs
+// stay on one line whatever the labels do. Without subgrid, the inputs are
+// still pinned to the bottom of their cell.
 .exp-bonus-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	align-items: end;
+	column-gap: 12px;
+	row-gap: 4px;
 }
 
+.exp-bonus {
+	grid-row: span 2;
+	// Room between two lines of fields, when they wrap.
+	margin-bottom: 8px;
+
+	@supports (grid-template-rows: subgrid) {
+		display: grid;
+		grid-template-rows: subgrid;
+		gap: 4px;
+
+		> label {
+			align-self: end;
+		}
+	}
+}
+
+// The unit sits inside the field, like a suffix.
 .exp-bonus-input {
-	display: flex;
-	align-items: center;
-	gap: 6px;
+	position: relative;
+	display: block;
+
+	input {
+		padding-right: 28px;
+	}
 
 	> span {
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
 		color: var(--ink-3);
+		pointer-events: none;
 	}
 }
 
