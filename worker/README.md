@@ -151,4 +151,4 @@ VITE_API_URL=https://ogame-api.<sous-domaine>.workers.dev
 ```
 
 Pour restreindre l'accès au site une fois en place, remplacer `ALLOWED_ORIGIN`
-dans `wrangler.toml` par `https://blog.rolljee.fr`.
+dans `wrangler.toml` par `https://ogame.rolljee.fr`.

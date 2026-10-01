@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "homepage": "http://rolljee.github.io/ogame-ui",
+  "homepage": "https://ogame.rolljee.fr",
   "dependencies": {
     "copy-to-clipboard": "^4.0.2",
     "fast-xml-parser": "^5.10.1",
