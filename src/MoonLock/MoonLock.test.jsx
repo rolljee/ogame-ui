@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor } from '../test/utils';
+import { renderView, screen, userEvent, waitFor } from '../test/utils';
 import MoonLock from './MoonLock';
 import { fetchServerData, fetchUniverses } from '../api/ogame';
 
@@ -33,14 +33,14 @@ beforeEach(() => {
 
 describe('<MoonLock />', () => {
 	it('asks for coordinates before computing anything', async () => {
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		expect(screen.getByText(/Enter valid coordinates/)).toBeInTheDocument();
 	});
 
 	it('shows the ships to blow up and links to the galaxy view', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 
 		await user.type(screen.getByLabelText(/Position/), '4:212:8');
@@ -59,7 +59,7 @@ describe('<MoonLock />', () => {
 
 	it('names the ships in the interface language', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<MoonLock />, { lang: 'fr' });
+		renderView(<MoonLock />, { lang: 'fr' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 
 		await user.type(screen.getByLabelText(/Position/), '4:212:8');
@@ -71,7 +71,7 @@ describe('<MoonLock />', () => {
 	it('needs fewer ships in a universe with more debris', async () => {
 		const user = userEvent.setup();
 		fetchServerData.mockResolvedValue({ ...TUCANA, debrisFactor: 1 });
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 
 		await user.type(screen.getByLabelText(/Position/), '4:212:8');
@@ -83,7 +83,7 @@ describe('<MoonLock />', () => {
 	it('copies the link', async () => {
 		const user = userEvent.setup();
 		const copy = (await import('copy-to-clipboard')).default;
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		await user.type(screen.getByLabelText(/Position/), '4:212:8');
 
@@ -94,7 +94,7 @@ describe('<MoonLock />', () => {
 
 	it('rejects coordinates the universe cannot hold', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 
 		await user.type(screen.getByLabelText(/Position/), '9:1:1');
@@ -104,7 +104,7 @@ describe('<MoonLock />', () => {
 
 	it('reports a failure to load the universe settings', async () => {
 		fetchServerData.mockRejectedValue(new Error('upstream responded 503'));
-		renderWithI18n(<MoonLock />, { lang: 'en' });
+		renderView(<MoonLock />, { lang: 'en' });
 
 		const alert = await screen.findByRole('alert');
 		expect(alert).toHaveTextContent('upstream responded 503');

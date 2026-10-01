@@ -1,4 +1,5 @@
 import React from 'react';
+import { MapPin } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { MAX_POSITION } from '../formulas';
 
@@ -9,7 +10,7 @@ function CoordinatesInput({ value, onChange, galaxies, systems }) {
 		<div className="ml-coords">
 			<label className="field">
 				<span className="field-label">
-					<span aria-hidden="true">📍</span>
+					<MapPin size={18} aria-hidden="true" />
 					{t('ml.coords.label')}
 				</span>
 				<input

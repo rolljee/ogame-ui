@@ -1,4 +1,5 @@
 import React from 'react';
+import { X } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { MAX_ATTACKERS } from '../formulas';
 
@@ -28,7 +29,7 @@ function AttackerList({ attackers, onChange, onAdd, onRemove }) {
 							aria-label={t('mb.attacker.remove', { n: index + 1 })}
 							onClick={() => onRemove(index)}
 						>
-							✕
+							<X size={18} aria-hidden="true" />
 						</button>
 					)}
 				</div>

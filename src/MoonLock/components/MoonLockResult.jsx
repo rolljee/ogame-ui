@@ -12,7 +12,9 @@ function MoonLockResult({ result }) {
 	if (!result.ok) {
 		return (
 			<div className="result">
-				<h2 className="result-title">{t('ml.result.title')}</h2>
+				<div className="result-head">
+					<h2 className="result-title">{t('ml.result.title')}</h2>
+				</div>
 				<p className="result-empty">{t(`ml.error.${result.error}`)}</p>
 			</div>
 		);
@@ -22,7 +24,10 @@ function MoonLockResult({ result }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('ml.result.title')}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('ml.result.title')}</h2>
+				<CopyButton text={url} labelKey="ml.result.copy" />
+			</div>
 
 			<p className="ml-link">
 				<a href={url} target="_blank" rel="noopener noreferrer">
@@ -48,10 +53,6 @@ function MoonLockResult({ result }) {
 					chance: MAX_MOON_CHANCE,
 				})}
 			</p>
-
-			<div className="ml-actions">
-				<CopyButton text={url} labelKey="ml.result.copy" />
-			</div>
 		</div>
 	);
 }

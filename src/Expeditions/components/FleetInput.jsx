@@ -1,4 +1,5 @@
 import React from 'react';
+import { Telescope } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { MAX_HYPERSPACE_LEVEL } from '../formulas';
 
@@ -15,7 +16,7 @@ function FleetInput({ hyperspaceLevel, onLevelChange, pathfinder, onPathfinderCh
 		<div className="exp-fleet">
 			<label className="field">
 				<span className="field-label">
-					<span aria-hidden="true">🔭</span>
+					<Telescope size={18} aria-hidden="true" />
 					{t('exp.hyperspace.label')}
 				</span>
 				<input

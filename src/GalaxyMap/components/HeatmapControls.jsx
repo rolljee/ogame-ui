@@ -28,7 +28,7 @@ function HeatmapControls({ metric, statuses, onMetric, onToggleStatus }) {
 
 			<div className="gm-control" role="group" aria-label={t('gm.filter.label')}>
 				<span className="pl-sort-label">{t('gm.filter.label')}</span>
-				{STATUS_FLAGS.map(({ key, labelKey, icon }) => (
+				{STATUS_FLAGS.map(({ key, labelKey, Icon }) => (
 					<button
 						key={key}
 						type="button"
@@ -36,7 +36,7 @@ function HeatmapControls({ metric, statuses, onMetric, onToggleStatus }) {
 						aria-pressed={statuses.includes(key)}
 						onClick={() => onToggleStatus(key)}
 					>
-						<span aria-hidden="true">{icon}</span> {t(labelKey)}
+						<Icon size={15} aria-hidden="true" /> {t(labelKey)}
 					</button>
 				))}
 			</div>

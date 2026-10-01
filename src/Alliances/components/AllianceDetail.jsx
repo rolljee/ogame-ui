@@ -1,6 +1,8 @@
 import React from 'react';
+import { Crown } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import StatusBadges from '../../components/StatusBadges';
+import { HelpNote } from '../../components/Layout';
 import { STATUS_FLAGS, filterByStatus } from '../../components/status';
 import {
 	countStatuses,
@@ -14,7 +16,7 @@ function MemberFilters({ statuses, onToggle }) {
 	const { t } = useI18n();
 	return (
 		<div className="chips" role="group" aria-label={t('al.filter.label')}>
-			{STATUS_FLAGS.map(({ key, labelKey, icon }) => (
+			{STATUS_FLAGS.map(({ key, labelKey, Icon }) => (
 				<button
 					key={key}
 					type="button"
@@ -22,7 +24,7 @@ function MemberFilters({ statuses, onToggle }) {
 					aria-pressed={statuses.includes(key)}
 					onClick={() => onToggle(key)}
 				>
-					<span aria-hidden="true">{icon}</span> {t(labelKey)}
+					<Icon size={15} aria-hidden="true" /> {t(labelKey)}
 				</button>
 			))}
 		</div>
@@ -39,7 +41,9 @@ function AllianceDetail({ alliance, statuses, onToggleStatus }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('al.detail.title')}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('al.detail.title')}</h2>
+			</div>
 			<h3 className="pl-name">
 				<span className="al-tag">[{alliance.tag}]</span> {alliance.name}
 			</h3>
@@ -58,15 +62,17 @@ function AllianceDetail({ alliance, statuses, onToggleStatus }) {
 
 			{breakdown.length > 0 && (
 				<section className="srv-group">
-					<h3 className="srv-group-title">{t('al.detail.breakdown')}</h3>
-					{/* The flags overlap, so say so instead of looking like a bad sum. */}
-					{countsOverlap(alliance.members) && (
-						<p className="help">{t('al.detail.breakdown.overlap')}</p>
-					)}
+					<div className="srv-group-head">
+						<h3 className="srv-group-title">{t('al.detail.breakdown')}</h3>
+						{/* The flags overlap, so say so instead of looking like a bad sum. */}
+						{countsOverlap(alliance.members) && (
+							<HelpNote>{t('al.detail.breakdown.overlap')}</HelpNote>
+						)}
+					</div>
 					<div className="al-breakdown">
-						{breakdown.map(({ key, labelKey, icon, count }) => (
+						{breakdown.map(({ key, labelKey, Icon, count }) => (
 							<span key={key} className="al-breakdown-item">
-								<span aria-hidden="true">{icon}</span> {count} {t(labelKey)}
+								<Icon size={15} aria-hidden="true" /> {count} {t(labelKey)}
 							</span>
 						))}
 					</div>
@@ -85,7 +91,7 @@ function AllianceDetail({ alliance, statuses, onToggleStatus }) {
 								<span className="al-member-name">{member.label}</span>
 								{member.founder && (
 									<span className="al-founder">
-										<span aria-hidden="true">👑</span> {t('al.detail.founder')}
+										<Crown size={14} aria-hidden="true" /> {t('al.detail.founder')}
 									</span>
 								)}
 								{/* players.xml is generated apart from alliances.xml, so a member

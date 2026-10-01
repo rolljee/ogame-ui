@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T12:23:04.769Z",
+  "title": "Design System: OGame Tools",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Night Desk",
+        "canonical": "#111418",
+        "oklch": "oklch(19.0% 0.009 255)",
+        "tonalRamp": [
+          "#090b0f",
+          "#212429",
+          "#3c4045",
+          "#5a5e63",
+          "#7d8186",
+          "#a1a5ab",
+          "#c7cbd1",
+          "#eaeff5"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Report Sheet",
+        "canonical": "#181c22",
+        "oklch": "oklch(22.5% 0.013 258)",
+        "tonalRamp": [
+          "#080b11",
+          "#20242b",
+          "#3c4047",
+          "#595e65",
+          "#7b8188",
+          "#a0a5ad",
+          "#c5cbd3",
+          "#e9eff8"
+        ]
+      },
+      "sheet-2": {
+        "role": "neutral",
+        "displayName": "Sheet Two",
+        "canonical": "#1f242c",
+        "oklch": "oklch(25.9% 0.017 259)",
+        "tonalRamp": [
+          "#070b12",
+          "#1f242c",
+          "#3b4049",
+          "#585e67",
+          "#7a818b",
+          "#9fa5af",
+          "#c4cbd6",
+          "#e8effa"
+        ]
+      },
+      "sheet-3": {
+        "role": "neutral",
+        "displayName": "Sheet Three",
+        "canonical": "#262c35",
+        "oklch": "oklch(29.1% 0.019 258)",
+        "tonalRamp": [
+          "#070b13",
+          "#1f242d",
+          "#3a404a",
+          "#575e68",
+          "#7a818c",
+          "#9ea5b0",
+          "#c3cbd7",
+          "#e7effb"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#2c333d",
+        "oklch": "oklch(31.9% 0.020 257)",
+        "tonalRamp": [
+          "#060b14",
+          "#1e242e",
+          "#39404b",
+          "#565e69",
+          "#79818d",
+          "#9da5b2",
+          "#c2cbd8",
+          "#e6effd"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#404956",
+        "oklch": "oklch(40.2% 0.025 257)",
+        "tonalRamp": [
+          "#050b16",
+          "#1c2430",
+          "#38404d",
+          "#555e6c",
+          "#77818f",
+          "#9ba5b5",
+          "#c1cbdb",
+          "#e4efff"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Paper Ink",
+        "canonical": "#ece8dd",
+        "oklch": "oklch(93.1% 0.015 90)",
+        "tonalRamp": [
+          "#0e0b05",
+          "#27241c",
+          "#434037",
+          "#615d54",
+          "#848076",
+          "#a8a49a",
+          "#cecac0",
+          "#f2eee3"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink Two",
+        "canonical": "#b9bcc2",
+        "oklch": "oklch(79.5% 0.009 264)",
+        "tonalRamp": [
+          "#090b0f",
+          "#222429",
+          "#3d4045",
+          "#5b5e63",
+          "#7d8086",
+          "#a2a5aa",
+          "#c7cbd1",
+          "#ebeef5"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink Three",
+        "canonical": "#8f96a0",
+        "oklch": "oklch(67.1% 0.017 257)",
+        "tonalRamp": [
+          "#070b12",
+          "#1f242c",
+          "#3a4049",
+          "#585e67",
+          "#7a818a",
+          "#9ea5af",
+          "#c4cbd6",
+          "#e8effa"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Brass Signal",
+        "canonical": "#e0a43c",
+        "oklch": "oklch(75.8% 0.136 77)",
+        "tonalRamp": [
+          "#190500",
+          "#3d1a00",
+          "#613300",
+          "#855100",
+          "#a97505",
+          "#c89c56",
+          "#e4c699",
+          "#faedda"
+        ]
+      },
+      "signal-ink": {
+        "role": "primary",
+        "displayName": "Brass Ink",
+        "canonical": "#1b1407",
+        "oklch": "oklch(19.6% 0.026 82)",
+        "tonalRamp": [
+          "#110a01",
+          "#2a2315",
+          "#473f30",
+          "#655c4d",
+          "#887f6f",
+          "#ada393",
+          "#d3c9b8",
+          "#f7eddb"
+        ]
+      },
+      "loss": {
+        "role": "secondary",
+        "displayName": "Ember Loss",
+        "canonical": "#ec8a6f",
+        "oklch": "oklch(73.2% 0.126 36)",
+        "tonalRamp": [
+          "#1f0000",
+          "#480800",
+          "#711f05",
+          "#973e25",
+          "#be6249",
+          "#dc8d77",
+          "#f3bcac",
+          "#ffe8e1"
+        ]
+      },
+      "ok": {
+        "role": "secondary",
+        "displayName": "Lichen Ok",
+        "canonical": "#8fcb98",
+        "oklch": "oklch(78.7% 0.095 148)",
+        "tonalRamp": [
+          "#001200",
+          "#002f04",
+          "#0f4d21",
+          "#336c3e",
+          "#569060",
+          "#7ab583",
+          "#add7b2",
+          "#e2f4e4"
+        ]
+      },
+      "metal": {
+        "role": "tertiary",
+        "displayName": "Metal Grey",
+        "canonical": "#c6cfd9",
+        "oklch": "oklch(85.1% 0.017 250)",
+        "tonalRamp": [
+          "#060c12",
+          "#1e252c",
+          "#394149",
+          "#575f67",
+          "#79818a",
+          "#9da6af",
+          "#c3ccd6",
+          "#e6f0fa"
+        ]
+      },
+      "crystal": {
+        "role": "tertiary",
+        "displayName": "Crystal Blue",
+        "canonical": "#74c6ee",
+        "oklch": "oklch(78.9% 0.098 230)",
+        "tonalRamp": [
+          "#000e21",
+          "#00294a",
+          "#00476a",
+          "#00678b",
+          "#368ab0",
+          "#5eb0d7",
+          "#9dd3ef",
+          "#dcf3ff"
+        ]
+      },
+      "deut": {
+        "role": "tertiary",
+        "displayName": "Deuterium Green",
+        "canonical": "#5fd6a4",
+        "oklch": "oklch(79.4% 0.130 163)",
+        "tonalRamp": [
+          "#001204",
+          "#003115",
+          "#00522d",
+          "#007348",
+          "#16976b",
+          "#62b992",
+          "#a2d9be",
+          "#def5e9"
+        ]
+      },
+      "ink-bright": {
+        "role": "neutral",
+        "displayName": "Bright Paper",
+        "canonical": "#fffaf0"
+      },
+      "signal-soft": {
+        "role": "primary",
+        "displayName": "Brass Wash",
+        "canonical": "rgba(224, 164, 60, 0.14)"
+      },
+      "loss-soft": {
+        "role": "secondary",
+        "displayName": "Loss Wash",
+        "canonical": "rgba(236, 138, 111, 0.12)"
+      },
+      "heat-0": {
+        "role": "neutral",
+        "displayName": "Heat 0",
+        "canonical": "#1d2228",
+        "tonalRamp": [
+          "#1d2228",
+          "#343a42",
+          "#555b62",
+          "#81848a",
+          "#b4b3b0",
+          "#ece8dd"
+        ]
+      },
+      "heat-1": {
+        "role": "neutral",
+        "displayName": "Heat 1",
+        "canonical": "#343a42",
+        "tonalRamp": [
+          "#1d2228",
+          "#343a42",
+          "#555b62",
+          "#81848a",
+          "#b4b3b0",
+          "#ece8dd"
+        ]
+      },
+      "heat-2": {
+        "role": "neutral",
+        "displayName": "Heat 2",
+        "canonical": "#555b62",
+        "tonalRamp": [
+          "#1d2228",
+          "#343a42",
+          "#555b62",
+          "#81848a",
+          "#b4b3b0",
+          "#ece8dd"
+        ]
+      },
+      "heat-3": {
+        "role": "neutral",
+        "displayName": "Heat 3",
+        "canonical": "#81848a",
+        "tonalRamp": [
+          "#1d2228",
+          "#343a42",
+          "#555b62",
+          "#81848a",
+          "#b4b3b0",
+          "#ece8dd"
+        ]
+      },
+      "heat-4": {
+        "role": "neutral",
+        "displayName": "Heat 4",
+        "canonical": "#b4b3b0",
+        "tonalRamp": [
+          "#1d2228",
+          "#343a42",
+          "#555b62",
+          "#81848a",
+          "#b4b3b0",
+          "#ece8dd"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Verdict",
+        "purpose": "The verdict figure in brass, the one figure each tool exists to produce. 32px under 860px."
+      },
+      "headline": {
+        "displayName": "Tool Title",
+        "purpose": "The tool name as the page h1. 24px under 860px."
+      },
+      "title": {
+        "displayName": "Group / Sheet Title",
+        "purpose": "Settings group titles and report sheet titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text; intros capped at 72ch, help notes at 68ch."
+      },
+      "label": {
+        "displayName": "Index Label",
+        "purpose": "Uppercase tracked heading for the index groups and server-settings groups only."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Mono tabular face for coordinates, counts, ticks, table cells and stamps."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-on-desk",
+        "value": "0 12px 32px -18px rgba(0, 0, 0, 0.7)",
+        "purpose": "The report sheet resting on the desk. The only surface shadow."
+      },
+      {
+        "name": "thumb-contact",
+        "value": "0 1px 3px rgba(0, 0, 0, 0.5)",
+        "purpose": "Range slider thumb only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Easing for the re-ink stroke."
+      },
+      {
+        "name": "reink",
+        "value": "0.9s scaleX sweep then fade",
+        "purpose": "A 2px brass stroke sweeps under a changed verdict figure once. Off under reduced motion."
+      },
+      {
+        "name": "state",
+        "value": "0.15s ease",
+        "purpose": "Colour, background and border transitions on controls and index links."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stamp-wrap",
+        "value": "640px"
+      },
+      {
+        "name": "index-folds",
+        "value": "860px"
+      },
+      {
+        "name": "grid-collapses",
+        "value": "1180px"
+      }
+    ],
+    "layout": {
+      "indexWidth": "264px",
+      "deskMax": "1280px",
+      "splitCalculators": "5fr 6fr",
+      "splitData": "7fr 5fr",
+      "columnGap": "32px",
+      "reportStickyTop": "24px"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid paper-ink action, e.g. search.",
+      "html": "<button class=\"ds-btn\">Rechercher</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--ink,#ece8dd);border-radius:3px;background:var(--ink,#ece8dd);color:var(--ground,#111418);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:background-color .15s ease}.ds-btn:hover{background:#fffaf0}.ds-btn:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Dashed add action, e.g. add an attacker.",
+      "html": "<button class=\"ds-btn-ghost\">+ Ajouter un attaquant</button>",
+      "css": ".ds-btn-ghost{min-height:40px;padding:8px 16px;border:1px dashed var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:border-color .15s ease,color .15s ease}.ds-btn-ghost:hover{border-color:var(--ink-3,#8f96a0);color:var(--ink,#ece8dd)}.ds-btn-ghost:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Small bordered secondary action, e.g. copy.",
+      "html": "<button class=\"ds-btn-quiet\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>Copier</button>",
+      "css": ".ds-btn-quiet{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 10px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:14px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}.ds-btn-quiet:hover{border-color:var(--ink-3,#8f96a0);background:var(--sheet-2,#1f242c);color:var(--ink,#ece8dd)}.ds-btn-quiet:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Segmented choices; selection is ink, never brass.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip is-active\">1.7 : 1.4 : 1</button><button class=\"ds-chip\">2 : 1.5 : 1</button><button class=\"ds-chip\">3 : 2 : 1</button></div>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px}.ds-chip{min-height:36px;padding:6px 12px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);font-size:14px;cursor:pointer;transition:border-color .15s ease,background-color .15s ease,color .15s ease}.ds-chip:hover{border-color:var(--ink-3,#8f96a0);color:var(--ink,#ece8dd)}.ds-chip.is-active{border-color:var(--ink,#ece8dd);background:var(--sheet-3,#262c35);color:var(--ink,#ece8dd);font-weight:700}.ds-chip:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "One-line labelled input, label left, value right.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Quantité</span><input value=\"1 000 000\" /></label>",
+      "css": ".ds-field{display:flex;align-items:center;gap:12px;padding:0 14px;min-height:52px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:var(--sheet-2,#1f242c);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);transition:border-color .15s ease}.ds-field:focus-within{border-color:var(--signal,#e0a43c)}.ds-field-label{font-size:15px;color:var(--ink-2,#b9bcc2)}.ds-field input{flex:1;min-width:0;border:0;outline:none;background:transparent;padding:12px 0;text-align:right;font:700 22px var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-variant-numeric:tabular-nums;color:var(--ink,#ece8dd)}"
+    },
+    {
+      "name": "Index Navigation",
+      "kind": "nav",
+      "refersTo": "index-link",
+      "description": "Ruled tool rows; the open tool is brass.",
+      "html": "<nav class=\"ds-nav\"><h2 class=\"ds-nav-title\">Calculateurs</h2><ul><li><a class=\"is-active\" href=\"#\">Commerce</a></li><li><a href=\"#\">Destruction de lune</a></li><li><a href=\"#\">Expéditions</a></li></ul></nav>",
+      "css": ".ds-nav{width:224px;padding:16px;background:var(--sheet,#181c22);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-nav-title{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3,#8f96a0)}.ds-nav ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule,#2c333d)}.ds-nav li{border-bottom:1px solid var(--rule,#2c333d)}.ds-nav a{display:block;padding:9px 10px 9px 14px;font-size:15px;color:var(--ink-2,#b9bcc2);text-decoration:none;transition:color .15s ease,background-color .15s ease}.ds-nav a:hover{color:var(--ink,#ece8dd);background:var(--sheet-2,#1f242c)}.ds-nav a.is-active{color:var(--signal,#e0a43c);font-weight:700;background:var(--sheet-2,#1f242c)}.ds-nav a:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Report Sheet",
+      "kind": "card",
+      "refersTo": "report-sheet",
+      "description": "The verdict report: ruled lines, brass figures.",
+      "html": "<section class=\"ds-report\"><div class=\"ds-report-head\"><h2>Résultat</h2></div><div class=\"ds-line\"><span>Cristal</span><strong>823 529</strong></div><div class=\"ds-line\"><span>Deutérium</span><strong>588 235</strong></div><p class=\"ds-for\">Pour <b>1 000 000 Métal</b></p></section>",
+      "css": ".ds-report{max-width:420px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:var(--sheet,#181c22);box-shadow:0 12px 32px -18px rgba(0,0,0,.7);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);color:var(--ink,#ece8dd);padding-bottom:22px}.ds-report-head{padding:12px 22px;border-bottom:1px solid var(--rule-strong,#404956);background:var(--sheet-2,#1f242c)}.ds-report-head h2{margin:0;font-size:17px;font-weight:700}.ds-line{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 22px;padding:12px 0}.ds-line+.ds-line{border-top:1px solid var(--rule,#2c333d)}.ds-line span{font-size:17px;color:var(--ink-2,#b9bcc2)}.ds-line strong{font-size:40px;font-weight:700;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--signal,#e0a43c)}.ds-for{margin:16px 22px 0;padding-top:14px;border-top:1px solid var(--rule,#2c333d);font-size:15px;color:var(--ink-2,#b9bcc2)}.ds-for b{color:var(--ink,#ece8dd)}"
+    },
+    {
+      "name": "Status Stamps",
+      "kind": "chip",
+      "refersTo": "status-stamp",
+      "description": "Rectangular ruled status marks, never pills.",
+      "html": "<span class=\"ds-stamps\"><span class=\"ds-stamp ds-ok\">Actif</span><span class=\"ds-stamp ds-vac\">Vacances</span><span class=\"ds-stamp ds-ban\">Banni</span><span class=\"ds-stamp\">Inactif</span></span>",
+      "css": ".ds-stamps{display:inline-flex;gap:4px;font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-stamp{display:inline-flex;align-items:center;padding:1px 6px;border:1px solid var(--rule-strong,#404956);border-radius:2px;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink-2,#b9bcc2)}.ds-ok{border-color:rgba(143,203,152,.5);color:var(--ok,#8fcb98)}.ds-vac{border-color:rgba(116,198,238,.5);color:var(--crystal,#74c6ee)}.ds-ban{border-color:rgba(236,138,111,.55);color:var(--loss,#ec8a6f)}"
+    },
+    {
+      "name": "Heatmap Row",
+      "kind": "custom",
+      "refersTo": "heatmap-cell",
+      "description": "Graphite-to-ink ramp; the selected cell is brass.",
+      "html": "<div class=\"ds-heat\"><span class=\"ds-heat-label\">G1</span><button class=\"ds-cell\" style=\"background:#1d2228\"></button><button class=\"ds-cell\" style=\"background:#343a42\"></button><button class=\"ds-cell\" style=\"background:#555b62\"></button><button class=\"ds-cell is-selected\"></button><button class=\"ds-cell\" style=\"background:#81848a\"></button><button class=\"ds-cell\" style=\"background:#b4b3b0\"></button><button class=\"ds-cell\" style=\"background:#ece8dd\"></button></div>",
+      "css": ".ds-heat{display:inline-flex;align-items:center;gap:2px;padding:14px;background:var(--sheet,#181c22);border:1px solid var(--rule,#2c333d);border-radius:3px}.ds-heat-label{margin-right:8px;font:13px var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);color:var(--ink-2,#b9bcc2)}.ds-cell{width:12px;height:18px;padding:0;border:1px solid transparent;border-radius:1px;cursor:pointer}.ds-cell:hover{border-color:var(--ink,#ece8dd)}.ds-cell.is-selected{background:var(--signal,#e0a43c);border-color:var(--signal,#e0a43c);outline:2px solid var(--signal,#e0a43c);outline-offset:1px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Rapport de combat",
+    "overview": "Every tool hands down its verdict as a report: a dated, ruled document on a graphite telex desk at night. The lineage is the combat and espionage reports OGame players have pasted into forums and Discord since 2002. The verdict is the first thing read and the thing copied back into chat, so the whole system is arranged to make one figure unmistakable and everything around it quiet.\n\nThe world is flat paper on a dark desk. A sticky index rail holds the brand, the one universe picker and the tool list; the desk to its right shows one tool at a time, its settings column beside the report sheet. Surfaces are told apart by small steps of graphite and by 1px rules, never by colour or glow. Numbers that are read, compared or copied are set in a tabular face. One brass ink is the only accent, and its rarity is what makes the verdict land.\n\nThe build refuses the neon HUD card stack of the previous UI and the generic SaaS dashboard: no glow, no glass, no decorative gradient, no pills.",
+    "keyCharacteristics": [
+      "Graphite ground, three sheet steps, warm paper ink.",
+      "One brass signal ink, reserved for a short list of meanings.",
+      "1px rules everywhere; ruled lists and tables instead of cards in cards.",
+      "Tabular numerals, with a mono face for coordinates, counts, ticks and stamps.",
+      "Corners of 3px at most; status marks are rectangular stamps.",
+      "A single motion signature: a changed figure is re-inked by one brass stroke."
+    ],
+    "rules": [
+      {
+        "name": "The Brass Reservation Rule",
+        "body": "Brass means \"this is the answer, this has focus, or this is where you are.\" It marks the verdict figures, focus, the open tool, the selected heatmap cell and the curve's current point. Any other use dilutes the verdict.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Selection Rule",
+        "body": "Selection that is not the open tool is shown with ink: an ink border or ink outline and a step-up sheet fill (chips, list rows, language toggle). The selected resource tile is the one exception, and it uses that resource's own data ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The Data Ink Rule",
+        "body": "Metal, crystal and deuterium colours only ever describe a resource. They never colour a button, a heading or a frame.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figure Rule",
+        "body": "Any number a player compares or copies is tabular; numbers in rows, tables, ticks and stamps use the mono face.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Loud Figure Rule",
+        "body": "Only the verdict reaches display size. Nothing else on a report competes with it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Not Light Rule",
+        "body": "Surfaces are separated by tone and 1px rules. No glow, no glass, no blur, and no gradient except the slider track fill that shows the value.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep brass to the verdict figures, focus, the open tool, the selected heatmap cell and the curve's current point.",
+      "Do show any other selection with an ink border or outline and a step-up sheet fill (sheet-2 for hover, sheet-3 for selected).",
+      "Do separate surfaces with 1px rules and graphite steps; rule lists and tables instead of nesting cards.",
+      "Do set compared or copied numbers tabular, and in the mono face when they sit in rows, tables, ticks or stamps.",
+      "Do make status marks rectangular stamps with 2px corners and a 1px border.",
+      "Do colour the galaxy heatmap with the single graphite-to-ink ramp (heat-0 to heat-4, then ink).",
+      "Do keep metal, crystal and deuterium inks on resource data only.",
+      "Do keep the report beside the settings and sticky on wide screens so the verdict is read without scrolling."
+    ],
+    "donts": [
+      "Don't use glows, glass, blur or decorative gradients; the slider's value fill is the only gradient.",
+      "Don't add coloured side stripes to cards, notes or rows.",
+      "Don't round anything past 3px, and don't make status marks into pills.",
+      "Don't add a second accent colour, or use brass for decoration, hover flourishes or headings.",
+      "Don't set any figure other than the verdict at display size.",
+      "Don't add shadows beyond the report sheet's single drop shadow and the slider thumb's contact shadow."
+    ]
+  }
+}

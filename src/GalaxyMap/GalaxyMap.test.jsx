@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor, within } from '../test/utils';
+import { renderView, screen, userEvent, waitFor, within } from '../test/utils';
 import GalaxyMap from './GalaxyMap';
 import { fetchRoster, fetchServerData, fetchUniverses } from '../api/ogame';
 
@@ -71,7 +71,7 @@ beforeEach(() => {
 
 describe('<GalaxyMap />', () => {
 	it('draws the whole universe from a single roster request', async () => {
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await waitFor(() =>
@@ -84,7 +84,7 @@ describe('<GalaxyMap />', () => {
 	});
 
 	it('shades the busiest system the brightest', async () => {
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
 		expect(cell('1:1')).toHaveClass('gm-level-5');
@@ -94,7 +94,7 @@ describe('<GalaxyMap />', () => {
 
 	it('recolours for inactives without another request', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
 		await user.click(screen.getByRole('button', { name: 'Inactives' }));
@@ -106,7 +106,7 @@ describe('<GalaxyMap />', () => {
 
 	it('only counts the selected statuses', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
 		await user.click(screen.getByRole('button', { name: /Inactive \(28 d\)/ }));
@@ -117,7 +117,7 @@ describe('<GalaxyMap />', () => {
 
 	it('lists who lives in a system when its cell is clicked', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
 		await user.click(cell('1:1'));
@@ -136,7 +136,7 @@ describe('<GalaxyMap />', () => {
 
 	it('still draws the map when the universe size is unavailable', async () => {
 		fetchServerData.mockRejectedValue(new Error('nope'));
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 
 		expect(await screen.findByLabelText(/^1:1 —/)).toBeInTheDocument();
 		expect(screen.getByText('4 placed planet(s) across 2 galaxy(ies) × 3 systems.')).toBeInTheDocument();
@@ -144,7 +144,7 @@ describe('<GalaxyMap />', () => {
 
 	it('reports a roster the proxy could not load', async () => {
 		fetchRoster.mockRejectedValue(new Error('upstream 502'));
-		renderWithI18n(<GalaxyMap />, { lang: 'en' });
+		renderView(<GalaxyMap />, { lang: 'en' });
 
 		expect(await screen.findByRole('alert')).toHaveTextContent(
 			"Could not load this universe's roster.",

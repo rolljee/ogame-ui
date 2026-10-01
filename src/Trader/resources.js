@@ -4,8 +4,8 @@ import { RESOURCES } from '../components/constants';
 // `order` is the metal:crystal:deut order used throughout the UI and rates.
 export const RESOURCE_META = {
 	[RESOURCES.metal]: { key: 'metal', color: '#c6cfd9', labelKey: 'resource.metal' },
-	[RESOURCES.crystal]: { key: 'crystal', color: '#57c7f5', labelKey: 'resource.crystal' },
-	[RESOURCES.deut]: { key: 'deut', color: '#45e0a6', labelKey: 'resource.deut' },
+	[RESOURCES.crystal]: { key: 'crystal', color: '#74c6ee', labelKey: 'resource.crystal' },
+	[RESOURCES.deut]: { key: 'deut', color: '#5fd6a4', labelKey: 'resource.deut' },
 };
 
 export const RESOURCE_ORDER = [RESOURCES.metal, RESOURCES.crystal, RESOURCES.deut];

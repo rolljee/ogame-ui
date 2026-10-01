@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '../../i18n/I18nContext';
+import { HelpNote } from '../../components/Layout';
 
 // Chart box in user units; the SVG scales to its container.
 const WIDTH = 320;
@@ -28,8 +29,10 @@ function MoonbreakCurve({ curve, attackerCount }) {
 
 	return (
 		<div className="result mb-curve">
-			<h2 className="result-title">{t('mb.curve.title')}</h2>
-			<p className="help">{t('mb.curve.help', { attackers: attackerCount })}</p>
+			<div className="result-head">
+				<h2 className="result-title">{t('mb.curve.title')}</h2>
+				<HelpNote>{t('mb.curve.help', { attackers: attackerCount })}</HelpNote>
+			</div>
 
 			<svg
 				className="mb-curve-chart"
@@ -60,6 +63,9 @@ function MoonbreakCurve({ curve, attackerCount }) {
 				{/* Where each threshold is reached — the number people actually want. */}
 				{targets
 					.filter(({ rip }) => rip !== null && rip <= upTo)
+					// The fleet's own point is labelled already; a threshold right
+					// next to it would print over that label.
+					.filter(({ rip }) => !current || Math.abs(x(rip) - x(current.rip)) > 36)
 					.map(({ target, rip }) => (
 						<g key={target}>
 							<line
@@ -69,7 +75,7 @@ function MoonbreakCurve({ curve, attackerCount }) {
 								y1={y(target)}
 								y2={y(0)}
 							/>
-							<text className="mb-curve-target-label" x={x(rip)} y={y(target) - 5}>
+							<text className="mb-curve-target-label" x={x(rip) + 4} y={y(0) - 5} textAnchor="start">
 								{target}%
 							</text>
 						</g>
@@ -88,7 +94,13 @@ function MoonbreakCurve({ curve, attackerCount }) {
 						<text
 							className="mb-curve-point-label"
 							x={x(current.rip)}
-							y={y(current.probability) - 10}
+							// Above the point, unless that would leave the plot: then under the line.
+							y={
+								y(current.probability) - 10 > PAD.top + 8
+									? y(current.probability) - 10
+									: y(current.probability) + 18
+							}
+							dx={current.rip > upTo / 2 ? -8 : 8}
 							textAnchor={current.rip > upTo / 2 ? 'end' : 'start'}
 						>
 							{t('mb.curve.point', {
@@ -116,7 +128,7 @@ function MoonbreakCurve({ curve, attackerCount }) {
 				<text className="mb-curve-tick" x={PAD.left} y={HEIGHT - 8}>
 					1
 				</text>
-				<text className="mb-curve-tick" x={WIDTH - PAD.right} y={HEIGHT - 8} textAnchor="end">
+				<text className="mb-curve-tick" x={WIDTH - PAD.right - 6} y={HEIGHT - 8} textAnchor="end">
 					{t('mb.curve.axisX', { rip: upTo })}
 				</text>
 			</svg>

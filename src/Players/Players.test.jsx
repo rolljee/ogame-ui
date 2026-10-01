@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor, within } from '../test/utils';
+import { renderView, screen, userEvent, waitFor, within } from '../test/utils';
 import Players from './Players';
 import { fetchPlayer, fetchRoster, fetchUniverses } from '../api/ogame';
 
@@ -105,7 +105,7 @@ beforeEach(() => {
 describe('<Players />', () => {
 	// The whole point of the roster: the list is there before anything is typed.
 	it('loads the whole universe as soon as one is picked', async () => {
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await waitFor(() =>
@@ -117,7 +117,7 @@ describe('<Players />', () => {
 
 	it('filters by name as you type, without a request', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByRole('searchbox'), 'elysee');
@@ -128,7 +128,7 @@ describe('<Players />', () => {
 
 	it('filters by galaxy', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByLabelText(/Galaxy/), '4');
@@ -138,7 +138,7 @@ describe('<Players />', () => {
 
 	it('filters by system', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByLabelText(/System/), '194');
@@ -148,7 +148,7 @@ describe('<Players />', () => {
 
 	it('combines a galaxy with a status filter', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByLabelText(/Galaxy/), '4');
@@ -161,7 +161,7 @@ describe('<Players />', () => {
 	// Only the positions that matched are worth showing on a row.
 	it('shows the coordinates that matched, linked into the galaxy view', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByLabelText(/Galaxy/), '4');
@@ -177,7 +177,7 @@ describe('<Players />', () => {
 
 	it('sorts by position on request, and by name by default', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 		expect(names()).toEqual(['Élysée[TWA]', 'Elysium', 'Elyx', 'Newcomer']);
 
@@ -190,7 +190,7 @@ describe('<Players />', () => {
 
 	it('keeps a player without coordinates until a position is asked for', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Newcomer');
 
 		await user.type(screen.getByLabelText(/Galaxy/), '1');
@@ -200,17 +200,17 @@ describe('<Players />', () => {
 
 	// The galaxy dump is days old; the view has to say so.
 	it('says how old the positions are', async () => {
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		expect(await screen.findByText(/galaxy dump, 2 h old/)).toBeInTheDocument();
 	});
 
 	it('shows the alliance tag of each player', async () => {
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		expect(await screen.findByText('[TWA]')).toHaveAttribute('title', 'The Wolf Army');
 	});
 
 	it('badges the statuses, keeping only the longer inactivity', async () => {
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		expect(rows().getByText(/Vacation/)).toBeInTheDocument();
@@ -220,7 +220,7 @@ describe('<Players />', () => {
 
 	it('loads a player and shows their scores and planets', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 
@@ -237,7 +237,7 @@ describe('<Players />', () => {
 
 	it('drops the score categories Gameforge does not document', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 
 		await screen.findByText('Overall');
@@ -246,7 +246,7 @@ describe('<Players />', () => {
 
 	it('forgets the selected player when the universe changes', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await user.click(await screen.findByRole('button', { name: /Élysée/ }));
 		await screen.findByText('Overall');
 
@@ -257,7 +257,7 @@ describe('<Players />', () => {
 
 	it('reports a roster that could not be loaded', async () => {
 		fetchRoster.mockRejectedValue(new Error('upstream responded 502'));
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 
 		const alert = await screen.findByRole('alert');
 		expect(alert).toHaveTextContent("Could not load this universe's roster");
@@ -266,7 +266,7 @@ describe('<Players />', () => {
 
 	it('says so when nothing matches the filters', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<Players />, { lang: 'en' });
+		renderView(<Players />, { lang: 'en' });
 		await screen.findByText('Élysée');
 
 		await user.type(screen.getByRole('searchbox'), 'zzz');
@@ -275,7 +275,7 @@ describe('<Players />', () => {
 	});
 
 	it('renders in French too', async () => {
-		renderWithI18n(<Players />, { lang: 'fr' });
+		renderView(<Players />, { lang: 'fr' });
 		await screen.findByText('Élysée');
 
 		expect(rows().getByText(/Vacances/)).toBeInTheDocument();

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useI18n } from '../i18n/I18nContext';
 import { fetchAlliance, searchAlliances } from '../api/ogame';
 import { useApiData } from '../api/useApiData';
-import UniversePicker from '../components/UniversePicker';
+import { useUniverse } from '../universe/UniverseContext';
+import { Group, NeedsUniverse, ToolGrid } from '../components/Layout';
 import AllianceSearch from './components/AllianceSearch';
 import AllianceList from './components/AllianceList';
 import AllianceDetail from './components/AllianceDetail';
 
 function Alliances() {
 	const { t } = useI18n();
-	const [selection, setSelection] = useState({ lang: '', universe: '' });
+	const { selection } = useUniverse();
 	const [search, setSearch] = useState('');
 	const [allianceId, setAllianceId] = useState(null);
 	const [statuses, setStatuses] = useState([]);
@@ -29,10 +30,7 @@ function Alliances() {
 
 	// An alliance id only means something in the universe it was found in, and a
 	// new search makes the previous selection stale.
-	function handleUniverse(next) {
-		setSelection(next);
-		setAllianceId(null);
-	}
+	useEffect(() => setAllianceId(null), [selection.universe, selection.lang]);
 
 	function handleSearch(next) {
 		setSearch(next);
@@ -46,67 +44,61 @@ function Alliances() {
 	}
 
 	return (
-		<>
-			<p className="calc-intro">{t('al.intro')}</p>
+		<ToolGrid
+			layout="data"
+			settings={
+				<Group title={t('al.step.search')} help={t('al.step.search.help')}>
+					<AllianceSearch onSearch={handleSearch} />
+					<NeedsUniverse>
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">1</span>
-					<h2 className="section-title">{t('al.step.universe')}</h2>
-				</div>
-				<p className="help">{t('al.step.universe.help')}</p>
-				<UniversePicker value={selection} onChange={handleUniverse} />
-			</section>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">2</span>
-					<h2 className="section-title">{t('al.step.search')}</h2>
-				</div>
-				<p className="help">{t('al.step.search.help')}</p>
-				<AllianceSearch onSearch={handleSearch} />
-
-				{results.loading && <p className="help">{t('al.loading')}</p>}
-				{results.error && (
-					<p className="api-error" role="alert">
-						{t('al.error.search')}{' '}
-						<span className="api-error-detail">{results.error.message}</span>
-					</p>
-				)}
-				{results.data && (
-					<AllianceList
-						alliances={results.data.alliances}
-						total={results.data.total}
-						selectedId={allianceId}
-						onSelect={setAllianceId}
-					/>
-				)}
-			</section>
-
-			{detail.loading && <p className="help">{t('al.loading.detail')}</p>}
-			{detail.error && (
-				<p className="api-error" role="alert">
-					{t('al.error.detail')}{' '}
-					<span className="api-error-detail">{detail.error.message}</span>
-				</p>
-			)}
-			{detail.data ? (
-				<AllianceDetail
-					alliance={detail.data}
-					statuses={statuses}
-					onToggleStatus={handleToggleStatus}
-				/>
-			) : (
-				!detail.loading && (
-					<div className="result">
-						<h2 className="result-title">{t('al.detail.title')}</h2>
-						<p className="result-empty">
-							{canSearch ? t('al.detail.pick') : t('al.detail.searchFirst')}
+						{results.loading && <p className="help">{t('al.loading')}</p>}
+						{results.error && (
+							<p className="api-error" role="alert">
+								{t('al.error.search')}{' '}
+								<span className="api-error-detail">{results.error.message}</span>
+							</p>
+						)}
+						{results.data && (
+							<AllianceList
+								alliances={results.data.alliances}
+								total={results.data.total}
+								selectedId={allianceId}
+								onSelect={setAllianceId}
+							/>
+						)}
+					</NeedsUniverse>
+				</Group>
+			}
+			report={
+				<>
+					{detail.loading && <p className="help">{t('al.loading.detail')}</p>}
+					{detail.error && (
+						<p className="api-error" role="alert">
+							{t('al.error.detail')}{' '}
+							<span className="api-error-detail">{detail.error.message}</span>
 						</p>
-					</div>
-				)
-			)}
-		</>
+					)}
+					{detail.data ? (
+						<AllianceDetail
+							alliance={detail.data}
+							statuses={statuses}
+							onToggleStatus={handleToggleStatus}
+						/>
+					) : (
+						!detail.loading && (
+							<div className="result">
+								<div className="result-head">
+									<h2 className="result-title">{t('al.detail.title')}</h2>
+								</div>
+								<p className="result-empty">
+									{canSearch ? t('al.detail.pick') : t('al.detail.searchFirst')}
+								</p>
+							</div>
+						)
+					)}
+				</>
+			}
+		/>
 	);
 }
 

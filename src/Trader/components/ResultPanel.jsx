@@ -19,8 +19,11 @@ function ResultPanel({ selected, amount, rate, outputs }) {
 	}
 
 	return (
-		<div className="result">
-			<p className="result-title">{t('result.title')}</p>
+		<section className="result" aria-live="polite">
+			<div className="result-head">
+				<h2 className="result-title">{t('result.title')}</h2>
+				{hasResult && <CopyButton text={buildCopyText()} />}
+			</div>
 
 			{!hasResult ? (
 				<p className="result-empty">{t('result.empty')}</p>
@@ -32,10 +35,12 @@ function ResultPanel({ selected, amount, rate, outputs }) {
 							return (
 								<div className="result-line" key={resource} style={{ '--res-color': meta.color }}>
 									<span className="res-name">
-										<ResourceIcon resource={resource} size={24} />
+										<ResourceIcon resource={resource} size={22} />
 										{t(meta.labelKey)}
 									</span>
-									<span className="res-amount">{prettify(outputs[resource])}</span>
+									<span className="res-amount figure" key={outputs[resource]}>
+										{prettify(outputs[resource])}
+									</span>
 								</div>
 							);
 						})}
@@ -43,15 +48,14 @@ function ResultPanel({ selected, amount, rate, outputs }) {
 
 					<p className="result-for">
 						{t('result.for')}{' '}
-						<strong>
+						<strong className="nowrap">
 							{prettify(amount)} {t(RESOURCE_META[selected].labelKey)}
 						</strong>
+						<span className="result-rate"> · {rate.replace(/:/g, ' : ')}</span>
 					</p>
-
-					<CopyButton text={buildCopyText()} />
 				</>
 			)}
-		</div>
+		</section>
 	);
 }
 

@@ -6,6 +6,7 @@ import MoonSizeInput from './components/MoonSizeInput';
 import AttackerList from './components/AttackerList';
 import MoonbreakResult from './components/MoonbreakResult';
 import MoonbreakCurve from './components/MoonbreakCurve';
+import { Group, ToolGrid } from '../components/Layout';
 
 function Moonbreak() {
 	const { t } = useI18n();
@@ -45,36 +46,30 @@ function Moonbreak() {
 	);
 
 	return (
-		<>
-			<p className="calc-intro">{t('mb.intro')}</p>
+		<ToolGrid
+			settings={
+				<>
+					<Group title={t('mb.step.size')} help={t('mb.step.size.help')}>
+						<MoonSizeInput value={moonSize} onChange={setMoonSize} />
+					</Group>
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">1</span>
-					<h2 className="section-title">{t('mb.step.size')}</h2>
-				</div>
-				<p className="help">{t('mb.step.size.help')}</p>
-				<MoonSizeInput value={moonSize} onChange={setMoonSize} />
-			</section>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">2</span>
-					<h2 className="section-title">{t('mb.step.attackers')}</h2>
-				</div>
-				<p className="help">{t('mb.step.attackers.help')}</p>
-				<AttackerList
-					attackers={attackers}
-					onChange={handleAttackerChange}
-					onAdd={handleAdd}
-					onRemove={handleRemove}
-				/>
-			</section>
-
-			<MoonbreakResult result={result} />
-
-			{curve && <MoonbreakCurve curve={curve} attackerCount={result.attackers.length} />}
-		</>
+					<Group title={t('mb.step.attackers')} help={t('mb.step.attackers.help')}>
+						<AttackerList
+							attackers={attackers}
+							onChange={handleAttackerChange}
+							onAdd={handleAdd}
+							onRemove={handleRemove}
+						/>
+					</Group>
+				</>
+			}
+			report={
+				<>
+					<MoonbreakResult result={result} />
+					{curve && <MoonbreakCurve curve={curve} attackerCount={result.attackers.length} />}
+				</>
+			}
+		/>
 	);
 }
 

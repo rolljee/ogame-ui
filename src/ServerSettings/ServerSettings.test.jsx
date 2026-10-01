@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderWithI18n, screen, userEvent, waitFor } from '../test/utils';
+import { renderView, screen, userEvent, waitFor } from '../test/utils';
 import ServerSettings from './ServerSettings';
 import { fetchServerData, fetchUniverses } from '../api/ogame';
 
@@ -46,13 +46,13 @@ beforeEach(() => {
 
 describe('<ServerSettings />', () => {
 	it('offers the communities returned by the API', async () => {
-		renderWithI18n(<ServerSettings />);
+		renderView(<ServerSettings />);
 		const community = await screen.findByLabelText('Community');
 		expect([...community.options].map((o) => o.value)).toEqual(['de', 'en', 'fr']);
 	});
 
 	it('preselects the interface language and loads its first universe', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		expect(fetchServerData).toHaveBeenCalledWith(
 			{ lang: 'en', universe: '101' },
@@ -62,7 +62,7 @@ describe('<ServerSettings />', () => {
 
 	it('falls back to the first community when the interface language has none', async () => {
 		fetchUniverses.mockResolvedValue([{ language: 'de', number: 100, name: 'Alpha' }]);
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		await waitFor(() => expect(fetchServerData).toHaveBeenCalled());
 		expect(fetchServerData).toHaveBeenCalledWith(
 			{ lang: 'de', universe: '100' },
@@ -71,7 +71,7 @@ describe('<ServerSettings />', () => {
 	});
 
 	it('lists only the universes of the selected community', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'fr' });
+		renderView(<ServerSettings />, { lang: 'fr' });
 		const universe = await screen.findByLabelText('Univers');
 		await waitFor(() => expect(universe.options).toHaveLength(2));
 		expect([...universe.options].map((o) => o.textContent)).toEqual([
@@ -82,7 +82,7 @@ describe('<ServerSettings />', () => {
 
 	it('switches to the first universe of a newly picked community', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		await screen.findByLabelText('Community');
 
 		await user.selectOptions(screen.getByLabelText('Community'), 'fr');
@@ -97,7 +97,7 @@ describe('<ServerSettings />', () => {
 
 	it('reloads when another universe is picked', async () => {
 		const user = userEvent.setup();
-		renderWithI18n(<ServerSettings />, { lang: 'fr' });
+		renderView(<ServerSettings />, { lang: 'fr' });
 		await screen.findByLabelText('Univers');
 
 		await user.selectOptions(screen.getByLabelText('Univers'), '198');
@@ -111,7 +111,7 @@ describe('<ServerSettings />', () => {
 	});
 
 	it('renders the settings, grouped and formatted', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 
 		expect(await screen.findByText('Speeds')).toBeInTheDocument();
 		expect(screen.getByText('Combat and debris')).toBeInTheDocument();
@@ -122,12 +122,12 @@ describe('<ServerSettings />', () => {
 	});
 
 	it('shows the official exchange rate, ready for the trade calculator', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		expect(await screen.findByText('2.5 : 1.5 : 1')).toBeInTheDocument();
 	});
 
 	it('translates booleans instead of showing 1 and 0', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		expect(await screen.findByText('Yes')).toBeInTheDocument();
 		expect(screen.getByText('No')).toBeInTheDocument();
 	});
@@ -136,7 +136,7 @@ describe('<ServerSettings />', () => {
 	// Read as a boolean it showed "No" for every value but 1 — including the 5
 	// of a universe where probes do raid.
 	it('shows the probe cargo capacity as a number, not a yes/no', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		const row = (await screen.findByText('Probe cargo capacity')).closest('.srv-row');
 		expect(row).toHaveTextContent('5');
 	});
@@ -144,13 +144,13 @@ describe('<ServerSettings />', () => {
 	// s1-en omits <name> entirely, which used to render an empty heading.
 	it('names a universe that does not report a name', async () => {
 		fetchServerData.mockResolvedValue({ number: 1, language: 'en', speed: 8 });
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 		expect(await screen.findByRole('heading', { name: 'Universe 1' })).toBeInTheDocument();
 	});
 
 	it('reports a failure to load the universe list', async () => {
 		fetchUniverses.mockRejectedValue(new Error('cannot reach the API'));
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 
 		const alert = await screen.findByRole('alert');
 		expect(alert).toHaveTextContent('Could not load the universe list');
@@ -159,7 +159,7 @@ describe('<ServerSettings />', () => {
 
 	it('reports a failure to load the settings', async () => {
 		fetchServerData.mockRejectedValue(new Error('upstream responded 503'));
-		renderWithI18n(<ServerSettings />, { lang: 'en' });
+		renderView(<ServerSettings />, { lang: 'en' });
 
 		const alert = await screen.findByRole('alert');
 		expect(alert).toHaveTextContent('Could not load this universe');
@@ -167,7 +167,7 @@ describe('<ServerSettings />', () => {
 	});
 
 	it('renders in French too', async () => {
-		renderWithI18n(<ServerSettings />, { lang: 'fr' });
+		renderView(<ServerSettings />, { lang: 'fr' });
 		expect(await screen.findByText('Vitesses')).toBeInTheDocument();
 		expect(screen.getByText('Combat et débris')).toBeInTheDocument();
 	});

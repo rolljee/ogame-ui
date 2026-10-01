@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moon } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { groupDigits } from '../../components/format';
 import { countMoons, describePlanets, describeScores, formatScore } from '../model';
@@ -23,7 +24,9 @@ function PlayerDetail({ player, selection }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('pl.detail.title')}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('pl.detail.title')}</h2>
+			</div>
 			<h3 className="pl-name">{player.name}</h3>
 			<p className="srv-subtitle">
 				{t('pl.detail.summary', {
@@ -58,7 +61,7 @@ function PlayerDetail({ player, selection }) {
 							<span className="pl-planet-name">{planet.name}</span>
 							{planet.moon && (
 								<span className="pl-moon">
-									<span aria-hidden="true">🌑</span> {planet.moon.name}
+									<Moon size={14} aria-hidden="true" /> {planet.moon.name}
 									{planet.moon.size ? ` · ${groupDigits(planet.moon.size)} km` : ''}
 								</span>
 							)}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moon } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import StatusBadges from '../../components/StatusBadges';
 import { describeRosterCoords } from '../model';
@@ -25,7 +26,7 @@ function Coords({ player, filters, selection }) {
 						// The row is a button; the link inside it must not toggle it.
 						onClick={(event) => event.stopPropagation()}
 					>
-						[{position}]{moon && <span aria-hidden="true"> 🌑</span>}
+						[{position}]{moon && <Moon size={12} aria-hidden="true" className="coords-moon" />}
 					</a>
 				) : (
 					<span key={position} className="pl-coords">

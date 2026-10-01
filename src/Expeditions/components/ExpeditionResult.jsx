@@ -12,7 +12,9 @@ function ExpeditionResult({ result, universeName }) {
 	if (!result.ok) {
 		return (
 			<div className="result">
-				<h2 className="result-title">{t('exp.result.title')}</h2>
+				<div className="result-head">
+					<h2 className="result-title">{t('exp.result.title')}</h2>
+				</div>
 				<p className="result-empty">{t(`exp.error.${result.error}`)}</p>
 			</div>
 		);
@@ -22,10 +24,14 @@ function ExpeditionResult({ result, universeName }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('exp.result.title')}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('exp.result.title')}</h2>
+			</div>
 
 			<p className="exp-find">
-				<strong>{round(maxFind)}</strong>
+				<strong className="figure" key={maxFind}>
+					{round(maxFind)}
+				</strong>
 				<span>{t('exp.result.find')}</span>
 			</p>
 

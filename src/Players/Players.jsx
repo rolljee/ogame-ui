@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useI18n } from '../i18n/I18nContext';
 import { fetchPlayer, fetchRoster } from '../api/ogame';
 import { useApiData } from '../api/useApiData';
-import UniversePicker from '../components/UniversePicker';
+import { useDataAge, useUniverse } from '../universe/UniverseContext';
+import { Group, NeedsUniverse, ToolGrid } from '../components/Layout';
 import { coordsAge, filterRoster, sortRoster } from './model';
 import PlayerFilters from './components/PlayerFilters';
 import PlayerList from './components/PlayerList';
@@ -13,7 +14,7 @@ const NO_FILTERS = { query: '', galaxy: '', system: '', statuses: [], sort: 'nam
 
 function Players() {
 	const { t } = useI18n();
-	const [selection, setSelection] = useState({ lang: '', universe: '' });
+	const { selection } = useUniverse();
 	const [filters, setFilters] = useState(NO_FILTERS);
 	const [playerId, setPlayerId] = useState(null);
 
@@ -30,10 +31,7 @@ function Players() {
 	);
 
 	// A player id only means something in the universe it was found in.
-	function handleUniverse(next) {
-		setSelection(next);
-		setPlayerId(null);
-	}
+	useEffect(() => setPlayerId(null), [selection.universe, selection.lang]);
 
 	function handleToggleStatus(key) {
 		setFilters((prev) => ({
@@ -50,77 +48,75 @@ function Players() {
 	);
 
 	const age = coordsAge(roster.data?.coordsTimestamp);
+	useDataAge(age);
 
 	return (
-		<>
-			<p className="calc-intro">{t('pl.intro')}</p>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">1</span>
-					<h2 className="section-title">{t('pl.step.universe')}</h2>
-				</div>
-				<p className="help">{t('pl.step.universe.help')}</p>
-				<UniversePicker value={selection} onChange={handleUniverse} />
-			</section>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">2</span>
-					<h2 className="section-title">{t('pl.step.filter')}</h2>
-				</div>
-				<p className="help">{t('pl.step.filter.help')}</p>
-
-				{roster.loading && <p className="help">{t('pl.loading')}</p>}
-				{roster.error && (
-					<p className="api-error" role="alert">
-						{t('pl.error.roster')}{' '}
-						<span className="api-error-detail">{roster.error.message}</span>
-					</p>
-				)}
-
-				{roster.data && (
-					<>
-						<PlayerFilters
-							filters={filters}
-							onChange={setFilters}
-							onToggleStatus={handleToggleStatus}
-						/>
-						{/* universe.xml is regenerated every few days: say how old the
-						    positions are rather than let them pass for live. */}
-						{age !== null && (
-							<p className="help pl-coords-age">{t('pl.coords.age', { hours: age })}</p>
+		<ToolGrid
+			layout="data"
+			settings={
+				<Group
+					title={t('pl.step.filter')}
+					// universe.xml is regenerated every few days: the header stamps its
+					// age, and the help says what that means for the positions.
+					help={
+						age === null
+							? t('pl.step.filter.help')
+							: `${t('pl.step.filter.help')} ${t('pl.coords.age', { hours: age })}`
+					}
+				>
+					<NeedsUniverse>
+						{roster.loading && <p className="help">{t('pl.loading')}</p>}
+						{roster.error && (
+							<p className="api-error" role="alert">
+								{t('pl.error.roster')}{' '}
+								<span className="api-error-detail">{roster.error.message}</span>
+							</p>
 						)}
-						<PlayerList
-							players={players}
-							total={roster.data.total}
-							filters={filters}
-							selection={selection}
-							selectedId={playerId}
-							onSelect={setPlayerId}
-						/>
-					</>
-				)}
-			</section>
 
-			{detail.loading && <p className="help">{t('pl.loading.detail')}</p>}
-			{detail.error && (
-				<p className="api-error" role="alert">
-					{t('pl.error.detail')}{' '}
-					<span className="api-error-detail">{detail.error.message}</span>
-				</p>
-			)}
-			{detail.data ? (
-				<PlayerDetail player={detail.data} selection={selection} />
-			) : (
-				!detail.loading && (
-					<div className="result">
-						<h2 className="result-title">{t('pl.detail.title')}</h2>
-						<p className="result-empty">{t('pl.detail.pick')}</p>
-					</div>
-				)
-			)}
-		</>
+						{roster.data && (
+							<>
+								<PlayerFilters
+									filters={filters}
+									onChange={setFilters}
+									onToggleStatus={handleToggleStatus}
+								/>
+								<PlayerList
+									players={players}
+									total={roster.data.total}
+									filters={filters}
+									selection={selection}
+									selectedId={playerId}
+									onSelect={setPlayerId}
+								/>
+							</>
+						)}
+					</NeedsUniverse>
+				</Group>
+			}
+			report={
+				<>
+					{detail.loading && <p className="help">{t('pl.loading.detail')}</p>}
+					{detail.error && (
+						<p className="api-error" role="alert">
+							{t('pl.error.detail')}{' '}
+							<span className="api-error-detail">{detail.error.message}</span>
+						</p>
+					)}
+					{detail.data ? (
+						<PlayerDetail player={detail.data} selection={selection} />
+					) : (
+						!detail.loading && (
+							<div className="result">
+								<div className="result-head">
+									<h2 className="result-title">{t('pl.detail.title')}</h2>
+								</div>
+								<p className="result-empty">{t('pl.detail.pick')}</p>
+							</div>
+						)
+					)}
+				</>
+			}
+		/>
 	);
 }
 

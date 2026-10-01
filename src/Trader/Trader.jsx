@@ -10,6 +10,7 @@ import AmountInput from './components/AmountInput';
 import RateSelector from './components/RateSelector';
 import SplitControl from './components/SplitControl';
 import ResultPanel from './components/ResultPanel';
+import { Group, ToolGrid } from '../components/Layout';
 
 const DEFAULT_RATE = '2:1.5:1';
 
@@ -67,54 +68,35 @@ function Trader() {
 	);
 
 	return (
-		<>
-			<p className="calc-intro">{t('calc.intro')}</p>
+		<ToolGrid
+			settings={
+				<>
+					<Group title={t('step.resource')} help={t('step.resource.help')}>
+						<ResourcePicker selected={selected} onSelect={handleSelect} />
+					</Group>
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">1</span>
-					<h2 className="section-title">{t('step.resource')}</h2>
-				</div>
-				<p className="help">{t('step.resource.help')}</p>
-				<ResourcePicker selected={selected} onSelect={handleSelect} />
-			</section>
+					<Group title={t('step.amount')} help={t('step.amount.help')}>
+						<AmountInput resource={selected} value={amount} onChange={setAmount} />
+					</Group>
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">2</span>
-					<h2 className="section-title">{t('step.amount')}</h2>
-				</div>
-				<p className="help">{t('step.amount.help')}</p>
-				<AmountInput resource={selected} value={amount} onChange={setAmount} />
-			</section>
+					<Group title={t('step.rate')} help={t('step.rate.help')}>
+						<RateSelector rate={rate} onChange={setRate} />
+						{/* An emptied or zeroed field used to reach the calculation and come
+						    back as 0 or Infinity; say the rate is unusable instead. */}
+						{!isValidRate(rate) && (
+							<p className="api-error" role="alert">
+								{t('step.rate.invalid')}
+							</p>
+						)}
+					</Group>
 
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">3</span>
-					<h2 className="section-title">{t('step.rate')}</h2>
-				</div>
-				<p className="help">{t('step.rate.help')}</p>
-				<RateSelector rate={rate} onChange={setRate} />
-				{/* An emptied or zeroed field used to reach the calculation and come
-				    back as 0 or Infinity; say the rate is unusable instead. */}
-				{!isValidRate(rate) && (
-					<p className="api-error" role="alert">
-						{t('step.rate.invalid')}
-					</p>
-				)}
-			</section>
-
-			<section className="section">
-				<div className="section-head">
-					<span className="section-step">4</span>
-					<h2 className="section-title">{t('step.split')}</h2>
-				</div>
-				<p className="help">{t('step.split.help')}</p>
-				<SplitControl others={others} percents={percents} onChange={handleSplitChange} />
-			</section>
-
-			<ResultPanel selected={selected} amount={amount} rate={rate} outputs={outputs} />
-		</>
+					<Group title={t('step.split')} help={t('step.split.help')}>
+						<SplitControl others={others} percents={percents} onChange={handleSplitChange} />
+					</Group>
+				</>
+			}
+			report={<ResultPanel selected={selected} amount={amount} rate={rate} outputs={outputs} />}
+		/>
 	);
 }
 

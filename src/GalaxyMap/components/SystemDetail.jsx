@@ -1,4 +1,5 @@
 import React from 'react';
+import { Moon } from 'lucide-react';
 
 import { useI18n } from '../../i18n/I18nContext';
 import StatusBadges from '../../components/StatusBadges';
@@ -11,7 +12,9 @@ function SystemDetail({ system, rows }) {
 	if (!system) {
 		return (
 			<div className="result">
-				<h2 className="result-title">{t('gm.detail.title')}</h2>
+				<div className="result-head">
+					<h2 className="result-title">{t('gm.detail.title')}</h2>
+				</div>
 				<p className="result-empty">{t('gm.detail.pick')}</p>
 			</div>
 		);
@@ -21,7 +24,9 @@ function SystemDetail({ system, rows }) {
 
 	return (
 		<div className="result">
-			<h2 className="result-title">{t('gm.detail.system', { coords })}</h2>
+			<div className="result-head">
+				<h2 className="result-title">{t('gm.detail.system', { coords })}</h2>
+			</div>
 
 			{rows.length === 0 ? (
 				<p className="result-empty">{t('gm.detail.empty')}</p>
@@ -37,7 +42,7 @@ function SystemDetail({ system, rows }) {
 							<StatusBadges status={row.player.status} />
 							{row.moon && (
 								<span className="pl-moon" title={t('gm.detail.moon')}>
-									🌙
+									<Moon size={14} aria-label={t('gm.detail.moon')} />
 								</span>
 							)}
 							{row.url ? (

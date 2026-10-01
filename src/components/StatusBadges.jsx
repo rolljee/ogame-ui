@@ -8,9 +8,9 @@ function StatusBadges({ status }) {
 	const { t } = useI18n();
 	return (
 		<span className="pl-badges">
-			{describeStatus(status).map(({ key, labelKey, icon }) => (
+			{describeStatus(status).map(({ key, labelKey, Icon }) => (
 				<span key={key} className={`pl-badge pl-badge-${key}`}>
-					<span aria-hidden="true">{icon}</span> {t(labelKey)}
+					<Icon size={13} aria-hidden="true" /> {t(labelKey)}
 				</span>
 			))}
 		</span>

@@ -54,12 +54,18 @@ function UniversePicker({ value, onChange }) {
 
 	// Preselect DEFAULT_UNIVERSE, or else the first universe of the community
 	// matching the interface language, so the view has something to show
-	// immediately.
+	// immediately. A remembered universe that has closed since is replaced the
+	// same way.
 	useEffect(() => {
-		if (!universes || universes.length === 0 || value.universe) return;
+		if (!universes || universes.length === 0) return;
+		const known = universes.some(
+			(universe) =>
+				universe.language === value.lang && String(universe.number) === value.universe,
+		);
+		if (value.universe && (known || !value.lang)) return;
 		const first = preferred ?? universes.find((universe) => universe.language === activeLang);
 		if (first) onChange({ lang: first.language, universe: String(first.number) });
-	}, [universes, activeLang]);
+	}, [universes, activeLang, value.universe, value.lang]);
 
 	// Coming back to the default community lands on the default universe rather
 	// than on whichever one happens to be first.
