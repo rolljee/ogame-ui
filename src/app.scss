@@ -33,6 +33,23 @@
 	--crystal: #74c6ee;
 	--deut: #5fd6a4;
 
+	// Derived roles, remapped by each theme.
+	--btn-hover: #fffaf0;
+	--shadow-sheet: 0 12px 32px -18px rgba(0, 0, 0, 0.7);
+	--shadow-thumb: 0 1px 3px rgba(0, 0, 0, 0.5);
+	--signal-line: rgba(224, 164, 60, 0.4);
+	--ok-line: rgba(143, 203, 152, 0.5);
+	--crystal-line: rgba(116, 198, 238, 0.5);
+	--loss-line: rgba(236, 138, 111, 0.55);
+
+	// Galaxy heatmap, empty to crowded.
+	--heat-0: #1d2228;
+	--heat-1: #343a42;
+	--heat-2: #555b62;
+	--heat-3: #81848a;
+	--heat-4: #b4b3b0;
+	--heat-5: #ece8dd;
+
 	--radius: 3px;
 
 	--font: 'Atkinson Hyperlegible Next', 'Segoe UI', system-ui, sans-serif;
@@ -195,8 +212,7 @@ button {
 }
 
 .lang-toggle {
-	grid-area: lang;
-	justify-self: start;
+	flex-shrink: 0;
 	display: inline-flex;
 	border: 1px solid var(--rule-strong);
 	border-radius: var(--radius);
@@ -300,6 +316,57 @@ button {
 
 	a {
 		color: var(--ink-2);
+	}
+}
+
+.brand-settings {
+	grid-area: lang;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.theme-select {
+	flex: 1;
+	min-width: 0;
+	max-width: 160px;
+
+	select {
+		appearance: none;
+		width: 100%;
+		min-height: 30px;
+		padding: 4px 26px 4px 10px;
+		border: 1px solid var(--rule-strong);
+		border-radius: var(--radius);
+		background-color: transparent;
+		background-image:
+			linear-gradient(45deg, transparent 50%, var(--ink-3) 50%),
+			linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+		background-position:
+			calc(100% - 14px) 52%,
+			calc(100% - 9px) 52%;
+		background-size: 5px 5px;
+		background-repeat: no-repeat;
+		font-size: 13px;
+		color: var(--ink-2);
+		cursor: pointer;
+		text-overflow: ellipsis;
+
+		&:hover,
+		&:focus {
+			border-color: var(--ink-3);
+			color: var(--ink);
+		}
 	}
 }
 
@@ -684,7 +751,7 @@ input::placeholder {
 		color 0.15s ease;
 
 	&:hover {
-		background: #fffaf0;
+		background: var(--btn-hover);
 	}
 }
 
@@ -855,7 +922,7 @@ input::placeholder {
 		border: 2px solid var(--ground);
 		border-radius: 50%;
 		background: var(--ink);
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+		box-shadow: var(--shadow-thumb);
 	}
 
 	&::-moz-range-thumb {
@@ -875,7 +942,7 @@ input::placeholder {
 	border: 1px solid var(--rule-strong);
 	border-radius: var(--radius);
 	background: var(--sheet);
-	box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.7);
+	box-shadow: var(--shadow-sheet);
 
 	> :not(.result-head) {
 		margin-left: 22px;
@@ -1392,7 +1459,7 @@ input::placeholder {
 		font-size: 36px;
 		font-weight: 600;
 		color: var(--signal);
-		text-decoration-color: rgba(224, 164, 60, 0.4);
+		text-decoration-color: var(--signal-line);
 	}
 
 	span {
@@ -1585,18 +1652,18 @@ input::placeholder {
 }
 
 .pl-badge-active {
-	border-color: rgba(143, 203, 152, 0.5);
+	border-color: var(--ok-line);
 	color: var(--ok);
 }
 
 .pl-badge-vacation {
-	border-color: rgba(116, 198, 238, 0.5);
+	border-color: var(--crystal-line);
 	color: var(--crystal);
 }
 
 .pl-badge-banned,
 .pl-badge-outlaw {
-	border-color: rgba(236, 138, 111, 0.55);
+	border-color: var(--loss-line);
 	color: var(--loss);
 }
 
@@ -1833,22 +1900,22 @@ input::placeholder {
 
 // One hue, rising in value: the crowded systems are the bright ones.
 .gm-level-0 {
-	background: #1d2228;
+	background: var(--heat-0);
 }
 .gm-level-1 {
-	background: #343a42;
+	background: var(--heat-1);
 }
 .gm-level-2 {
-	background: #555b62;
+	background: var(--heat-2);
 }
 .gm-level-3 {
-	background: #81848a;
+	background: var(--heat-3);
 }
 .gm-level-4 {
-	background: #b4b3b0;
+	background: var(--heat-4);
 }
 .gm-level-5 {
-	background: #ece8dd;
+	background: var(--heat-5);
 }
 
 .gm-legend {
@@ -1970,8 +2037,9 @@ input::placeholder {
 	}
 
 	.brand {
-		grid-template-columns: auto minmax(0, 1fr) auto;
-		grid-template-areas: 'logo text lang';
+		grid-template-areas:
+			'logo text'
+			'lang lang';
 	}
 
 	.brand-tagline {

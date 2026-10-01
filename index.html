@@ -15,6 +15,13 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;500;600&family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap"
     rel="stylesheet" />
+  <script>
+    // Apply the remembered theme before the first paint (see src/theme).
+    try {
+      var theme = localStorage.getItem('og_ui_theme');
+      if (theme && theme !== 'graphite') document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {}
+  </script>
   <title>OGame Tools — Calculateur d'échange</title>
 </head>
 

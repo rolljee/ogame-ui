@@ -1,0 +1,174 @@
+// ---------------------------------------------------------------------------
+// Themes: the same report desk, other inks.
+//
+// A theme only remaps the tokens declared on :root in app.scss; layout,
+// components and the brass rule (one signal ink, for the verdict, focus and
+// the open tool) stay the same. The default, graphite, lives on :root.
+// ---------------------------------------------------------------------------
+
+// Télex: a printed report on pale grey-green paper, ribbon-red verdicts.
+// For daytime play and bright rooms.
+:root[data-theme='telex'] {
+	color-scheme: light;
+
+	--ground: #dcdfd8;
+	--sheet: #f3f4f0;
+	--sheet-2: #e9ebe5;
+	--sheet-3: #dde0d9;
+
+	--rule: #cbcfc7;
+	--rule-strong: #a3a89f;
+
+	--ink: #181b18;
+	--ink-2: #3c423d;
+	--ink-3: #596059;
+
+	--signal: #b3301c;
+	--signal-soft: rgba(179, 48, 28, 0.1);
+	--signal-ink: #ffffff;
+
+	--loss: #9a4a00;
+	--loss-soft: rgba(154, 74, 0, 0.1);
+	--ok: #2c7a40;
+
+	--metal: #56626d;
+	--crystal: #1b6a9e;
+	--deut: #16805a;
+
+	--btn-hover: #000000;
+	--shadow-sheet: 0 10px 24px -16px rgba(40, 46, 40, 0.35);
+	--shadow-thumb: 0 1px 3px rgba(0, 0, 0, 0.3);
+	--signal-line: rgba(179, 48, 28, 0.4);
+	--ok-line: rgba(44, 122, 64, 0.5);
+	--crystal-line: rgba(27, 106, 158, 0.5);
+	--loss-line: rgba(154, 74, 0, 0.5);
+
+	--heat-0: #e4e7e1;
+	--heat-1: #c4c9c1;
+	--heat-2: #979e94;
+	--heat-3: #6a7168;
+	--heat-4: #3f463e;
+	--heat-5: #181b18;
+}
+
+// Cyanotype: a blueprint of the universe, chalk-yellow verdicts.
+:root[data-theme='cyanotype'] {
+	--ground: #0c2135;
+	--sheet: #112e48;
+	--sheet-2: #163856;
+	--sheet-3: #1c4364;
+
+	--rule: #285174;
+	--rule-strong: #3b688f;
+
+	--ink: #eaf2fa;
+	--ink-2: #b9cee1;
+	--ink-3: #90b1cd;
+
+	--signal: #ffd166;
+	--signal-soft: rgba(255, 209, 102, 0.14);
+	--signal-ink: #1d1503;
+
+	--loss: #ff9c87;
+	--loss-soft: rgba(255, 156, 135, 0.14);
+	--ok: #9de2b2;
+
+	--metal: #d6dee7;
+	--crystal: #a3dbff;
+	--deut: #93f0c6;
+
+	--btn-hover: #ffffff;
+	--shadow-sheet: 0 12px 32px -18px rgba(2, 10, 20, 0.8);
+	--signal-line: rgba(255, 209, 102, 0.4);
+	--ok-line: rgba(157, 226, 178, 0.5);
+	--crystal-line: rgba(163, 219, 255, 0.5);
+	--loss-line: rgba(255, 156, 135, 0.55);
+
+	--heat-0: #133150;
+	--heat-1: #1f4a70;
+	--heat-2: #336791;
+	--heat-3: #5a8ab0;
+	--heat-4: #99bbd7;
+	--heat-5: #eaf2fa;
+}
+
+// Opérations: an olive staff desk, signal-orange verdicts.
+:root[data-theme='operations'] {
+	--ground: #14160e;
+	--sheet: #1c1f15;
+	--sheet-2: #24291b;
+	--sheet-3: #2d3322;
+
+	--rule: #353c29;
+	--rule-strong: #4b543b;
+
+	--ink: #ece5d0;
+	--ink-2: #c5bea8;
+	--ink-3: #9d9883;
+
+	--signal: #ff7d2e;
+	--signal-soft: rgba(255, 125, 46, 0.14);
+	--signal-ink: #1d0d02;
+
+	--loss: #f29090;
+	--loss-soft: rgba(242, 144, 144, 0.12);
+	--ok: #a9cb80;
+
+	--metal: #d0d3c5;
+	--crystal: #92c9d9;
+	--deut: #9bd77d;
+
+	--btn-hover: #fff8e6;
+	--signal-line: rgba(255, 125, 46, 0.4);
+	--ok-line: rgba(169, 203, 128, 0.5);
+	--crystal-line: rgba(146, 201, 217, 0.5);
+	--loss-line: rgba(242, 144, 144, 0.55);
+
+	--heat-0: #21251a;
+	--heat-1: #393f28;
+	--heat-2: #565e3d;
+	--heat-3: #7d855a;
+	--heat-4: #b2b18b;
+	--heat-5: #ece5d0;
+}
+
+// Contraste: maximum legibility, pure white ink and safety-yellow verdicts.
+:root[data-theme='contrast'] {
+	--ground: #000000;
+	--sheet: #0c0c0c;
+	--sheet-2: #171717;
+	--sheet-3: #242424;
+
+	--rule: #3d3d3d;
+	--rule-strong: #6b6b6b;
+
+	--ink: #ffffff;
+	--ink-2: #e6e6e6;
+	--ink-3: #c2c2c2;
+
+	--signal: #ffd500;
+	--signal-soft: rgba(255, 213, 0, 0.16);
+	--signal-ink: #000000;
+
+	--loss: #ff8f85;
+	--loss-soft: rgba(255, 143, 133, 0.14);
+	--ok: #6ff2b0;
+
+	--metal: #ebebeb;
+	--crystal: #86dcff;
+	--deut: #6ff2b0;
+
+	--btn-hover: #ffffff;
+	--shadow-sheet: none;
+	--signal-line: rgba(255, 213, 0, 0.5);
+	--ok-line: rgba(111, 242, 176, 0.6);
+	--crystal-line: rgba(134, 220, 255, 0.6);
+	--loss-line: rgba(255, 143, 133, 0.6);
+
+	--heat-0: #1a1a1a;
+	--heat-1: #3d3d3d;
+	--heat-2: #666666;
+	--heat-3: #999999;
+	--heat-4: #cccccc;
+	--heat-5: #ffffff;
+}
