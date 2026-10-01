@@ -42,10 +42,10 @@
 	--crystal-line: rgba(116, 198, 238, 0.5);
 	--loss-line: rgba(236, 138, 111, 0.55);
 
-	// Report sheets sit warmer than the night-blue desk they lie on.
-	--report: #1a1b22;
-	--report-2: #22232b;
-	--report-rule: #32333d;
+	// Report sheets: a step lighter than the night-blue desk they lie on.
+	--report: #172034;
+	--report-2: #1e2a42;
+	--report-rule: #2b3753;
 
 	// Player statuses, each its own ink. Drawn as text, rule and tint, never
 	// as the only cue: every stamp also carries an icon and a word.
