@@ -1428,6 +1428,57 @@ input::placeholder {
 	}
 }
 
+.exp-lifeform {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.exp-bonus-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 10px;
+}
+
+.exp-bonus-input {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+
+	> span {
+		color: var(--ink-3);
+	}
+}
+
+.exp-applied {
+	margin: 0;
+	font-size: 14px;
+	color: var(--ink-2);
+}
+
+.exp-info {
+	border-top: 1px solid var(--rule);
+	padding-top: 10px;
+
+	ul {
+		margin: 6px 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--ink-2);
+	}
+
+	li {
+		padding: 2px 0;
+	}
+}
+
+.exp-info-title {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--ink-3);
+}
+
 .exp-ships,
 .ml-ships {
 	margin: 0;

@@ -19,8 +19,32 @@ const CARGO_SHIPS = [
 	{ key: 'smallCargo', id: 11 },
 ];
 
-// The Discoverer class bonus older universes do not report.
+// The class bonuses older universes do not report: +50 % expedition finds for
+// the Discoverer, +25 % cargo on cargo ships for the Collector.
 const DEFAULT_EXPLORER_BONUS = 0.5;
+const DEFAULT_COLLECTOR_CARGO_BONUS = 0.25;
+
+export const CLASSES = ['explorer', 'collector', 'general'];
+
+// The lifeform bonuses, as the player reads them on the in-game lifeform bonus
+// page. The first three change the figures; the others only travel with the
+// expedition and are shown for information.
+export const BONUS_FIELDS = ['resources', 'explorer', 'cargo'];
+export const INFO_FIELDS = ['ships', 'darkMatter', 'fleetLoss'];
+
+// A percentage as typed: empty is 0, the French decimal comma is accepted.
+// Returns a fraction (0.2 for "20"), or null when it cannot be one.
+export function parsePercent(raw) {
+	const text = String(raw ?? '').trim().replace(',', '.');
+	if (text === '') return 0;
+	if (!/^\d+(\.\d+)?$/.test(text)) return null;
+	return Number(text) / 100;
+}
+
+function serverNumber(value, fallback) {
+	const n = Number(value);
+	return value != null && value !== '' && Number.isFinite(n) && n >= 0 ? n : fallback;
+}
 
 function isPositive(value) {
 	return Number.isFinite(value) && value > 0;
@@ -29,7 +53,16 @@ function isPositive(value) {
 // `data` is a serverData payload; the rest is what the player sets in the UI.
 // Returns `{ ok: false, error }` rather than throwing, so the view can render a
 // message while the universe is still loading or the level field is empty.
-export function computeExpedition({ data, hyperspaceLevel, pathfinder }) {
+//
+// `characterClass` is one of CLASSES; `bonuses` maps BONUS_FIELDS and
+// INFO_FIELDS to the percentages typed in the form.
+export function computeExpedition({
+	data,
+	hyperspaceLevel,
+	pathfinder,
+	characterClass = 'explorer',
+	bonuses = {},
+}) {
 	if (!data) return { ok: false, error: 'universe' };
 
 	const speed = Number(data.speed);
@@ -50,19 +83,46 @@ export function computeExpedition({ data, hyperspaceLevel, pathfinder }) {
 		return { ok: false, error: 'level' };
 	}
 
+	const lifeform = {};
+	for (const field of [...BONUS_FIELDS, ...INFO_FIELDS]) {
+		lifeform[field] = parsePercent(bonuses[field]);
+		if (lifeform[field] === null) return { ok: false, error: 'bonus', field };
+	}
+
+	const explorer = characterClass === 'explorer';
+	const explorerBonus = serverNumber(data.explorerBonusIncreasedExpeditionOutcome, DEFAULT_EXPLORER_BONUS);
+	// The Collector's bonus applies to cargo ships, which both of these are.
+	const classCargo =
+		characterClass === 'collector'
+			? serverNumber(data.minerBonusIncreasedCargoCapacityForTradingShips, DEFAULT_COLLECTOR_CARGO_BONUS)
+			: 0;
+
 	const bonus = (level * hyperspaceMultiplier) / 100;
 	const find = getExpeditionMaxFind({
 		topScore,
 		economySpeed: speed,
-		explorer: true,
+		explorer,
 		pathfinder,
-		explorerBonus: DEFAULT_EXPLORER_BONUS,
+		explorerBonus,
+		// The enhancement amplifies the Discoverer bonus: worthless to anyone else.
+		lifeformExplorerBonus: explorer ? lifeform.explorer : 0,
+		lifeformResourceBonus: lifeform.resources,
 	});
 
 	const ships = CARGO_SHIPS.map(({ key, id }) => {
-		const capacity = getCargoCapacity(Destroyable[id], { hyperspaceLevel: level, hyperspaceMultiplier });
+		const capacity = getCargoCapacity(Destroyable[id], {
+			hyperspaceLevel: level,
+			hyperspaceMultiplier,
+			bonus: classCargo + lifeform.cargo,
+		});
 		return { key, capacity, count: Math.ceil(find / capacity) };
 	});
+
+	// Only what the player actually has, in the order of INFO_FIELDS.
+	const info = INFO_FIELDS.filter((field) => lifeform[field] > 0).map((field) => ({
+		key: field,
+		value: lifeform[field],
+	}));
 
 	return {
 		ok: true,
@@ -70,7 +130,12 @@ export function computeExpedition({ data, hyperspaceLevel, pathfinder }) {
 		speed,
 		hyperspaceMultiplier,
 		bonus,
+		characterClass,
+		explorerBonus,
+		classCargo,
+		lifeform,
 		maxFind: find,
 		ships,
+		info,
 	};
 }
