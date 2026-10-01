@@ -1,103 +1,151 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-01T12:23:04.769Z",
+  "generatedAt": "2026-10-01T13:16:43.533Z",
   "title": "Design System: OGame Tools",
   "extensions": {
     "colorMeta": {
       "ground": {
         "role": "neutral",
         "displayName": "Night Desk",
-        "canonical": "#111418",
-        "oklch": "oklch(19.0% 0.009 255)",
+        "canonical": "#0d1320",
+        "oklch": "oklch(18.8% 0.028 265)",
         "tonalRamp": [
-          "#090b0f",
-          "#212429",
-          "#3c4045",
-          "#5a5e63",
-          "#7d8186",
-          "#a1a5ab",
-          "#c7cbd1",
-          "#eaeff5"
+          "#060b17",
+          "#202635",
+          "#3e4555",
+          "#5e6677",
+          "#81899b",
+          "#a5aec0",
+          "#c5cee1",
+          "#e7efff"
         ]
       },
       "sheet": {
         "role": "neutral",
-        "displayName": "Report Sheet",
-        "canonical": "#181c22",
-        "oklch": "oklch(22.5% 0.013 258)",
+        "displayName": "Desk Sheet",
+        "canonical": "#141b2a",
+        "oklch": "oklch(22.3% 0.031 265)",
         "tonalRamp": [
-          "#080b11",
-          "#20242b",
-          "#3c4047",
-          "#595e65",
-          "#7b8188",
-          "#a0a5ad",
-          "#c5cbd3",
-          "#e9eff8"
+          "#050b18",
+          "#1f2636",
+          "#3d4556",
+          "#5d6679",
+          "#80899d",
+          "#a4aec2",
+          "#c4cee3",
+          "#e7efff"
         ]
       },
       "sheet-2": {
         "role": "neutral",
         "displayName": "Sheet Two",
-        "canonical": "#1f242c",
-        "oklch": "oklch(25.9% 0.017 259)",
+        "canonical": "#1a2234",
+        "oklch": "oklch(25.3% 0.036 266)",
         "tonalRamp": [
-          "#070b12",
-          "#1f242c",
-          "#3b4049",
-          "#585e67",
-          "#7a818b",
-          "#9fa5af",
-          "#c4cbd6",
-          "#e8effa"
+          "#050a1a",
+          "#1e2638",
+          "#3c4559",
+          "#5c667b",
+          "#7f89a0",
+          "#a3aec6",
+          "#c2cee6",
+          "#e7effe"
         ]
       },
       "sheet-3": {
         "role": "neutral",
         "displayName": "Sheet Three",
-        "canonical": "#262c35",
-        "oklch": "oklch(29.1% 0.019 258)",
+        "canonical": "#222b40",
+        "oklch": "oklch(29.1% 0.041 266)",
         "tonalRamp": [
-          "#070b13",
-          "#1f242d",
-          "#3a404a",
-          "#575e68",
-          "#7a818c",
-          "#9ea5b0",
-          "#c3cbd7",
-          "#e7effb"
+          "#040a1c",
+          "#1d263a",
+          "#3b455b",
+          "#5b667e",
+          "#7e89a3",
+          "#a2aec9",
+          "#c1cee9",
+          "#e7efff"
         ]
       },
       "rule": {
         "role": "neutral",
         "displayName": "Hairline",
-        "canonical": "#2c333d",
-        "oklch": "oklch(31.9% 0.020 257)",
+        "canonical": "#283249",
+        "oklch": "oklch(31.9% 0.044 266)",
         "tonalRamp": [
-          "#060b14",
-          "#1e242e",
-          "#39404b",
-          "#565e69",
-          "#79818d",
-          "#9da5b2",
-          "#c2cbd8",
-          "#e6effd"
+          "#040a1d",
+          "#1c263c",
+          "#3a455d",
+          "#5a6680",
+          "#7d89a4",
+          "#a1aeca",
+          "#c0ceeb",
+          "#e7efff"
         ]
       },
       "rule-strong": {
         "role": "neutral",
         "displayName": "Strong Rule",
-        "canonical": "#404956",
-        "oklch": "oklch(40.2% 0.025 257)",
+        "canonical": "#3b4760",
+        "oklch": "oklch(39.8% 0.045 265)",
         "tonalRamp": [
-          "#050b16",
-          "#1c2430",
-          "#38404d",
-          "#555e6c",
-          "#77818f",
-          "#9ba5b5",
-          "#c1cbdb",
-          "#e4efff"
+          "#030a1e",
+          "#1b263d",
+          "#39455e",
+          "#596681",
+          "#7c89a5",
+          "#a0aecb",
+          "#bfceec",
+          "#e7efff"
+        ]
+      },
+      "report": {
+        "role": "neutral",
+        "displayName": "Report",
+        "canonical": "#172034",
+        "oklch": "oklch(24.6% 0.041 265)",
+        "tonalRamp": [
+          "#040a1c",
+          "#1d263a",
+          "#3a455b",
+          "#5b667e",
+          "#7d89a2",
+          "#a1aec8",
+          "#c1cee9",
+          "#e7efff"
+        ]
+      },
+      "report-2": {
+        "role": "neutral",
+        "displayName": "Report Two",
+        "canonical": "#1e2a42",
+        "oklch": "oklch(28.6% 0.047 263)",
+        "tonalRamp": [
+          "#030a1f",
+          "#1a263e",
+          "#38455f",
+          "#586682",
+          "#7a89a7",
+          "#9faecd",
+          "#beceee",
+          "#e6efff"
+        ]
+      },
+      "report-rule": {
+        "role": "neutral",
+        "displayName": "Report Rule",
+        "canonical": "#2b3753",
+        "oklch": "oklch(33.9% 0.052 266)",
+        "tonalRamp": [
+          "#030921",
+          "#1a2540",
+          "#384461",
+          "#586685",
+          "#7a89aa",
+          "#9eaed0",
+          "#becef1",
+          "#e7efff"
         ]
       },
       "ink": {
@@ -107,45 +155,51 @@
         "oklch": "oklch(93.1% 0.015 90)",
         "tonalRamp": [
           "#0e0b05",
-          "#27241c",
-          "#434037",
-          "#615d54",
-          "#848076",
-          "#a8a49a",
-          "#cecac0",
+          "#29261e",
+          "#48453c",
+          "#69665c",
+          "#8d897f",
+          "#b2aea3",
+          "#d1cec3",
           "#f2eee3"
         ]
+      },
+      "ink-bright": {
+        "role": "neutral",
+        "displayName": "Bright Paper",
+        "canonical": "#fffaf0",
+        "oklch": "oklch(98.6% 0.014 85)"
       },
       "ink-2": {
         "role": "neutral",
         "displayName": "Ink Two",
-        "canonical": "#b9bcc2",
-        "oklch": "oklch(79.5% 0.009 264)",
+        "canonical": "#bcc1cc",
+        "oklch": "oklch(81.0% 0.016 266)",
         "tonalRamp": [
-          "#090b0f",
-          "#222429",
-          "#3d4045",
-          "#5b5e63",
-          "#7d8086",
-          "#a2a5aa",
-          "#c7cbd1",
-          "#ebeef5"
+          "#080b12",
+          "#23262f",
+          "#41454e",
+          "#626670",
+          "#848993",
+          "#a9aeb9",
+          "#c9ced9",
+          "#e9eefa"
         ]
       },
       "ink-3": {
         "role": "neutral",
         "displayName": "Ink Three",
-        "canonical": "#8f96a0",
-        "oklch": "oklch(67.1% 0.017 257)",
+        "canonical": "#8e97aa",
+        "oklch": "oklch(67.5% 0.030 265)",
         "tonalRamp": [
-          "#070b12",
-          "#1f242c",
-          "#3a4049",
-          "#585e67",
-          "#7a818a",
-          "#9ea5af",
-          "#c4cbd6",
-          "#e8effa"
+          "#060b18",
+          "#1f2635",
+          "#3d4555",
+          "#5e6678",
+          "#80899c",
+          "#a5aec2",
+          "#c4cee2",
+          "#e7efff"
         ]
       },
       "signal": {
@@ -154,15 +208,20 @@
         "canonical": "#e0a43c",
         "oklch": "oklch(75.8% 0.136 77)",
         "tonalRamp": [
-          "#190500",
-          "#3d1a00",
-          "#613300",
-          "#855100",
-          "#a97505",
-          "#c89c56",
-          "#e4c699",
-          "#faedda"
+          "#130900",
+          "#352202",
+          "#5d3e00",
+          "#875d04",
+          "#b47d0a",
+          "#dda239",
+          "#fdc265",
+          "#ffecd0"
         ]
+      },
+      "signal-soft": {
+        "role": "primary",
+        "displayName": "Brass Wash",
+        "canonical": "rgba(224, 164, 60, 0.14)"
       },
       "signal-ink": {
         "role": "primary",
@@ -171,12 +230,12 @@
         "oklch": "oklch(19.6% 0.026 82)",
         "tonalRamp": [
           "#110a01",
-          "#2a2315",
-          "#473f30",
-          "#655c4d",
-          "#887f6f",
-          "#ada393",
-          "#d3c9b8",
+          "#2d2518",
+          "#4c4435",
+          "#6e6555",
+          "#918878",
+          "#b6ad9c",
+          "#d6cdbb",
           "#f7eddb"
         ]
       },
@@ -186,45 +245,50 @@
         "canonical": "#ec8a6f",
         "oklch": "oklch(73.2% 0.126 36)",
         "tonalRamp": [
-          "#1f0000",
-          "#480800",
-          "#711f05",
-          "#973e25",
-          "#be6249",
-          "#dc8d77",
-          "#f3bcac",
-          "#ffe8e1"
+          "#1c0200",
+          "#481002",
+          "#7a2206",
+          "#a1472e",
+          "#c96b51",
+          "#f29074",
+          "#fdbcaa",
+          "#fee9e3"
         ]
+      },
+      "loss-soft": {
+        "role": "secondary",
+        "displayName": "Loss Wash",
+        "canonical": "rgba(236, 138, 111, 0.12)"
       },
       "ok": {
         "role": "secondary",
         "displayName": "Lichen Ok",
         "canonical": "#8fcb98",
-        "oklch": "oklch(78.7% 0.095 148)",
+        "oklch": "oklch(78.7% 0.095 149)",
         "tonalRamp": [
-          "#001200",
-          "#002f04",
-          "#0f4d21",
-          "#336c3e",
-          "#569060",
-          "#7ab583",
-          "#add7b2",
-          "#e2f4e4"
+          "#001002",
+          "#00300e",
+          "#175226",
+          "#3b7547",
+          "#5f9969",
+          "#83bf8c",
+          "#a3dfac",
+          "#cafed1"
         ]
       },
       "metal": {
         "role": "tertiary",
         "displayName": "Metal Grey",
         "canonical": "#c6cfd9",
-        "oklch": "oklch(85.1% 0.017 250)",
+        "oklch": "oklch(85.1% 0.017 251)",
         "tonalRamp": [
           "#060c12",
-          "#1e252c",
-          "#394149",
-          "#575f67",
-          "#79818a",
-          "#9da6af",
-          "#c3ccd6",
+          "#20272f",
+          "#3e464e",
+          "#5f6770",
+          "#828a93",
+          "#a6afb9",
+          "#c6cfd9",
           "#e6f0fa"
         ]
       },
@@ -232,15 +296,15 @@
         "role": "tertiary",
         "displayName": "Crystal Blue",
         "canonical": "#74c6ee",
-        "oklch": "oklch(78.9% 0.098 230)",
+        "oklch": "oklch(78.9% 0.098 231)",
         "tonalRamp": [
-          "#000e21",
-          "#00294a",
-          "#00476a",
-          "#00678b",
-          "#368ab0",
-          "#5eb0d7",
-          "#9dd3ef",
+          "#000d15",
+          "#012b3b",
+          "#064c66",
+          "#106f94",
+          "#4094ba",
+          "#67b9e1",
+          "#90d9fd",
           "#dcf3ff"
         ]
       },
@@ -250,121 +314,289 @@
         "canonical": "#5fd6a4",
         "oklch": "oklch(79.4% 0.130 163)",
         "tonalRamp": [
-          "#001204",
-          "#003115",
-          "#00522d",
-          "#007348",
-          "#16976b",
-          "#62b992",
-          "#a2d9be",
-          "#def5e9"
+          "#000f07",
+          "#012f1e",
+          "#045238",
+          "#0e7954",
+          "#18a172",
+          "#4fc796",
+          "#73e8b5",
+          "#c1ffe1"
         ]
       },
-      "ink-bright": {
-        "role": "neutral",
-        "displayName": "Bright Paper",
-        "canonical": "#fffaf0"
+      "st-active": {
+        "role": "tertiary",
+        "displayName": "Active Green",
+        "canonical": "#7fd492",
+        "oklch": "oklch(79.9% 0.125 150)",
+        "tonalRamp": [
+          "#001003",
+          "#033012",
+          "#005423",
+          "#1f793d",
+          "#499e5f",
+          "#6fc483",
+          "#8fe5a2",
+          "#c7ffd1"
+        ]
       },
-      "signal-soft": {
-        "role": "primary",
-        "displayName": "Brass Wash",
-        "canonical": "rgba(224, 164, 60, 0.14)"
+      "st-inactive": {
+        "role": "tertiary",
+        "displayName": "Inactive Apricot",
+        "canonical": "#f4a582",
+        "oklch": "oklch(79.1% 0.106 45)",
+        "tonalRamp": [
+          "#190400",
+          "#441600",
+          "#712e08",
+          "#97502f",
+          "#be7352",
+          "#e69875",
+          "#febca0",
+          "#ffe9e0"
+        ]
       },
-      "loss-soft": {
-        "role": "secondary",
-        "displayName": "Loss Wash",
-        "canonical": "rgba(236, 138, 111, 0.12)"
+      "st-long-inactive": {
+        "role": "tertiary",
+        "displayName": "Long-Inactive Clay",
+        "canonical": "#c9917a",
+        "oklch": "oklch(70.5% 0.076 43)",
+        "tonalRamp": [
+          "#1a0400",
+          "#431702",
+          "#663622",
+          "#8b5742",
+          "#b17a64",
+          "#d89f87",
+          "#f9bea6",
+          "#ffe9e1"
+        ]
+      },
+      "st-vacation": {
+        "role": "tertiary",
+        "displayName": "Vacation Blue",
+        "canonical": "#7cb8ff",
+        "oklch": "oklch(77.0% 0.120 253)",
+        "tonalRamp": [
+          "#000b1e",
+          "#00264e",
+          "#024583",
+          "#2d68a9",
+          "#518cd0",
+          "#76b2f8",
+          "#abd1ff",
+          "#e4f0fe"
+        ]
+      },
+      "st-banned": {
+        "role": "tertiary",
+        "displayName": "Banned Red",
+        "canonical": "#ff6b6b",
+        "oklch": "oklch(71.2% 0.181 23)",
+        "tonalRamp": [
+          "#1f0002",
+          "#4f000a",
+          "#850319",
+          "#b72531",
+          "#e25053",
+          "#fe8582",
+          "#febab6",
+          "#ffe9e7"
+        ]
+      },
+      "st-outlaw": {
+        "role": "tertiary",
+        "displayName": "Outlaw Violet",
+        "canonical": "#c49bff",
+        "oklch": "oklch(76.5% 0.145 302)",
+        "tonalRamp": [
+          "#120026",
+          "#35035c",
+          "#552a84",
+          "#764daa",
+          "#9a71d1",
+          "#bf96fa",
+          "#d8c1fe",
+          "#f2eaff"
+        ]
+      },
+      "st-admin": {
+        "role": "tertiary",
+        "displayName": "Admin Teal",
+        "canonical": "#5fd4cf",
+        "oklch": "oklch(80.2% 0.106 191)",
+        "tonalRamp": [
+          "#000f0e",
+          "#002d2c",
+          "#01504e",
+          "#077572",
+          "#119d99",
+          "#4cc3be",
+          "#70e4df",
+          "#b7fefa"
+        ]
       },
       "heat-0": {
         "role": "neutral",
         "displayName": "Heat 0",
-        "canonical": "#1d2228",
+        "canonical": "#172034",
+        "oklch": "oklch(24.6% 0.041 265)",
         "tonalRamp": [
-          "#1d2228",
-          "#343a42",
-          "#555b62",
-          "#81848a",
-          "#b4b3b0",
-          "#ece8dd"
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
         ]
       },
       "heat-1": {
         "role": "neutral",
         "displayName": "Heat 1",
-        "canonical": "#343a42",
+        "canonical": "#304068",
+        "oklch": "oklch(37.8% 0.072 266)",
         "tonalRamp": [
-          "#1d2228",
-          "#343a42",
-          "#555b62",
-          "#81848a",
-          "#b4b3b0",
-          "#ece8dd"
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
         ]
       },
       "heat-2": {
         "role": "neutral",
         "displayName": "Heat 2",
-        "canonical": "#555b62",
+        "canonical": "#4b5e90",
+        "oklch": "oklch(47.2% 0.083 268)",
         "tonalRamp": [
-          "#1d2228",
-          "#343a42",
-          "#555b62",
-          "#81848a",
-          "#b4b3b0",
-          "#ece8dd"
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
         ]
       },
       "heat-3": {
         "role": "neutral",
         "displayName": "Heat 3",
-        "canonical": "#81848a",
+        "canonical": "#7186b4",
+        "oklch": "oklch(62.1% 0.074 265)",
         "tonalRamp": [
-          "#1d2228",
-          "#343a42",
-          "#555b62",
-          "#81848a",
-          "#b4b3b0",
-          "#ece8dd"
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
         ]
       },
       "heat-4": {
         "role": "neutral",
         "displayName": "Heat 4",
-        "canonical": "#b4b3b0",
+        "canonical": "#b1bcd6",
+        "oklch": "oklch(79.5% 0.039 267)",
         "tonalRamp": [
-          "#1d2228",
-          "#343a42",
-          "#555b62",
-          "#81848a",
-          "#b4b3b0",
-          "#ece8dd"
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
+        ]
+      },
+      "heat-5": {
+        "role": "neutral",
+        "displayName": "Heat 5",
+        "canonical": "#f2ede0",
+        "oklch": "oklch(94.6% 0.018 89)",
+        "tonalRamp": [
+          "#172034",
+          "#304068",
+          "#4b5e90",
+          "#7186b4",
+          "#b1bcd6",
+          "#f2ede0"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Verdict",
-        "purpose": "The verdict figure in brass, the one figure each tool exists to produce. 32px under 860px."
+        "purpose": "The verdict figure, the one figure each tool exists to produce."
+      },
+      "display-compact": {
+        "displayName": "Verdict Compact",
+        "purpose": "The verdict figure under 860px."
+      },
+      "verdict-mono": {
+        "displayName": "Verdict Mono",
+        "purpose": "The moon-lock coordinate verdict."
+      },
+      "verdict-mono-compact": {
+        "displayName": "Verdict Mono Compact",
+        "purpose": "The moon-lock verdict under 860px."
       },
       "headline": {
         "displayName": "Tool Title",
-        "purpose": "The tool name as the page h1. 24px under 860px."
+        "purpose": "The tool name as the page h1."
+      },
+      "headline-detail": {
+        "displayName": "Detail Name",
+        "purpose": "The player or alliance name in detail views."
+      },
+      "headline-compact": {
+        "displayName": "Tool Title Compact",
+        "purpose": "The tool h1 under 860px."
+      },
+      "field-value": {
+        "displayName": "Field Value",
+        "purpose": "The value in a one-line field."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "The brand name in the index; also the position search value."
       },
       "title": {
         "displayName": "Group / Sheet Title",
-        "purpose": "Settings group titles and report sheet titles."
+        "purpose": "Settings group titles, report sheet titles and verdict line names."
       },
       "body": {
         "displayName": "Body",
         "purpose": "Running text; intros capped at 72ch, help notes at 68ch."
       },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Help notes, index links, field labels and buttons."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Mini-field labels, the brand tagline and legends."
+      },
       "label": {
         "displayName": "Index Label",
         "purpose": "Uppercase tracked heading for the index groups and server-settings groups only."
       },
+      "figure-lg": {
+        "displayName": "Figure Large",
+        "purpose": "Ship counts."
+      },
       "figure": {
         "displayName": "Figure",
-        "purpose": "Mono tabular face for coordinates, counts, ticks, table cells and stamps."
+        "purpose": "Mono tabular face for coordinates, counts, table cells, chips and stamps."
+      },
+      "tick": {
+        "displayName": "Tick",
+        "purpose": "Heatmap axis ticks."
+      },
+      "tick-label": {
+        "displayName": "Tick Label",
+        "purpose": "The moonbreak curve current-point label."
+      },
+      "tick-sm": {
+        "displayName": "Tick Small",
+        "purpose": "Moonbreak curve axis ticks and target labels."
       }
     },
     "shadows": [
@@ -377,6 +609,11 @@
         "name": "thumb-contact",
         "value": "0 1px 3px rgba(0, 0, 0, 0.5)",
         "purpose": "Range slider thumb only."
+      },
+      {
+        "name": "resource-under-rule",
+        "value": "inset 0 -3px 0 <resource ink>",
+        "purpose": "A flat 3px rule at the foot of the selected resource tile. Not elevation."
       }
     ],
     "motion": [
@@ -417,6 +654,18 @@
       "splitData": "7fr 5fr",
       "columnGap": "32px",
       "reportStickyTop": "24px"
+    },
+    "statusMix": {
+      "text": "100%",
+      "border": "55%",
+      "tint": "14%",
+      "chipActiveTint": "16%",
+      "method": "color-mix(in srgb, <status ink> N%, transparent)"
+    },
+    "moonbreakOdds": {
+      "high": ">= 95% -> ok",
+      "low": "< 50% -> loss",
+      "between": "signal"
     }
   },
   "components": [
@@ -426,7 +675,7 @@
       "refersTo": "button-primary",
       "description": "Solid paper-ink action, e.g. search.",
       "html": "<button class=\"ds-btn\">Rechercher</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--ink,#ece8dd);border-radius:3px;background:var(--ink,#ece8dd);color:var(--ground,#111418);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:background-color .15s ease}.ds-btn:hover{background:#fffaf0}.ds-btn:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--ink,#ece8dd);border-radius:3px;background:var(--ink,#ece8dd);color:var(--ground,#0d1320);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:background-color .15s ease}.ds-btn:hover{background:#fffaf0}.ds-btn:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
     },
     {
       "name": "Ghost Button",
@@ -434,7 +683,7 @@
       "refersTo": "button-ghost",
       "description": "Dashed add action, e.g. add an attacker.",
       "html": "<button class=\"ds-btn-ghost\">+ Ajouter un attaquant</button>",
-      "css": ".ds-btn-ghost{min-height:40px;padding:8px 16px;border:1px dashed var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:border-color .15s ease,color .15s ease}.ds-btn-ghost:hover{border-color:var(--ink-3,#8f96a0);color:var(--ink,#ece8dd)}.ds-btn-ghost:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+      "css": ".ds-btn-ghost{min-height:40px;padding:8px 16px;border:1px dashed var(--rule-strong,#3b4760);border-radius:3px;background:transparent;color:var(--ink-2,#bcc1cc);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:15px;font-weight:700;cursor:pointer;transition:border-color .15s ease,color .15s ease}.ds-btn-ghost:hover{border-color:var(--ink-3,#8e97aa);color:var(--ink,#ece8dd)}.ds-btn-ghost:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
     },
     {
       "name": "Quiet Button",
@@ -442,7 +691,7 @@
       "refersTo": "button-quiet",
       "description": "Small bordered secondary action, e.g. copy.",
       "html": "<button class=\"ds-btn-quiet\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>Copier</button>",
-      "css": ".ds-btn-quiet{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 10px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:14px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}.ds-btn-quiet:hover{border-color:var(--ink-3,#8f96a0);background:var(--sheet-2,#1f242c);color:var(--ink,#ece8dd)}.ds-btn-quiet:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+      "css": ".ds-btn-quiet{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 10px;border:1px solid var(--rule-strong,#3b4760);border-radius:3px;background:transparent;color:var(--ink-2,#bcc1cc);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:14px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}.ds-btn-quiet:hover{border-color:var(--ink-3,#8e97aa);background:var(--sheet-2,#1a2234);color:var(--ink,#ece8dd)}.ds-btn-quiet:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
     },
     {
       "name": "Chips",
@@ -450,7 +699,7 @@
       "refersTo": "chip",
       "description": "Segmented choices; selection is ink, never brass.",
       "html": "<div class=\"ds-chips\"><button class=\"ds-chip is-active\">1.7 : 1.4 : 1</button><button class=\"ds-chip\">2 : 1.5 : 1</button><button class=\"ds-chip\">3 : 2 : 1</button></div>",
-      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px}.ds-chip{min-height:36px;padding:6px 12px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:transparent;color:var(--ink-2,#b9bcc2);font-family:var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);font-size:14px;cursor:pointer;transition:border-color .15s ease,background-color .15s ease,color .15s ease}.ds-chip:hover{border-color:var(--ink-3,#8f96a0);color:var(--ink,#ece8dd)}.ds-chip.is-active{border-color:var(--ink,#ece8dd);background:var(--sheet-3,#262c35);color:var(--ink,#ece8dd);font-weight:700}.ds-chip:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px}.ds-chip{min-height:36px;padding:6px 12px;border:1px solid var(--rule-strong,#3b4760);border-radius:3px;background:transparent;color:var(--ink-2,#bcc1cc);font-family:var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);font-size:14px;cursor:pointer;transition:border-color .15s ease,background-color .15s ease,color .15s ease}.ds-chip:hover{border-color:var(--ink-3,#8e97aa);color:var(--ink,#ece8dd)}.ds-chip.is-active{border-color:var(--ink,#ece8dd);background:var(--sheet-3,#222b40);color:var(--ink,#ece8dd);font-weight:700}.ds-chip:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
     },
     {
       "name": "Field",
@@ -458,7 +707,7 @@
       "refersTo": "field",
       "description": "One-line labelled input, label left, value right.",
       "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Quantité</span><input value=\"1 000 000\" /></label>",
-      "css": ".ds-field{display:flex;align-items:center;gap:12px;padding:0 14px;min-height:52px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:var(--sheet-2,#1f242c);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);transition:border-color .15s ease}.ds-field:focus-within{border-color:var(--signal,#e0a43c)}.ds-field-label{font-size:15px;color:var(--ink-2,#b9bcc2)}.ds-field input{flex:1;min-width:0;border:0;outline:none;background:transparent;padding:12px 0;text-align:right;font:700 22px var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-variant-numeric:tabular-nums;color:var(--ink,#ece8dd)}"
+      "css": ".ds-field{display:flex;align-items:center;gap:12px;padding:0 14px;min-height:52px;border:1px solid var(--rule-strong,#3b4760);border-radius:3px;background:var(--sheet-2,#1a2234);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);transition:border-color .15s ease}.ds-field:focus-within{border-color:var(--signal,#e0a43c)}.ds-field-label{font-size:15px;color:var(--ink-2,#bcc1cc)}.ds-field input{flex:1;min-width:0;border:0;outline:none;background:transparent;padding:12px 0;text-align:right;font:700 22px var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-variant-numeric:tabular-nums;color:var(--ink,#ece8dd)}"
     },
     {
       "name": "Index Navigation",
@@ -466,58 +715,82 @@
       "refersTo": "index-link",
       "description": "Ruled tool rows; the open tool is brass.",
       "html": "<nav class=\"ds-nav\"><h2 class=\"ds-nav-title\">Calculateurs</h2><ul><li><a class=\"is-active\" href=\"#\">Commerce</a></li><li><a href=\"#\">Destruction de lune</a></li><li><a href=\"#\">Expéditions</a></li></ul></nav>",
-      "css": ".ds-nav{width:224px;padding:16px;background:var(--sheet,#181c22);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-nav-title{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3,#8f96a0)}.ds-nav ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule,#2c333d)}.ds-nav li{border-bottom:1px solid var(--rule,#2c333d)}.ds-nav a{display:block;padding:9px 10px 9px 14px;font-size:15px;color:var(--ink-2,#b9bcc2);text-decoration:none;transition:color .15s ease,background-color .15s ease}.ds-nav a:hover{color:var(--ink,#ece8dd);background:var(--sheet-2,#1f242c)}.ds-nav a.is-active{color:var(--signal,#e0a43c);font-weight:700;background:var(--sheet-2,#1f242c)}.ds-nav a:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+      "css": ".ds-nav{width:224px;padding:16px;background:var(--sheet,#141b2a);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-nav-title{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3,#8e97aa)}.ds-nav ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule,#283249)}.ds-nav li{border-bottom:1px solid var(--rule,#283249)}.ds-nav a{display:block;padding:9px 10px 9px 14px;font-size:15px;color:var(--ink-2,#bcc1cc);text-decoration:none;transition:color .15s ease,background-color .15s ease}.ds-nav a:hover{color:var(--ink,#ece8dd);background:var(--sheet-2,#1a2234)}.ds-nav a.is-active{color:var(--signal,#e0a43c);font-weight:700;background:var(--sheet-2,#1a2234)}.ds-nav a:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
+    },
+    {
+      "name": "Resource Tiles",
+      "kind": "custom",
+      "refersTo": "resource-tile",
+      "description": "Choose the resource to sell; each tile is tinted by its resource ink.",
+      "html": "<div class=\"ds-tiles\"><button class=\"ds-tile is-active\" style=\"--res-color:var(--metal,#c6cfd9)\">Métal</button><button class=\"ds-tile\" style=\"--res-color:var(--crystal,#74c6ee)\">Cristal</button><button class=\"ds-tile\" style=\"--res-color:var(--deut,#5fd6a4)\">Deutérium</button></div>",
+      "css": ".ds-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:420px}.ds-tile{min-height:56px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--res-color) 30%,var(--rule-strong,#3b4760));border-radius:3px;background:color-mix(in srgb,var(--res-color) 7%,var(--sheet-2,#1a2234));color:var(--ink-2,#bcc1cc);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);font-size:16px;cursor:pointer;transition:border-color .15s ease,background-color .15s ease,color .15s ease}.ds-tile:hover{border-color:color-mix(in srgb,var(--res-color) 60%,var(--rule-strong,#3b4760));color:var(--ink,#ece8dd)}.ds-tile.is-active{border-color:var(--res-color);background:color-mix(in srgb,var(--res-color) 18%,var(--sheet-2,#1a2234));color:var(--ink,#ece8dd);font-weight:700;box-shadow:inset 0 -3px 0 var(--res-color)}.ds-tile:focus-visible{outline:2px solid var(--signal,#e0a43c);outline-offset:2px}"
     },
     {
       "name": "Report Sheet",
       "kind": "card",
       "refersTo": "report-sheet",
-      "description": "The verdict report: ruled lines, brass figures.",
-      "html": "<section class=\"ds-report\"><div class=\"ds-report-head\"><h2>Résultat</h2></div><div class=\"ds-line\"><span>Cristal</span><strong>823 529</strong></div><div class=\"ds-line\"><span>Deutérium</span><strong>588 235</strong></div><p class=\"ds-for\">Pour <b>1 000 000 Métal</b></p></section>",
-      "css": ".ds-report{max-width:420px;border:1px solid var(--rule-strong,#404956);border-radius:3px;background:var(--sheet,#181c22);box-shadow:0 12px 32px -18px rgba(0,0,0,.7);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);color:var(--ink,#ece8dd);padding-bottom:22px}.ds-report-head{padding:12px 22px;border-bottom:1px solid var(--rule-strong,#404956);background:var(--sheet-2,#1f242c)}.ds-report-head h2{margin:0;font-size:17px;font-weight:700}.ds-line{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 22px;padding:12px 0}.ds-line+.ds-line{border-top:1px solid var(--rule,#2c333d)}.ds-line span{font-size:17px;color:var(--ink-2,#b9bcc2)}.ds-line strong{font-size:40px;font-weight:700;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--signal,#e0a43c)}.ds-for{margin:16px 22px 0;padding-top:14px;border-top:1px solid var(--rule,#2c333d);font-size:15px;color:var(--ink-2,#b9bcc2)}.ds-for b{color:var(--ink,#ece8dd)}"
+      "description": "The verdict report on the report family; trade amounts take their resource ink.",
+      "html": "<section class=\"ds-report\"><div class=\"ds-report-head\"><h2>Résultat</h2></div><div class=\"ds-line\" style=\"--res-color:var(--crystal,#74c6ee)\"><span>Cristal</span><strong>823 529</strong></div><div class=\"ds-line\" style=\"--res-color:var(--deut,#5fd6a4)\"><span>Deutérium</span><strong>588 235</strong></div><p class=\"ds-for\">Pour <b>1 000 000 Métal</b></p></section>",
+      "css": ".ds-report{max-width:420px;border:1px solid var(--rule-strong,#3b4760);border-radius:3px;background:var(--report,#172034);box-shadow:0 12px 32px -18px rgba(0,0,0,.7);font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif);color:var(--ink,#ece8dd);padding-bottom:22px}.ds-report-head{padding:12px 22px;border-bottom:1px solid var(--rule-strong,#3b4760);background:var(--report-2,#1e2a42)}.ds-report-head h2{margin:0;font-size:17px;font-weight:700}.ds-line{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:20px 12px 0;padding:12px 10px;border-radius:3px;background:color-mix(in srgb,var(--res-color) 8%,transparent)}.ds-line+.ds-line{margin-top:6px}.ds-line span{font-size:17px;color:var(--ink,#ece8dd)}.ds-line strong{font-size:40px;font-weight:700;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--res-color)}.ds-for{margin:16px 22px 0;padding-top:14px;border-top:1px solid var(--report-rule,#2b3753);font-size:15px;color:var(--ink-2,#bcc1cc)}.ds-for b{color:var(--ink,#ece8dd)}"
     },
     {
       "name": "Status Stamps",
       "kind": "chip",
       "refersTo": "status-stamp",
-      "description": "Rectangular ruled status marks, never pills.",
-      "html": "<span class=\"ds-stamps\"><span class=\"ds-stamp ds-ok\">Actif</span><span class=\"ds-stamp ds-vac\">Vacances</span><span class=\"ds-stamp ds-ban\">Banni</span><span class=\"ds-stamp\">Inactif</span></span>",
-      "css": ".ds-stamps{display:inline-flex;gap:4px;font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-stamp{display:inline-flex;align-items:center;padding:1px 6px;border:1px solid var(--rule-strong,#404956);border-radius:2px;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink-2,#b9bcc2)}.ds-ok{border-color:rgba(143,203,152,.5);color:var(--ok,#8fcb98)}.ds-vac{border-color:rgba(116,198,238,.5);color:var(--crystal,#74c6ee)}.ds-ban{border-color:rgba(236,138,111,.55);color:var(--loss,#ec8a6f)}"
+      "description": "Rectangular status stamps: status ink as text, 55% border and 14% tint, always with icon and word.",
+      "html": "<span class=\"ds-stamps\"><span class=\"ds-stamp\" style=\"--st:var(--st-active,#7fd492)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Actif</span><span class=\"ds-stamp\" style=\"--st:var(--st-inactive,#f4a582)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Inactif</span><span class=\"ds-stamp\" style=\"--st:var(--st-long-inactive,#c9917a)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Inactif long</span><span class=\"ds-stamp\" style=\"--st:var(--st-vacation,#7cb8ff)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Vacances</span><span class=\"ds-stamp\" style=\"--st:var(--st-banned,#ff6b6b)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Banni</span><span class=\"ds-stamp\" style=\"--st:var(--st-outlaw,#c49bff)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Hors-la-loi</span><span class=\"ds-stamp\" style=\"--st:var(--st-admin,#5fd4cf)\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Admin</span></span>",
+      "css": ".ds-stamps{display:inline-flex;flex-wrap:wrap;gap:4px;font-family:var(--font, 'Atkinson Hyperlegible Next', system-ui, sans-serif)}.ds-stamp{display:inline-flex;align-items:center;gap:4px;padding:1px 6px;border:1px solid color-mix(in srgb,var(--st,#8e97aa) 55%,transparent);border-radius:2px;background:color-mix(in srgb,var(--st,#8e97aa) 14%,transparent);font-size:12px;font-weight:700;letter-spacing:.02em;white-space:nowrap;color:var(--st,#bcc1cc)}"
     },
     {
       "name": "Heatmap Row",
       "kind": "custom",
       "refersTo": "heatmap-cell",
-      "description": "Graphite-to-ink ramp; the selected cell is brass.",
-      "html": "<div class=\"ds-heat\"><span class=\"ds-heat-label\">G1</span><button class=\"ds-cell\" style=\"background:#1d2228\"></button><button class=\"ds-cell\" style=\"background:#343a42\"></button><button class=\"ds-cell\" style=\"background:#555b62\"></button><button class=\"ds-cell is-selected\"></button><button class=\"ds-cell\" style=\"background:#81848a\"></button><button class=\"ds-cell\" style=\"background:#b4b3b0\"></button><button class=\"ds-cell\" style=\"background:#ece8dd\"></button></div>",
-      "css": ".ds-heat{display:inline-flex;align-items:center;gap:2px;padding:14px;background:var(--sheet,#181c22);border:1px solid var(--rule,#2c333d);border-radius:3px}.ds-heat-label{margin-right:8px;font:13px var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);color:var(--ink-2,#b9bcc2)}.ds-cell{width:12px;height:18px;padding:0;border:1px solid transparent;border-radius:1px;cursor:pointer}.ds-cell:hover{border-color:var(--ink,#ece8dd)}.ds-cell.is-selected{background:var(--signal,#e0a43c);border-color:var(--signal,#e0a43c);outline:2px solid var(--signal,#e0a43c);outline-offset:1px}"
+      "description": "Night-blue-to-sand ramp; the selected cell is brass.",
+      "html": "<div class=\"ds-heat\"><span class=\"ds-heat-label\">G1</span><button class=\"ds-cell\" style=\"background:var(--heat-0,#172034)\"></button><button class=\"ds-cell\" style=\"background:var(--heat-1,#304068)\"></button><button class=\"ds-cell\" style=\"background:var(--heat-2,#4b5e90)\"></button><button class=\"ds-cell is-selected\"></button><button class=\"ds-cell\" style=\"background:var(--heat-3,#7186b4)\"></button><button class=\"ds-cell\" style=\"background:var(--heat-4,#b1bcd6)\"></button><button class=\"ds-cell\" style=\"background:var(--heat-5,#f2ede0)\"></button></div>",
+      "css": ".ds-heat{display:inline-flex;align-items:center;gap:2px;padding:14px;background:var(--sheet,#141b2a);border:1px solid var(--rule,#283249);border-radius:3px}.ds-heat-label{margin-right:8px;font:13px var(--font-figure, 'Atkinson Hyperlegible Mono', ui-monospace, monospace);color:var(--ink-2,#bcc1cc)}.ds-cell{width:12px;height:18px;padding:0;border:1px solid transparent;border-radius:1px;cursor:pointer}.ds-cell:hover{border-color:var(--ink,#ece8dd)}.ds-cell.is-selected{background:var(--signal,#e0a43c);border-color:var(--signal,#e0a43c);outline:2px solid var(--signal,#e0a43c);outline-offset:1px}"
     }
   ],
   "narrative": {
     "northStar": "Rapport de combat",
-    "overview": "Every tool hands down its verdict as a report: a dated, ruled document on a graphite telex desk at night. The lineage is the combat and espionage reports OGame players have pasted into forums and Discord since 2002. The verdict is the first thing read and the thing copied back into chat, so the whole system is arranged to make one figure unmistakable and everything around it quiet.\n\nThe world is flat paper on a dark desk. A sticky index rail holds the brand, the one universe picker and the tool list; the desk to its right shows one tool at a time, its settings column beside the report sheet. Surfaces are told apart by small steps of graphite and by 1px rules, never by colour or glow. Numbers that are read, compared or copied are set in a tabular face. One brass ink is the only accent, and its rarity is what makes the verdict land.\n\nThe build refuses the neon HUD card stack of the previous UI and the generic SaaS dashboard: no glow, no glass, no decorative gradient, no pills.",
+    "overview": "Every tool hands down its verdict as a report: a dated, ruled document on a night-blue telex desk. The lineage is the combat and espionage reports OGame players have pasted into forums and Discord since 2002. The verdict is the first thing read and the thing copied back into chat, so the whole system is arranged to make one figure unmistakable and everything around it quiet.\n\nThe world is flat paper on a dark desk. A sticky index rail holds the brand, the one universe picker and the tool list; the desk to its right shows one tool at a time, its settings column beside the report sheet. The desk and its chrome are told apart by small steps of night blue and by 1px rules, never by glow; the report sheet lies one step lighter than the desk. Numbers that are read, compared or copied are set in a tabular face. Brass is the one chrome accent. Every other hue is data: the three resource inks, seven status inks, and the ok and loss inks for success, odds and errors, each used only where its colour carries the meaning.\n\nThe build refuses the neon HUD card stack of the previous UI and the generic SaaS dashboard: no glow, no glass, no decorative gradient, no pills. There is one theme.",
     "keyCharacteristics": [
-      "Graphite ground, three sheet steps, warm paper ink.",
-      "One brass signal ink, reserved for a short list of meanings.",
+      "Night-blue ground, three sheet steps, a report sheet one step lighter, warm paper ink.",
+      "One brass signal ink for the verdict, focus and the open tool.",
+      "Data inks by meaning: resource inks, status inks, and ok/loss for odds and errors.",
       "1px rules everywhere; ruled lists and tables instead of cards in cards.",
       "Tabular numerals, with a mono face for coordinates, counts, ticks and stamps.",
-      "Corners of 3px at most; status marks are rectangular stamps.",
+      "Corners of 3px at most; status marks are rectangular stamps with an icon and a word.",
       "A single motion signature: a changed figure is re-inked by one brass stroke."
     ],
     "rules": [
       {
         "name": "The Brass Reservation Rule",
-        "body": "Brass means \"this is the answer, this has focus, or this is where you are.\" It marks the verdict figures, focus, the open tool, the selected heatmap cell and the curve's current point. Any other use dilutes the verdict.",
+        "body": "Brass means \"this is the answer, this has focus, or this is where you are.\" It marks the verdict figures that have no meaning ink, focus, the open tool, the selected heatmap cell, the curve's current point and the wash under the curve. Never use it for decoration, hover or headings.",
+        "section": "colors"
+      },
+      {
+        "name": "The Meaning Ink Rule",
+        "body": "A verdict takes a data ink instead of brass only when the colour is part of the answer. Trade amounts are set in the ink of the resource received; moonbreak odds are ok from 95%, loss under 50% and brass in between. This is the one exception to brass on the verdict.",
         "section": "colors"
       },
       {
         "name": "The Ink Selection Rule",
-        "body": "Selection that is not the open tool is shown with ink: an ink border or ink outline and a step-up sheet fill (chips, list rows, language toggle). The selected resource tile is the one exception, and it uses that resource's own data ink.",
+        "body": "Selection that is not the open tool is shown with ink: an ink border and a step-up sheet fill (chips, list rows, language toggle). Two exceptions take their data ink: the selected resource tile (resource-ink border, an 18% resource tint and a 3px resource under-rule) and a selected status filter chip (status-ink border and a 16% status tint).",
         "section": "colors"
       },
       {
         "name": "The Data Ink Rule",
-        "body": "Metal, crystal and deuterium colours only ever describe a resource. They never colour a button, a heading or a frame.",
+        "body": "Resource and status inks describe a resource or a status. They never colour a button fill, a heading or a frame. The one borrowed use is the calculator field icons, which take a fixed ink each so the tools read apart: metal for moon size, crystal for the expedition fleet, vacation blue for moon-lock coordinates.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never Colour Alone Rule",
+        "body": "No status is told by colour alone. Every status stamp carries its icon and its word; filter chips and breakdown items carry the icon in the status ink beside the word.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heat Step Rule",
+        "body": "The heat ramp is one family from night blue to sand, and adjacent steps aim for at least 1.5:1 contrast so neighbouring levels stay apart.",
         "section": "colors"
       },
       {
@@ -537,22 +810,27 @@
       }
     ],
     "dos": [
-      "Do keep brass to the verdict figures, focus, the open tool, the selected heatmap cell and the curve's current point.",
-      "Do show any other selection with an ink border or outline and a step-up sheet fill (sheet-2 for hover, sheet-3 for selected).",
-      "Do separate surfaces with 1px rules and graphite steps; rule lists and tables instead of nesting cards.",
+      "Do keep brass to verdict figures without a meaning ink, focus, the open tool, the selected heatmap cell, the curve's current point and the wash under the curve.",
+      "Do set trade amounts in the ink of the resource received, and colour moonbreak odds ok from 95%, loss under 50% and brass in between.",
+      "Do show any other selection with an ink border and a step-up sheet fill (sheet-2 for hover, sheet-3 for selected); only resource tiles and status filter chips select in their data ink.",
+      "Do draw status as text, a 55% border and a 14% tint of its status ink, always with its icon and its word.",
+      "Do lay the report sheet on the report family (report, report-2, report-rule), one step lighter than the desk.",
+      "Do separate surfaces with 1px rules and night-blue steps; rule lists and tables instead of nesting cards.",
       "Do set compared or copied numbers tabular, and in the mono face when they sit in rows, tables, ticks or stamps.",
+      "Do pick font sizes from the type ramp.",
       "Do make status marks rectangular stamps with 2px corners and a 1px border.",
-      "Do colour the galaxy heatmap with the single graphite-to-ink ramp (heat-0 to heat-4, then ink).",
-      "Do keep metal, crystal and deuterium inks on resource data only.",
+      "Do colour the galaxy heatmap with the single night-blue-to-sand ramp (heat-0 to heat-5), keeping adjacent steps at least 1.5:1 apart.",
       "Do keep the report beside the settings and sticky on wide screens so the verdict is read without scrolling."
     ],
     "donts": [
       "Don't use glows, glass, blur or decorative gradients; the slider's value fill is the only gradient.",
       "Don't add coloured side stripes to cards, notes or rows.",
       "Don't round anything past 3px, and don't make status marks into pills.",
-      "Don't add a second accent colour, or use brass for decoration, hover flourishes or headings.",
+      "Don't add a second chrome accent, or use brass for decoration, hover flourishes or headings.",
+      "Don't use resource or status inks for button fills, headings or frames, or let colour be the only cue for a status.",
       "Don't set any figure other than the verdict at display size.",
-      "Don't add shadows beyond the report sheet's single drop shadow and the slider thumb's contact shadow."
+      "Don't add shadows beyond the report sheet's single drop shadow and the slider thumb's contact shadow.",
+      "Don't add a theme picker or alternative palettes; the system has one theme."
     ]
   }
 }
