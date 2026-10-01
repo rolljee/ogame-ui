@@ -21,6 +21,24 @@ describe('<Moonbreak />', () => {
 		expect(screen.getByText('4 wave(s) of 17 and 2 wave(s) of 16 Deathstars.')).toBeInTheDocument();
 	});
 
+	it('grades the odds: low, middling, then near certain', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<Moonbreak />);
+		const odds = () => screen.getByText('chance to break the moon').closest('p');
+
+		await user.type(screen.getByLabelText('Attacker 1'), '5');
+		expect(odds()).toHaveClass('is-low');
+
+		await user.clear(screen.getByLabelText('Attacker 1'));
+		await user.type(screen.getByLabelText('Attacker 1'), '100');
+		expect(odds()).not.toHaveClass('is-low');
+		expect(odds()).not.toHaveClass('is-high');
+
+		await user.clear(screen.getByLabelText('Attacker 1'));
+		await user.type(screen.getByLabelText('Attacker 1'), '400');
+		expect(odds()).toHaveClass('is-high');
+	});
+
 	it('reacts to the moon size', async () => {
 		const user = userEvent.setup();
 		renderWithI18n(<Moonbreak />);

@@ -589,6 +589,15 @@ input::placeholder {
 }
 
 // A labelled input on one line: label left, value right.
+.field[style*='--res-color'] {
+	border-color: color-mix(in srgb, var(--res-color) 35%, var(--rule-strong));
+	background: color-mix(in srgb, var(--res-color) 6%, var(--sheet-2));
+
+	&:focus-within {
+		border-color: var(--res-color);
+	}
+}
+
 .field {
 	display: flex;
 	align-items: center;
@@ -686,6 +695,19 @@ input::placeholder {
 		cursor: pointer;
 		text-overflow: ellipsis;
 	}
+}
+
+// Calculator field icons: one ink each, so the tools read apart at a glance.
+.moon-size .field-label svg {
+	color: var(--metal);
+}
+
+.exp-fleet .field-label svg {
+	color: var(--crystal);
+}
+
+.ml-coords .field-label svg {
+	color: var(--st-vacation);
 }
 
 .res-dot {
@@ -987,6 +1009,27 @@ input::placeholder {
 	flex-direction: column;
 }
 
+.result-line[style*='--res-color'] {
+	margin: 0 -10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: var(--radius);
+	background: color-mix(in srgb, var(--res-color) 8%, transparent);
+
+	.res-amount {
+		color: var(--res-color);
+	}
+
+	.res-name {
+		color: var(--ink);
+	}
+
+	& + & {
+		margin-top: 6px;
+		border-top: 0;
+	}
+}
+
 .result-line {
 	display: flex;
 	align-items: baseline;
@@ -1086,9 +1129,9 @@ input::placeholder {
 	gap: 10px;
 	min-height: 56px;
 	padding: 10px 12px;
-	border: 1px solid var(--rule-strong);
+	border: 1px solid color-mix(in srgb, var(--res-color) 30%, var(--rule-strong));
 	border-radius: var(--radius);
-	background: var(--sheet-2);
+	background: color-mix(in srgb, var(--res-color) 7%, var(--sheet-2));
 	color: var(--ink-2);
 	font-size: 16px;
 	cursor: pointer;
@@ -1103,13 +1146,13 @@ input::placeholder {
 	}
 
 	&:hover {
-		border-color: var(--ink-3);
+		border-color: color-mix(in srgb, var(--res-color) 60%, var(--rule-strong));
 		color: var(--ink);
 	}
 
 	&.is-active {
 		border-color: var(--res-color);
-		background: var(--sheet-3);
+		background: color-mix(in srgb, var(--res-color) 18%, var(--sheet-2));
 		color: var(--ink);
 		font-weight: 700;
 		box-shadow: inset 0 -3px 0 var(--res-color);
@@ -1189,6 +1232,14 @@ input::placeholder {
 
 .attackers > .btn-ghost {
 	min-height: 40px;
+}
+
+.mb-probability.is-low strong {
+	color: var(--loss);
+}
+
+.mb-probability.is-high strong {
+	color: var(--ok);
 }
 
 .mb-probability,
@@ -1286,6 +1337,10 @@ input::placeholder {
 	font-family: var(--font-figure);
 	font-size: 9px;
 	text-anchor: middle;
+}
+
+.mb-curve-area {
+	fill: var(--signal-soft);
 }
 
 .mb-curve-line {

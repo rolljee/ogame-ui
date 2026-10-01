@@ -81,6 +81,11 @@ function MoonbreakCurve({ curve, attackerCount }) {
 						</g>
 					))}
 
+				{/* The area under the curve, closed down to the 0 % line. */}
+				<polygon
+					className="mb-curve-area"
+					points={`${x(points[0].rip)},${y(0)} ${line} ${x(points[points.length - 1].rip)},${y(0)}`}
+				/>
 				<polyline className="mb-curve-line" points={line} />
 
 				{current && (
