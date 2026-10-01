@@ -32,8 +32,9 @@ export function shipDebrisValue(id) {
 	return cost.metal + cost.crystal;
 }
 
+// From ogamejs (`Fleets.getMoonLockShips`), the code behind `!ogl` as well.
 export function shipsForThreshold({ debrisFactor, shipId, threshold = MOON_DEBRIS_THRESHOLD }) {
-	return Math.ceil(threshold / (debrisFactor * shipDebrisValue(shipId)));
+	return Ogame.Fleets.getMoonLockShips(shipModel(shipId), debrisFactor, threshold);
 }
 
 // `data` is a serverData payload, `coordinates` the raw text field.

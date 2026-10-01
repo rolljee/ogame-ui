@@ -1,8 +1,11 @@
-// Moonbreak (destruction de lune) model, ported from the `!mb` command of
-// https://github.com/rolljee/og-bot-discord (mb.js).
-//
-// Everything here is pure arithmetic: no API call is involved, only the moon
-// size and the number of Deathstars (RIP) each attacker sends.
+// Moonbreak (destruction de lune) model. The arithmetic itself — waves,
+// chance, losses — comes from ogamejs (`Fleets.getMoonbreak*`), the same code
+// behind the `!mb` command of og-bot-discord. What stays here is what the view
+// needs on top of it: validation, rounding, the wave plan and the curve.
+
+import Ogame from 'ogamejs';
+
+const { getMoonbreakWaves, getMoonbreakChance, getMoonbreakLosses } = Ogame.Fleets;
 
 export const MIN_MOON_SIZE = 3464;
 export const MAX_MOON_SIZE = 8944;
@@ -11,13 +14,6 @@ export const WAVES_PER_ATTACKER = 6;
 
 function round2(n) {
 	return Math.round(n * 100) / 100;
-}
-
-// Official in-game formula: chance that a single wave of `ripPerWave`
-// Deathstars destroys a moon of `moonSize` km. Capped at 1, since a wave
-// cannot do better than certain destruction.
-function waveProbability(moonSize, ripPerWave) {
-	return Math.min(1, ((100 - Math.sqrt(moonSize)) * Math.sqrt(ripPerWave)) / 100);
 }
 
 // An attacker spreads their Deathstars over 6 waves. When the count is not a
@@ -29,80 +25,29 @@ export function splitWaves(rip) {
 	};
 }
 
-// The waves one attacker actually sends, in the order they fire: `remainder`
-// waves carrying one extra ship, then the rest. An attacker with fewer than 6
-// Deathstars sends waves of 0, which neither threaten the moon nor lose a ship.
+// The waves one attacker actually sends, in the order they fire: the extra
+// ships first, then the rest; under 6 Deathstars, the last waves are empty.
 export function attackerWaves(rip) {
-	const { base, remainder } = splitWaves(rip);
-	return Array.from({ length: WAVES_PER_ATTACKER }, (_, i) => (i < remainder ? base + 1 : base));
+	return getMoonbreakWaves(rip);
 }
 
 // Every wave of the whole attack, in firing order. Attackers go one after the
-// other, which is how a coordinated moonbreak is flown: the moon is gone the
-// moment one wave succeeds, so nothing behind it fires.
+// other: the moon is gone the moment one wave succeeds.
 export function attackWaves(fleets) {
-	return fleets.flatMap(attackerWaves);
+	return fleets.flatMap(getMoonbreakWaves);
 }
 
-// Probability that all 6 waves of one attacker fail to break the moon.
-function failureProbability(moonSize, rip) {
-	const { base, remainder } = splitWaves(rip);
-
-	if (remainder === 0) {
-		return (1 - waveProbability(moonSize, base)) ** WAVES_PER_ATTACKER;
-	}
-
-	return (
-		(1 - waveProbability(moonSize, base + 1)) ** remainder *
-		(1 - waveProbability(moonSize, base)) ** (WAVES_PER_ATTACKER - remainder)
-	);
-}
-
-// Expected Deathstar losses over the whole attack, walked over the same waves
-// the probability above is built from — each attacker's own 6, at their own
-// size. Pooling the fleet into one average wave size instead made the estimate
-// blind to how it was split: 101 Deathstars as 1 + 100 came out at the same
-// losses as 50 + 50, when the two attacks do not lose the same ships at all.
-//
-// Each Deathstar in a wave is destroyed independently with probability
-// `destructionRate`, so a wave loses Binomial(size, rate) ships. The variance
-// below sums the per-wave variances, which treats the waves as independent
-// although they share the survival chain; the spread is then summarised as a
-// gaussian around the mean (1σ / 2σ / 3σ ≈ 68 % / 95 % / 99 %). Both are
-// approximations, kept from the model this was ported from.
+// Expected Deathstar losses, with the 68 / 95 / 99 % bands, rounded for display.
 function estimateLosses(moonSize, fleets) {
-	const destructionRate = Math.sqrt(moonSize) / 200;
-	const totalRip = fleets.reduce((acc, rip) => acc + rip, 0);
-
-	let mean = 0;
-	let variance = 0;
-	// The probability that every wave so far has failed. A wave only costs ships
-	// if it is fired at all, so this weights what it loses.
-	let reached = 1;
-
-	for (const size of attackWaves(fleets)) {
-		const p = destructionRate * reached;
-		mean += size * p;
-		variance += size * p * (1 - p);
-		reached *= 1 - waveProbability(moonSize, size);
-	}
-
-	const sigma = Math.sqrt(variance);
-
-	function band(sigmas) {
-		return {
-			min: round2(Math.max(mean - sigmas * sigma, 0)),
-			max: round2(Math.min(mean + sigmas * sigma, totalRip)),
-		};
-	}
+	const { mean, bands } = getMoonbreakLosses(moonSize, fleets);
 
 	return {
 		mean: round2(mean),
-		bands: [
-			{ confidence: 68, ...band(1) },
-			{ confidence: 95, ...band(2) },
-			{ confidence: 99, ...band(3) },
-		],
+		bands: bands.map(({ confidence, min, max }) => ({
+			confidence,
+			min: round2(min),
+			max: round2(max),
+		})),
 	};
 }
 
@@ -114,7 +59,7 @@ function estimateLosses(moonSize, fleets) {
 
 // Probability (0..1) that a set of fleets breaks the moon.
 export function breakProbability(moonSize, fleets) {
-	return 1 - fleets.reduce((acc, rip) => acc * failureProbability(moonSize, rip), 1);
+	return getMoonbreakChance(moonSize, fleets);
 }
 
 // Spread `total` Deathstars over `count` attackers as evenly as possible; the
@@ -205,12 +150,11 @@ export function computeMoonbreak({ moonSize, attackers }) {
 		return { ok: false, errors };
 	}
 
-	const failure = fleets.reduce((acc, rip) => acc * failureProbability(size, rip), 1);
 	const totalRip = fleets.reduce((acc, rip) => acc + rip, 0);
 
 	return {
 		ok: true,
-		probability: round2((1 - failure) * 100),
+		probability: round2(getMoonbreakChance(size, fleets) * 100),
 		totalRip,
 		attackers: fleets.map((rip) => ({ rip, ...splitWaves(rip) })),
 		losses: estimateLosses(size, fleets),
