@@ -7,6 +7,7 @@ import Trader from './Trader/Trader';
 import Moonbreak from './Moonbreak/Moonbreak';
 import Expeditions from './Expeditions/Expeditions';
 import MoonLock from './MoonLock/MoonLock';
+import Combat from './Combat/Combat';
 import Players from './Players/Players';
 import GalaxyMap from './GalaxyMap/GalaxyMap';
 import Alliances from './Alliances/Alliances';
@@ -28,6 +29,7 @@ const GROUPS = [
 				Component: Expeditions,
 			},
 			{ id: 'moonlock', labelKey: 'nav.moonlock', introKey: 'ml.intro', live: true, Component: MoonLock },
+			{ id: 'combat', labelKey: 'nav.combat', introKey: 'cs.intro', live: true, Component: Combat },
 		],
 	},
 	{
