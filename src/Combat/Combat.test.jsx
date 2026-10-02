@@ -35,7 +35,7 @@ describe('<Combat />', () => {
 		await waitFor(() => expect(screen.getByText('attacker wins')).toBeInTheDocument());
 		expect(screen.getByText('100%')).toBeInTheDocument();
 		expect(screen.getByText('Average of 20 battles')).toBeInTheDocument();
-		expect(screen.getByText('Defender losses')).toBeInTheDocument();
+		expect(screen.getByRole('heading', { name: 'Defender losses' })).toBeInTheDocument();
 	});
 
 	it('says when the settings changed since the last run', async () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '../../i18n/I18nContext';
+import { groupDigits } from '../../components/format';
 import { RESOURCE_META } from '../../Trader/resources';
 import ResourceIcon from '../../components/ResourceIcon';
 
@@ -30,7 +31,7 @@ function PlanetResources({ values, onChange }) {
 							inputMode="numeric"
 							autoComplete="off"
 							placeholder="0"
-							value={values[key] ?? ''}
+							value={groupDigits(values[key] ?? '')}
 							onChange={(e) => onChange(key, e.target.value.replace(/\D/g, ''))}
 						/>
 					</div>

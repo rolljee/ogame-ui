@@ -1,6 +1,7 @@
 import React from 'react';
 import Ogame from 'ogamejs';
 import { useI18n } from '../../i18n/I18nContext';
+import { groupDigits } from '../../components/format';
 import { unitModel } from '../formulas';
 
 // One count field per ship or defense, named as in the game.
@@ -20,7 +21,7 @@ function UnitGrid({ ids, counts, onChange, idPrefix }) {
 							inputMode="numeric"
 							autoComplete="off"
 							placeholder="0"
-							value={counts[id] ?? ''}
+							value={groupDigits(counts[id] ?? '')}
 							onChange={(e) => onChange(id, e.target.value.replace(/\D/g, ''))}
 						/>
 					</div>

@@ -2263,6 +2263,48 @@ input::placeholder {
 	}
 }
 
+// On a phone the three amounts do not fit beside the row name: the name goes
+// on its own line above them.
+@media (max-width: 640px) {
+	.cs-table,
+	.cs-table thead,
+	.cs-table tbody {
+		display: block;
+	}
+
+	.cs-table tr {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.cs-table thead td {
+		display: none;
+	}
+
+	.cs-table th,
+	.cs-table td {
+		border: 0;
+	}
+
+	.cs-table thead th {
+		border-top: 0;
+	}
+
+	.cs-table thead tr {
+		border-top: 1px solid var(--rule);
+	}
+
+	.cs-table tbody th {
+		grid-column: 1 / -1;
+		padding-bottom: 0;
+	}
+
+	.cs-table caption {
+		display: block;
+	}
+}
+
 .cs-facts {
 	margin: 0;
 	padding: 0;

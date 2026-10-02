@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useI18n } from '../i18n/I18nContext';
 import { fetchServerData } from '../api/ogame';
@@ -37,6 +37,15 @@ function Combat() {
 	const [runs, setRuns] = useState(DEFAULT_RUNS);
 	const [lastRun, setLastRun] = useState(null);
 	const simulation = useCombatSimulation();
+	const reportRef = useRef(null);
+
+	// Under 1180px the report sits below a long form: bring it into view once
+	// the battles are done. Beside the form, it is already there.
+	useEffect(() => {
+		if (simulation.status === 'done') {
+			reportRef.current?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
+		}
+	}, [simulation.status, simulation.stats]);
 
 	const { data, error, loading } = useApiData(
 		selection.universe ? (signal) => fetchServerData(selection, { signal }) : null,
@@ -169,7 +178,7 @@ function Combat() {
 				</form>
 			}
 			report={
-				<>
+				<div ref={reportRef}>
 					{loading && <p className="help">{t('srv.loading')}</p>}
 					{error && (
 						<p className="api-error" role="alert">
@@ -184,7 +193,7 @@ function Combat() {
 						universe={lastRun?.universe ?? readUniverse(data)}
 						universeName={universeName}
 					/>
-				</>
+				</div>
 			}
 		/>
 	);
