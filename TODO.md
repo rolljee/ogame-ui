@@ -214,7 +214,27 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 
 ## 5. Reste ouvert
 
-Rien. Le dernier point ouvert est retombé :
+### Simulateur de combat (`src/Combat/`) — V1, à itérer
+
+Outil propre au site, sans équivalent dans le bot. Le moteur et les moyennes
+viennent d'`ogamejs` (`Fleets.simulateCombat`, `getCombatStatistics`, v4.2) ;
+les combats tournent dans un Web Worker (`combat.worker.js`).
+
+La V1 prend les technologies de combat, l'hyperespace (fret du pillage), les
+flottes, les défenses et les ressources de la planète ; les réglages de débris
+et de reconstruction viennent de `serverData`. Pistes selon les retours :
+
+- [ ] Bonus de classe et de formes de vie sur l'attaque, le bouclier et la coque.
+- [ ] Coller le texte d'un rapport d'espionnage pour remplir le défenseur (les
+      clés `sr-…` ne sont pas lisibles sans accès partenaire : `/api/v1/*`
+      répond `RESULT_CODE 4001` à toute requête).
+- [ ] Attaque groupée (plusieurs attaquants, technologies différentes).
+- [ ] Consommation de deutérium du vol dans le bilan (distance, vitesse).
+- [ ] Valider les chiffres contre OSimulate sur quelques combats types.
+
+### Correctif moonbreak
+
+Le dernier point ouvert est retombé :
 
 - [x] **Correctif remonté au bot** — `getLosses` ne plafonnait pas la
       probabilité par vague à 1, d'où des pertes négatives et des `NaN` dès ~6
@@ -228,8 +248,8 @@ Rien. Le dernier point ouvert est retombé :
 ## Notes techniques
 
 - Les calculs métier sont fournis par la lib
-  [`ogamejs`](https://www.npmjs.com/package/ogamejs), en **v4.1** ici comme dans
-  le bot (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`,
+  [`ogamejs`](https://www.npmjs.com/package/ogamejs), en **v4.2** ici (v4.1 dans
+  le bot) (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`,
   `models`). Depuis la 4.1, le moonbreak, le fret d'expédition et le verrou de
   lune y vivent aussi (`Fleets.getMoonbreak*`, `getExpeditionMaxFind`,
   `getCargoCapacity`, `getMoonLockShips`) : plus de copie à tenir à jour entre

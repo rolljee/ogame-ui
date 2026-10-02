@@ -11,6 +11,7 @@ export const translations = {
 		'nav.moonbreak': 'Destruction de lune',
 		'nav.expeditions': 'Expéditions',
 		'nav.moonlock': 'Verrou de lune',
+		'nav.combat': 'Simulateur de combat',
 		'nav.players': 'Joueurs',
 		'nav.galaxymap': 'Carte de la galaxie',
 		'nav.alliances': 'Alliances',
@@ -322,6 +323,65 @@ export const translations = {
 		'ml.error.data': 'Cet univers ne renvoie pas son taux de débris.',
 		'ml.error.coordinates': 'Entre des coordonnées valides pour voir le résultat.',
 
+		'cs.intro':
+			"Simule le même combat des dizaines de fois et lis la moyenne : chances de victoire, pertes de chaque camp, défenses reconstruites, champ de débris, chances de lune et pillage. Cette première version tient compte des technologies de combat, pas encore des bonus de classe ni de formes de vie.",
+
+		'cs.step.attacker': 'Attaquant',
+		'cs.step.attacker.help':
+			"Les niveaux des technologies Armes, Bouclier et Protection (de 0 à {max}), l'hyperespace pour le fret qui ramène le pillage, et la flotte envoyée.",
+		'cs.step.defender': 'Défenseur',
+		'cs.step.defender.help':
+			"Recopie le rapport d'espionnage : technologies de combat, vaisseaux à quai et défenses.",
+		'cs.step.resources': 'Ressources sur la planète',
+		'cs.step.resources.help':
+			"Ce que le rapport d'espionnage montre sur la planète. Un attaquant victorieux en emporte une part, dans la limite de son fret.",
+		'cs.step.run': 'Simulation',
+		'cs.step.run.help':
+			'Chaque combat est tiré au hasard : plus de simulations donnent des moyennes plus stables, mais prennent plus de temps sur une grosse flotte.',
+
+		'cs.tech.weapons': 'Armes',
+		'cs.tech.shielding': 'Bouclier',
+		'cs.tech.armour': 'Protection',
+		'cs.tech.hyperspace': 'Hyperespace',
+		'cs.ships': 'Vaisseaux',
+		'cs.defenses': 'Défenses',
+		'cs.plunder': 'Part pillable',
+		'cs.runs': 'Nombre de combats simulés',
+		'cs.simulate': 'Simuler le combat',
+
+		'cs.result.title': 'Issue du combat',
+		'cs.result.runs': 'Moyenne sur {runs} combats',
+		'cs.result.empty': 'Lance la simulation pour voir le résultat.',
+		'cs.result.running': 'Simulation en cours… {progress} %',
+		'cs.result.stale': 'Les paramètres ont changé depuis cette simulation : relance-la pour mettre le résultat à jour.',
+		'cs.result.win': "de victoires de l'attaquant",
+		'cs.result.outcomes': 'Défenseur {defender} % · nul {draw} % · {rounds} tours en moyenne',
+		'cs.result.attackerLosses': "Pertes de l'attaquant",
+		'cs.result.defenderLosses': 'Pertes du défenseur',
+		'cs.result.noLoss': 'Aucune perte.',
+		'cs.result.rebuilt': '{count} reconstruites',
+		'cs.result.resources': 'Ressources (moyenne)',
+		'cs.result.row.attackerLosses': 'Pertes attaquant',
+		'cs.result.row.defenderLosses': 'Pertes défenseur',
+		'cs.result.row.debris': 'Champ de débris',
+		'cs.result.row.plunder': 'Pillage',
+		'cs.result.balance': "Bilan de l'attaquant",
+		'cs.result.balance.help':
+			"Pillage et champ de débris, moins les pertes de l'attaquant. Le deutérium consommé pour le vol n'est pas compté.",
+		'cs.result.recyclers': 'Recycleurs pour le champ de débris',
+		'cs.result.moon': 'Chances de lune',
+		'cs.result.for':
+			'Univers {universe} : débris des vaisseaux {debris} %, des défenses {defenseDebris} %, défenses reconstruites {repair} %.',
+		'cs.result.forDefault':
+			'Sans univers choisi : débris des vaisseaux {debris} %, défenses reconstruites {repair} %.',
+
+		'cs.error.attacker': "Ajoute au moins un vaisseau à l'attaquant pour lancer la simulation.",
+		'cs.error.defender': 'Ajoute au moins un vaisseau ou une défense au défenseur pour lancer la simulation.',
+		'cs.error.tech': 'Les niveaux de technologie vont de 0 à 40.',
+		'cs.error.count': 'Les nombres de vaisseaux et de défenses doivent être des nombres entiers.',
+		'cs.error.resources': 'Les ressources doivent être des nombres entiers.',
+		'cs.error.engine': 'La simulation a échoué.',
+
 		'srv.intro':
 			"Les réglages d'un univers : vitesses, débris, taille de la galaxie, score du premier. Utile pour savoir à quoi s'attendre avant de s'y installer, ou pour régler les autres calculateurs.",
 
@@ -387,6 +447,7 @@ export const translations = {
 		'nav.moonbreak': 'Moonbreak',
 		'nav.expeditions': 'Expeditions',
 		'nav.moonlock': 'Moon lock',
+		'nav.combat': 'Combat simulator',
 		'nav.players': 'Players',
 		'nav.galaxymap': 'Galaxy map',
 		'nav.alliances': 'Alliances',
@@ -691,6 +752,64 @@ export const translations = {
 		'ml.error.universe': 'Pick a universe to see the result.',
 		'ml.error.data': 'This universe does not report its debris factor.',
 		'ml.error.coordinates': 'Enter valid coordinates to see the result.',
+
+		'cs.intro':
+			'Simulate the same battle dozens of times and read the average: odds of winning, losses on each side, rebuilt defenses, debris field, moon chance and loot. This first version takes the combat technologies into account, not yet class or lifeform bonuses.',
+
+		'cs.step.attacker': 'Attacker',
+		'cs.step.attacker.help':
+			'The Weapons, Shielding and Armour technology levels (0 to {max}), Hyperspace for the cargo that brings the loot home, and the fleet sent.',
+		'cs.step.defender': 'Defender',
+		'cs.step.defender.help':
+			'Copy the espionage report: combat technologies, docked ships and defenses.',
+		'cs.step.resources': 'Resources on the planet',
+		'cs.step.resources.help':
+			'What the espionage report shows on the planet. A winning attacker takes a share of it, as far as its cargo allows.',
+		'cs.step.run': 'Simulation',
+		'cs.step.run.help':
+			'Every battle is random: more simulations give steadier averages, but take longer with a big fleet.',
+
+		'cs.tech.weapons': 'Weapons',
+		'cs.tech.shielding': 'Shielding',
+		'cs.tech.armour': 'Armour',
+		'cs.tech.hyperspace': 'Hyperspace',
+		'cs.ships': 'Ships',
+		'cs.defenses': 'Defenses',
+		'cs.plunder': 'Lootable share',
+		'cs.runs': 'Battles simulated',
+		'cs.simulate': 'Simulate the battle',
+
+		'cs.result.title': 'Battle outcome',
+		'cs.result.runs': 'Average of {runs} battles',
+		'cs.result.empty': 'Run the simulation to see the result.',
+		'cs.result.running': 'Simulating… {progress}%',
+		'cs.result.stale': 'The settings changed since this simulation: run it again to update the result.',
+		'cs.result.win': 'attacker wins',
+		'cs.result.outcomes': 'Defender {defender}% · draw {draw}% · {rounds} rounds on average',
+		'cs.result.attackerLosses': 'Attacker losses',
+		'cs.result.defenderLosses': 'Defender losses',
+		'cs.result.noLoss': 'No losses.',
+		'cs.result.rebuilt': '{count} rebuilt',
+		'cs.result.resources': 'Resources (average)',
+		'cs.result.row.attackerLosses': 'Attacker losses',
+		'cs.result.row.defenderLosses': 'Defender losses',
+		'cs.result.row.debris': 'Debris field',
+		'cs.result.row.plunder': 'Loot',
+		'cs.result.balance': 'Attacker balance',
+		'cs.result.balance.help':
+			'Loot and debris field, minus the attacker losses. The deuterium burned on the flight is not counted.',
+		'cs.result.recyclers': 'Recyclers for the debris field',
+		'cs.result.moon': 'Moon chance',
+		'cs.result.for':
+			'Universe {universe}: ship debris {debris}%, defense debris {defenseDebris}%, defenses rebuilt {repair}%.',
+		'cs.result.forDefault': 'No universe picked: ship debris {debris}%, defenses rebuilt {repair}%.',
+
+		'cs.error.attacker': 'Add at least one ship to the attacker to run the simulation.',
+		'cs.error.defender': 'Add at least one ship or defense to the defender to run the simulation.',
+		'cs.error.tech': 'Technology levels go from 0 to 40.',
+		'cs.error.count': 'Ship and defense counts must be whole numbers.',
+		'cs.error.resources': 'Resources must be whole numbers.',
+		'cs.error.engine': 'The simulation failed.',
 
 		'srv.intro':
 			"A universe's settings: speeds, debris, galaxy size, top score. Handy to know what you are getting into before settling in, or to configure the other calculators.",

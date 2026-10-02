@@ -2096,6 +2096,251 @@ input::placeholder {
 }
 
 // ---------------------------------------------------------------------------
+// Combat simulator
+// ---------------------------------------------------------------------------
+
+.cs-form {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+}
+
+// Unit names wrap to one or two lines: as for the lifeform bonuses, each field
+// spans two rows shared through subgrid, so the inputs stay on one line.
+.cs-techs,
+.cs-units,
+.cs-resources {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	align-items: end;
+	column-gap: 10px;
+	row-gap: 4px;
+
+	> .mini-field {
+		grid-row: span 2;
+		margin-bottom: 6px;
+
+		@supports (grid-template-rows: subgrid) {
+			display: grid;
+			grid-template-rows: subgrid;
+			gap: 4px;
+
+			> label {
+				align-self: end;
+			}
+		}
+	}
+}
+
+.cs-resources > .mini-field input:focus {
+	border-color: var(--res-color);
+}
+
+.cs-subtitle {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--ink-3);
+	text-align: left;
+}
+
+.cs-choice {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.cs-choice-label {
+	font-size: 13px;
+	color: var(--ink-3);
+}
+
+.cs-submit {
+	align-self: flex-start;
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: progress;
+	}
+}
+
+.cs-stale {
+	padding: 10px 12px;
+	border: 1px dashed var(--rule-strong);
+	border-radius: var(--radius);
+	font-size: 14px;
+	color: var(--ink-2);
+}
+
+.cs-outcomes {
+	font-family: var(--font-figure);
+	font-size: 14px;
+	color: var(--ink-2);
+}
+
+.cs-loss-columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 16px 24px;
+}
+
+.cs-losses {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.cs-loss-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--rule);
+
+	li {
+		display: grid;
+		grid-template-columns: minmax(56px, auto) minmax(0, 1fr);
+		align-items: baseline;
+		column-gap: 12px;
+		padding: 8px 0;
+		border-bottom: 1px solid var(--rule);
+	}
+}
+
+.cs-loss-count {
+	text-align: right;
+	font-family: var(--font-figure);
+	font-variant-numeric: tabular-nums;
+	color: var(--ink);
+}
+
+.cs-loss-rebuilt {
+	grid-column: 2;
+	font-size: 13px;
+	color: var(--ink-3);
+}
+
+// Tables scroll inside the sheet rather than pushing the page sideways.
+.cs-table-wrap {
+	overflow-x: auto;
+}
+
+.cs-table {
+	width: 100%;
+	border-collapse: collapse;
+
+	caption {
+		padding-bottom: 8px;
+	}
+
+	th,
+	td {
+		padding: 8px 0 8px 12px;
+		border-bottom: 1px solid var(--rule);
+		white-space: nowrap;
+	}
+
+	thead th {
+		text-align: right;
+		border-top: 1px solid var(--rule);
+	}
+
+	thead td {
+		border-top: 1px solid var(--rule);
+	}
+
+	tbody th {
+		padding-left: 0;
+		text-align: left;
+		font-weight: 400;
+		color: var(--ink-2);
+	}
+
+	td {
+		text-align: right;
+		font-family: var(--font-figure);
+		font-variant-numeric: tabular-nums;
+		font-size: 14px;
+	}
+}
+
+// On a phone the three amounts do not fit beside the row name: the name goes
+// on its own line above them.
+@media (max-width: 640px) {
+	.cs-table,
+	.cs-table thead,
+	.cs-table tbody {
+		display: block;
+	}
+
+	.cs-table tr {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.cs-table thead td {
+		display: none;
+	}
+
+	.cs-table th,
+	.cs-table td {
+		border: 0;
+	}
+
+	.cs-table thead th {
+		border-top: 0;
+	}
+
+	.cs-table thead tr {
+		border-top: 1px solid var(--rule);
+	}
+
+	.cs-table tbody th {
+		grid-column: 1 / -1;
+		padding-bottom: 0;
+	}
+
+	.cs-table caption {
+		display: block;
+	}
+}
+
+.cs-facts {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 10px 0;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	span {
+		color: var(--ink-2);
+	}
+
+	strong {
+		font-family: var(--font-figure);
+		font-variant-numeric: tabular-nums;
+		font-size: 20px;
+		font-weight: 400;
+		color: var(--ink);
+	}
+
+	.is-gain {
+		color: var(--ok);
+	}
+
+	.is-loss {
+		color: var(--loss);
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Server settings
 // ---------------------------------------------------------------------------
 
