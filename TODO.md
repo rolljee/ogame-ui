@@ -248,8 +248,8 @@ Le dernier point ouvert est retombé :
 ## Notes techniques
 
 - Les calculs métier sont fournis par la lib
-  [`ogamejs`](https://www.npmjs.com/package/ogamejs), en **v4.1** ici comme dans
-  le bot (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`,
+  [`ogamejs`](https://www.npmjs.com/package/ogamejs), en **v4.2** ici (v4.1 dans
+  le bot) (exports : `Trader`, `Building`, `Fleets`, `Research`, `i18n`,
   `models`). Depuis la 4.1, le moonbreak, le fret d'expédition et le verrou de
   lune y vivent aussi (`Fleets.getMoonbreak*`, `getExpeditionMaxFind`,
   `getCargoCapacity`, `getMoonLockShips`) : plus de copie à tenir à jour entre
