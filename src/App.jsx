@@ -7,11 +7,16 @@ import Trader from './Trader/Trader';
 import Moonbreak from './Moonbreak/Moonbreak';
 import Expeditions from './Expeditions/Expeditions';
 import MoonLock from './MoonLock/MoonLock';
-import Combat from './Combat/Combat';
 import Players from './Players/Players';
 import GalaxyMap from './GalaxyMap/GalaxyMap';
 import Alliances from './Alliances/Alliances';
 import ServerSettings from './ServerSettings/ServerSettings';
+
+// Stands in for a tool that is announced but not open yet.
+function ComingSoon() {
+	const { t } = useI18n();
+	return <p className="empty-note">{t('soon.note')}</p>;
+}
 
 // Grouped as the index shows them: what you compute, then what you look up in
 // a universe's live data.
@@ -29,7 +34,9 @@ const GROUPS = [
 				Component: Expeditions,
 			},
 			{ id: 'moonlock', labelKey: 'nav.moonlock', introKey: 'ml.intro', live: true, Component: MoonLock },
-			{ id: 'combat', labelKey: 'nav.combat', introKey: 'cs.intro', live: true, Component: Combat },
+			// The simulator waits for a way to read spy reports: its work in
+			// progress lives on the `feat/combat-sim-board` branch.
+			{ id: 'combat', labelKey: 'nav.combat', introKey: 'cs.intro', soon: true, Component: ComingSoon },
 		],
 	},
 	{
@@ -79,7 +86,7 @@ function ToolNav({ current, onSelect }) {
 				<div className="tool-nav-group" key={labelKey}>
 					<h2 className="tool-nav-title">{t(labelKey)}</h2>
 					<ul>
-						{tools.map(({ id, labelKey: toolLabel }) => (
+						{tools.map(({ id, labelKey: toolLabel, soon }) => (
 							<li key={id}>
 								<a
 									href={`#/${id}`}
@@ -88,6 +95,7 @@ function ToolNav({ current, onSelect }) {
 									onClick={() => onSelect(id)}
 								>
 									{t(toolLabel)}
+									{soon && <span className="soon-stamp">{t('soon.stamp')}</span>}
 								</a>
 							</li>
 						))}
@@ -108,6 +116,7 @@ function ToolHeader({ tool }) {
 			<div className="tool-head-row">
 				<div className="tool-title-row">
 					<h1 className="tool-title">{t(tool.labelKey)}</h1>
+					{tool.soon && <span className="soon-stamp">{t('soon.stamp')}</span>}
 					<button
 						type="button"
 						className="btn-text"

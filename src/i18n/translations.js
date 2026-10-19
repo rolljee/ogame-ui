@@ -18,6 +18,9 @@ export const translations = {
 		'nav.server': 'Réglages serveur',
 		'nav.group.calc': 'Calculs',
 		'nav.group.data': "Données d'univers",
+		'soon.stamp': 'Bientôt',
+		'soon.note':
+			"Le simulateur de combat arrive bientôt : il attend de pouvoir lire les rapports d'espionnage pour remplir le défenseur à votre place.",
 
 		'universe.label': 'Univers',
 		'universe.age': 'relevé il y a {hours} h',
@@ -454,6 +457,9 @@ export const translations = {
 		'nav.server': 'Server settings',
 		'nav.group.calc': 'Calculators',
 		'nav.group.data': 'Universe data',
+		'soon.stamp': 'Soon',
+		'soon.note':
+			'The combat simulator is coming soon: it is waiting to read spy reports so it can fill in the defender for you.',
 
 		'universe.label': 'Universe',
 		'universe.age': 'dump {hours} h old',

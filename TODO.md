@@ -216,6 +216,12 @@ Comparaison avec [`rolljee/og-bot-discord`](https://github.com/rolljee/og-bot-di
 
 ### Simulateur de combat (`src/Combat/`) — V1, à itérer
 
+> **En pause, affiché « Bientôt » sur le site** (19 octobre 2026) : l'entrée
+> reste dans le menu mais n'ouvre plus l'outil, faute de pouvoir lire les
+> rapports d'espionnage. La refonte en cours (tableau, import de rapport collé,
+> formulaire mémorisé) est sur la branche `feat/combat-sim-board`. Pour rouvrir :
+> remettre `Component: Combat` dans `src/App.jsx`.
+
 Outil propre au site, sans équivalent dans le bot. Le moteur et les moyennes
 viennent d'`ogamejs` (`Fleets.simulateCombat`, `getCombatStatistics`, v4.2) ;
 les combats tournent dans un Web Worker (`combat.worker.js`).
