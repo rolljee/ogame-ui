@@ -53,6 +53,24 @@ export function parseCount(raw) {
 	return Number(text);
 }
 
+// What a count field keeps of a keystroke: the digits, and a shorthand typed
+// as players write it in chat, `5k` or `1,5m`, expanded on the spot.
+const SHORTHAND = /^(\d+(?:[.,]\d+)?)\s*([km])$/i;
+const SHORTHAND_FACTOR = { k: 1e3, m: 1e6 };
+
+export function typedCount(raw) {
+	// The field shows its digits grouped with dots: `1.000k` is a thousand k.
+	const text = String(raw ?? '')
+		.replace(/\s/g, '')
+		.replace(/^\d{1,3}(?:\.\d{3})+(?!\d)/, (grouped) => grouped.replace(/\./g, ''));
+	const match = SHORTHAND.exec(text);
+	if (match) {
+		const value = Number(match[1].replace(',', '.')) * SHORTHAND_FACTOR[match[2].toLowerCase()];
+		return String(Math.round(value));
+	}
+	return text.replace(/\D/g, '');
+}
+
 function readFleet(counts, ids) {
 	const fleet = [];
 	for (const id of ids) {
@@ -207,5 +225,36 @@ export function describeOutcome(stats) {
 		...stats,
 		recyclers: Math.ceil(debris / recycler.cargo),
 		balance: gain - sum(stats.attacker.lostResources),
+	};
+}
+
+function roundedCounts(entries, ids) {
+	const counts = {};
+	for (const { id, count } of entries) {
+		if (!ids.includes(id)) continue;
+		const rounded = Math.round(count);
+		if (rounded > 0) counts[id] = String((Number(counts[id]) || 0) + rounded);
+	}
+	return counts;
+}
+
+// The form for the next wave: the same attacker with the ships it brings home,
+// against what is left on the planet (survivors, rebuilt defenses, resources
+// not carried away). The outcome is an average, so counts are rounded.
+export function nextWave({ attacker, defender, resources }, outcome) {
+	const left = [...outcome.defender.survivors, ...outcome.defender.rebuilt];
+	const remaining = {};
+	for (const key of RESOURCE_KEYS) {
+		const amount = (parseCount(resources[key]) ?? 0) - outcome.plunder[key];
+		remaining[key] = amount > 0 ? String(Math.round(amount)) : '';
+	}
+	return {
+		attacker: { ...attacker, ships: roundedCounts(outcome.attacker.survivors, ATTACKER_SHIPS) },
+		defender: {
+			...defender,
+			ships: roundedCounts(left, DEFENDER_SHIPS),
+			defenses: roundedCounts(left, DEFENSES),
+		},
+		resources: remaining,
 	};
 }

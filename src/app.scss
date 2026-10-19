@@ -446,6 +446,12 @@ button {
 	grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
 }
 
+// A form wide enough for several columns of its own (the combat simulator).
+.tool-grid-wide {
+	max-width: 1600px;
+	grid-template-columns: minmax(0, 5fr) minmax(400px, 3fr);
+}
+
 .tool-grid-stack,
 .tool-grid-single {
 	grid-template-columns: minmax(0, 1fr);
@@ -453,7 +459,8 @@ button {
 
 // The report stays in view while the settings scroll.
 .tool-grid-split .tool-report,
-.tool-grid-data .tool-report {
+.tool-grid-data .tool-report,
+.tool-grid-wide .tool-report {
 	position: sticky;
 	top: 24px;
 	display: flex;
@@ -2099,40 +2106,173 @@ input::placeholder {
 // Combat simulator
 // ---------------------------------------------------------------------------
 
+// The two fleets face each other in one table, the planet sits beside them:
+// the whole battle fits on one screen, as in a combat report.
 .cs-form {
-	display: flex;
-	flex-direction: column;
-	gap: 28px;
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+	align-items: start;
+	gap: 28px 24px;
 }
 
-// Unit names wrap to one or two lines: as for the lifeform bonuses, each field
-// spans two rows shared through subgrid, so the inputs stay on one line.
-.cs-techs,
-.cs-units,
-.cs-resources {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-	align-items: end;
-	column-gap: 10px;
-	row-gap: 4px;
+.tool-grid-wide .tool-settings {
+	container-type: inline-size;
+}
 
-	> .mini-field {
-		grid-row: span 2;
-		margin-bottom: 6px;
-
-		@supports (grid-template-rows: subgrid) {
-			display: grid;
-			grid-template-rows: subgrid;
-			gap: 4px;
-
-			> label {
-				align-self: end;
-			}
-		}
+// Too narrow for the planet beside the fleets: it goes under them.
+@container (max-width: 620px) {
+	.cs-form {
+		grid-template-columns: minmax(0, 1fr);
 	}
 }
 
-.cs-resources > .mini-field input:focus {
+.cs-aside {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	min-width: 0;
+}
+
+.cs-grid {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+
+	.cs-grid-side {
+		width: 30%;
+
+		&.is-alone {
+			width: 40%;
+		}
+	}
+
+	thead th {
+		padding: 0 0 6px 8px;
+		text-align: right;
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--ink-2);
+		border-bottom: 1px solid var(--rule-strong);
+	}
+
+	thead td {
+		border-bottom: 1px solid var(--rule-strong);
+	}
+
+	tbody th {
+		padding: 2px 8px 2px 0;
+		text-align: left;
+		font-size: 14px;
+		font-weight: 400;
+		color: var(--ink-3);
+		overflow-wrap: anywhere;
+	}
+
+	tbody td {
+		padding: 2px 0 2px 8px;
+	}
+
+	tbody tr:not(.cs-section) {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	// A row with a count reads out of the zeros around it.
+	tr.is-set th {
+		color: var(--ink);
+	}
+
+	.cs-section th {
+		padding: 14px 0 4px;
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+	}
+
+	tbody:first-of-type .cs-section th {
+		padding-top: 8px;
+	}
+
+	// No field where the side cannot have that unit.
+	.cs-none {
+		background: repeating-linear-gradient(
+			-45deg,
+			transparent 0 4px,
+			var(--rule) 4px 5px
+		);
+		background-clip: content-box;
+		opacity: 0.5;
+	}
+}
+
+.cs-col-head {
+	display: inline-flex;
+	align-items: baseline;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 2px 8px;
+}
+
+.cs-clear {
+	appearance: none;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--ink-3);
+	font-size: 12px;
+	font-weight: 400;
+	text-decoration: underline;
+	text-decoration-color: var(--rule-strong);
+	text-underline-offset: 3px;
+	cursor: pointer;
+
+	&:hover {
+		color: var(--ink);
+		text-decoration-color: var(--ink-3);
+	}
+}
+
+.cs-count {
+	width: 100%;
+	min-height: 30px;
+	padding: 3px 8px;
+	border: 1px solid var(--rule);
+	border-radius: var(--radius);
+	background: var(--sheet);
+	font-family: var(--font-figure);
+	font-variant-numeric: tabular-nums;
+	font-size: 14px;
+	text-align: right;
+	outline: none;
+
+	&::placeholder {
+		color: var(--ink-3);
+		opacity: 0.6;
+	}
+
+	&:hover {
+		border-color: var(--rule-strong);
+	}
+
+	&:focus {
+		border-color: var(--signal);
+		background: var(--sheet-2);
+	}
+
+	.is-set & {
+		border-color: var(--rule-strong);
+		background: var(--sheet-2);
+	}
+}
+
+.cs-res-name {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+[style*='--res-color'] .cs-count:focus {
 	border-color: var(--res-color);
 }
 
@@ -2155,68 +2295,265 @@ input::placeholder {
 	color: var(--ink-3);
 }
 
-.cs-submit {
-	align-self: flex-start;
+// The report import spans the whole form, above the fleets.
+.cs-spy {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
 
-	&:disabled {
-		opacity: 0.6;
-		cursor: progress;
+	&.is-open {
+		flex-direction: column;
+		align-items: stretch;
+		padding: 16px;
+		border: 1px solid var(--rule-strong);
+		border-radius: var(--radius);
+		background: var(--sheet);
+	}
+
+	.help {
+		margin: 0;
 	}
 }
 
-.cs-stale {
+.cs-spy-open svg {
+	color: var(--signal);
+}
+
+.cs-spy-label {
+	font-weight: 700;
+	color: var(--ink);
+}
+
+.cs-spy-text {
+	width: 100%;
+	min-height: 120px;
 	padding: 10px 12px;
-	border: 1px dashed var(--rule-strong);
+	border: 1px solid var(--rule-strong);
 	border-radius: var(--radius);
-	font-size: 14px;
-	color: var(--ink-2);
-}
-
-.cs-outcomes {
+	background: var(--ground);
+	color: var(--ink);
 	font-family: var(--font-figure);
+	font-size: 13px;
+	resize: vertical;
+
+	&:focus {
+		border-color: var(--signal);
+		outline: none;
+	}
+}
+
+.cs-spy-found,
+.cs-spy-status {
+	margin: 0;
+	min-height: 1.4em;
 	font-size: 14px;
 	color: var(--ink-2);
 }
 
-.cs-loss-columns {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 16px 24px;
+.cs-spy-status {
+	color: var(--ok);
 }
 
-.cs-losses {
+.cs-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.cs-submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+// A hairline under the report head while the battles run.
+.cs-progress {
+	flex-basis: 100%;
+	height: 2px;
+	margin: 0 -22px -12px;
+	background: var(--report-rule);
+
+	span {
+		display: block;
+		height: 100%;
+		background: var(--signal);
+		transition: width 0.15s linear;
+	}
+}
+
+// The last figures stay on the sheet while new ones are computed, dimmed.
+.cs-result {
+	> :not(.result-head) {
+		transition: opacity 0.2s ease;
+	}
+
+	&.is-busy > :not(.result-head) {
+		opacity: 0.55;
+	}
+}
+
+.cs-verdict {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.cs-odds {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 }
 
-.cs-loss-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	border-top: 1px solid var(--rule);
+.cs-odds-bar {
+	display: flex;
+	gap: 2px;
+	height: 8px;
+	border-radius: var(--radius);
+	overflow: hidden;
+	background: var(--report-rule);
 
-	li {
-		display: grid;
-		grid-template-columns: minmax(56px, auto) minmax(0, 1fr);
-		align-items: baseline;
-		column-gap: 12px;
-		padding: 8px 0;
-		border-bottom: 1px solid var(--rule);
+	span {
+		flex-basis: 0;
+		min-width: 3px;
 	}
 }
 
-.cs-loss-count {
-	text-align: right;
-	font-family: var(--font-figure);
-	font-variant-numeric: tabular-nums;
-	color: var(--ink);
+.cs-odds-bar .is-attacker,
+.cs-odds-legend .is-attacker::before {
+	background: var(--ok);
 }
 
-.cs-loss-rebuilt {
-	grid-column: 2;
-	font-size: 13px;
-	color: var(--ink-3);
+.cs-odds-bar .is-draw,
+.cs-odds-legend .is-draw::before {
+	background: var(--ink-3);
+}
+
+.cs-odds-bar .is-defender,
+.cs-odds-legend .is-defender::before {
+	background: var(--loss);
+}
+
+.cs-odds-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 18px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 14px;
+	color: var(--ink-2);
+
+	li {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+
+		&::before {
+			content: '';
+			width: 8px;
+			height: 8px;
+			border-radius: 2px;
+		}
+	}
+
+	strong {
+		font-family: var(--font-figure);
+		font-variant-numeric: tabular-nums;
+		font-weight: 400;
+		color: var(--ink);
+	}
+}
+
+// The four figures a raider reads first.
+.cs-kpis {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1px;
+	margin: 0;
+	border: 1px solid var(--rule);
+	border-radius: var(--radius);
+	overflow: hidden;
+	background: var(--rule);
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 10px 12px;
+		background: var(--report);
+	}
+
+	dt {
+		font-size: 13px;
+		color: var(--ink-3);
+	}
+
+	dd {
+		margin: 0;
+		font-family: var(--font-figure);
+		font-variant-numeric: tabular-nums;
+		font-size: 20px;
+		color: var(--ink);
+		overflow-wrap: anywhere;
+	}
+
+	.cs-kpi-note {
+		font-size: 13px;
+		color: var(--ink-3);
+	}
+
+	.is-gain {
+		color: var(--ok);
+	}
+
+	.is-loss {
+		color: var(--loss);
+	}
+}
+
+.cs-result .cs-table tbody th {
+	white-space: normal;
+	font-size: 14px;
+}
+
+.cs-units {
+	td {
+		vertical-align: top;
+	}
+
+	.cs-unit-lost {
+		color: var(--loss);
+	}
+
+	.cs-unit-safe {
+		color: var(--ink-3);
+	}
+
+	.cs-unit-total {
+		color: var(--ink-3);
+		font-size: 13px;
+	}
+
+	.cs-unit-rebuilt {
+		display: block;
+		font-family: var(--font);
+		font-size: 12px;
+		color: var(--ok);
+	}
+}
+
+.cs-wave {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 14px;
+
+	.help {
+		flex: 1 1 220px;
+		margin: 0;
+	}
 }
 
 // Tables scroll inside the sheet rather than pushing the page sideways.
@@ -2303,40 +2640,9 @@ input::placeholder {
 	.cs-table caption {
 		display: block;
 	}
-}
 
-.cs-facts {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-
-	li {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 16px;
-		padding: 10px 0;
-		border-bottom: 1px solid var(--rule);
-	}
-
-	span {
-		color: var(--ink-2);
-	}
-
-	strong {
-		font-family: var(--font-figure);
-		font-variant-numeric: tabular-nums;
-		font-size: 20px;
-		font-weight: 400;
-		color: var(--ink);
-	}
-
-	.is-gain {
-		color: var(--ok);
-	}
-
-	.is-loss {
-		color: var(--loss);
+	.cs-units tr {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 
@@ -2356,12 +2662,14 @@ input::placeholder {
 
 @media (max-width: 1180px) {
 	.tool-grid-split,
-	.tool-grid-data {
+	.tool-grid-data,
+	.tool-grid-wide {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.tool-grid-split .tool-report,
-	.tool-grid-data .tool-report {
+	.tool-grid-data .tool-report,
+	.tool-grid-wide .tool-report {
 		position: static;
 	}
 }

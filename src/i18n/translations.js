@@ -326,15 +326,32 @@ export const translations = {
 		'cs.intro':
 			"Simule le même combat des dizaines de fois et lis la moyenne : chances de victoire, pertes de chaque camp, défenses reconstruites, champ de débris, chances de lune et pillage. Cette première version tient compte des technologies de combat, pas encore des bonus de classe ni de formes de vie.",
 
-		'cs.step.attacker': 'Attaquant',
-		'cs.step.attacker.help':
-			"Les niveaux des technologies Armes, Bouclier et Protection (de 0 à {max}), l'hyperespace pour le fret qui ramène le pillage, et la flotte envoyée.",
-		'cs.step.defender': 'Défenseur',
-		'cs.step.defender.help':
-			"Recopie le rapport d'espionnage : technologies de combat, vaisseaux à quai et défenses.",
-		'cs.step.resources': 'Ressources sur la planète',
-		'cs.step.resources.help':
-			"Ce que le rapport d'espionnage montre sur la planète. Un attaquant victorieux en emporte une part, dans la limite de son fret.",
+		'cs.sheet.fleets': 'Flottes',
+		'cs.sheet.fleets.help':
+			"Une ligne par technologie ou vaisseau, une colonne par camp. Technologies de 0 à {max} ; l'hyperespace de l'attaquant fixe son fret, donc le pillage. Recopie le rapport d'espionnage pour le défenseur. Tape 5k pour 5 000, 2m pour 2 000 000.",
+		'cs.sheet.planet': 'Planète du défenseur',
+		'cs.sheet.planet.help':
+			"Les défenses et les ressources que montre le rapport d'espionnage. Un attaquant victorieux emporte une part des ressources, dans la limite de son fret.",
+		'cs.spy.open': "Coller un rapport d'espionnage",
+		'cs.spy.label': "Rapport d'espionnage",
+		'cs.spy.help':
+			"Dans la messagerie du jeu, sélectionne tout le rapport, copie-le et colle-le ici. Le défenseur est rempli avec ses vaisseaux, défenses, technologies et ressources. Rapports en français ou en anglais.",
+		'cs.spy.found':
+			'Trouvé — vaisseaux : {ships} · défenses : {defenses} · technologies : {techs} · ressources : {resources}',
+		'cs.spy.nothing': "Rien de reconnu pour l'instant : colle le rapport en entier, en français ou en anglais.",
+		'cs.spy.apply': 'Remplir le défenseur',
+		'cs.spy.cancel': 'Annuler',
+		'cs.spy.done': 'Rapport importé — vaisseaux : {ships} · défenses : {defenses}.',
+		'cs.spy.keptTechs': 'Pas de technologies dans le rapport : celles déjà saisies sont gardées.',
+		'cs.side.attacker': 'Attaquant',
+		'cs.side.defender': 'Défenseur',
+		'cs.side.planet': 'Planète',
+		'cs.clear': 'Vider',
+		'cs.clear.attacker': "Vider l'attaquant",
+		'cs.clear.defender': 'Vider le défenseur',
+		'cs.clear.planet': 'Vider la planète',
+		'cs.techs': 'Technologies',
+		'cs.resources': 'Ressources',
 		'cs.step.run': 'Simulation',
 		'cs.step.run.help':
 			'Chaque combat est tiré au hasard : plus de simulations donnent des moyennes plus stables, mais prennent plus de temps sur une grosse flotte.',
@@ -347,18 +364,24 @@ export const translations = {
 		'cs.defenses': 'Défenses',
 		'cs.plunder': 'Part pillable',
 		'cs.runs': 'Nombre de combats simulés',
-		'cs.simulate': 'Simuler le combat',
+		'cs.simulate': 'Relancer',
+		'cs.reset': 'Tout effacer',
 
 		'cs.result.title': 'Issue du combat',
 		'cs.result.runs': 'Moyenne sur {runs} combats',
 		'cs.result.empty': 'Lance la simulation pour voir le résultat.',
 		'cs.result.running': 'Simulation en cours… {progress} %',
-		'cs.result.stale': 'Les paramètres ont changé depuis cette simulation : relance-la pour mettre le résultat à jour.',
 		'cs.result.win': "de victoires de l'attaquant",
-		'cs.result.outcomes': 'Défenseur {defender} % · nul {draw} % · {rounds} tours en moyenne',
-		'cs.result.attackerLosses': "Pertes de l'attaquant",
-		'cs.result.defenderLosses': 'Pertes du défenseur',
-		'cs.result.noLoss': 'Aucune perte.',
+		'cs.result.progress': 'Avancement de la simulation',
+		'cs.result.odds.attacker': 'Attaquant',
+		'cs.result.odds.draw': 'Nul',
+		'cs.result.odds.defender': 'Défenseur',
+		'cs.result.rounds': '{rounds} tours en moyenne',
+		'cs.result.units': 'Unités perdues (moyenne)',
+		'cs.result.recyclersShort': '{count} recycleurs',
+		'cs.result.nextWave': 'Vague suivante',
+		'cs.result.nextWave.help':
+			"Renvoie les vaisseaux de l'attaquant qui ont survécu contre ce qui reste sur la planète : survivants, défenses reconstruites et ressources non pillées.",
 		'cs.result.rebuilt': '{count} reconstruites',
 		'cs.result.resources': 'Ressources (moyenne)',
 		'cs.result.row.attackerLosses': 'Pertes attaquant',
@@ -368,14 +391,13 @@ export const translations = {
 		'cs.result.balance': "Bilan de l'attaquant",
 		'cs.result.balance.help':
 			"Pillage et champ de débris, moins les pertes de l'attaquant. Le deutérium consommé pour le vol n'est pas compté.",
-		'cs.result.recyclers': 'Recycleurs pour le champ de débris',
 		'cs.result.moon': 'Chances de lune',
 		'cs.result.for':
 			'Univers {universe} : débris des vaisseaux {debris} %, des défenses {defenseDebris} %, défenses reconstruites {repair} %.',
 		'cs.result.forDefault':
 			'Sans univers choisi : débris des vaisseaux {debris} %, défenses reconstruites {repair} %.',
 
-		'cs.error.attacker': "Ajoute au moins un vaisseau à l'attaquant pour lancer la simulation.",
+		'cs.error.attacker': "Ajoute au moins un vaisseau à l'attaquant : le combat se simule tout seul dès que les deux camps sont remplis.",
 		'cs.error.defender': 'Ajoute au moins un vaisseau ou une défense au défenseur pour lancer la simulation.',
 		'cs.error.tech': 'Les niveaux de technologie vont de 0 à 40.',
 		'cs.error.count': 'Les nombres de vaisseaux et de défenses doivent être des nombres entiers.',
@@ -756,15 +778,32 @@ export const translations = {
 		'cs.intro':
 			'Simulate the same battle dozens of times and read the average: odds of winning, losses on each side, rebuilt defenses, debris field, moon chance and loot. This first version takes the combat technologies into account, not yet class or lifeform bonuses.',
 
-		'cs.step.attacker': 'Attacker',
-		'cs.step.attacker.help':
-			'The Weapons, Shielding and Armour technology levels (0 to {max}), Hyperspace for the cargo that brings the loot home, and the fleet sent.',
-		'cs.step.defender': 'Defender',
-		'cs.step.defender.help':
-			'Copy the espionage report: combat technologies, docked ships and defenses.',
-		'cs.step.resources': 'Resources on the planet',
-		'cs.step.resources.help':
-			'What the espionage report shows on the planet. A winning attacker takes a share of it, as far as its cargo allows.',
+		'cs.sheet.fleets': 'Fleets',
+		'cs.sheet.fleets.help':
+			"One row per technology or ship, one column per side. Technologies from 0 to {max}; the attacker's hyperspace sets its cargo, hence the loot. Copy the espionage report for the defender. Type 5k for 5,000, 2m for 2,000,000.",
+		'cs.sheet.planet': "Defender's planet",
+		'cs.sheet.planet.help':
+			'The defenses and resources the espionage report shows. A winning attacker carries away a share of the resources, up to its cargo.',
+		'cs.spy.open': 'Paste an espionage report',
+		'cs.spy.label': 'Espionage report',
+		'cs.spy.help':
+			"In the game's messages, select the whole report, copy it and paste it here. The defender is filled with its ships, defenses, technologies and resources. Reports in French or English.",
+		'cs.spy.found':
+			'Found — ships: {ships} · defenses: {defenses} · technologies: {techs} · resources: {resources}',
+		'cs.spy.nothing': 'Nothing recognised yet: paste the whole report, in French or English.',
+		'cs.spy.apply': 'Fill the defender',
+		'cs.spy.cancel': 'Cancel',
+		'cs.spy.done': 'Report imported — ships: {ships} · defenses: {defenses}.',
+		'cs.spy.keptTechs': 'No technologies in the report: the ones already typed are kept.',
+		'cs.side.attacker': 'Attacker',
+		'cs.side.defender': 'Defender',
+		'cs.side.planet': 'Planet',
+		'cs.clear': 'Clear',
+		'cs.clear.attacker': 'Clear the attacker',
+		'cs.clear.defender': 'Clear the defender',
+		'cs.clear.planet': 'Clear the planet',
+		'cs.techs': 'Technologies',
+		'cs.resources': 'Resources',
 		'cs.step.run': 'Simulation',
 		'cs.step.run.help':
 			'Every battle is random: more simulations give steadier averages, but take longer with a big fleet.',
@@ -777,18 +816,24 @@ export const translations = {
 		'cs.defenses': 'Defenses',
 		'cs.plunder': 'Lootable share',
 		'cs.runs': 'Battles simulated',
-		'cs.simulate': 'Simulate the battle',
+		'cs.simulate': 'Run again',
+		'cs.reset': 'Clear all',
 
 		'cs.result.title': 'Battle outcome',
 		'cs.result.runs': 'Average of {runs} battles',
 		'cs.result.empty': 'Run the simulation to see the result.',
 		'cs.result.running': 'Simulating… {progress}%',
-		'cs.result.stale': 'The settings changed since this simulation: run it again to update the result.',
 		'cs.result.win': 'attacker wins',
-		'cs.result.outcomes': 'Defender {defender}% · draw {draw}% · {rounds} rounds on average',
-		'cs.result.attackerLosses': 'Attacker losses',
-		'cs.result.defenderLosses': 'Defender losses',
-		'cs.result.noLoss': 'No losses.',
+		'cs.result.progress': 'Simulation progress',
+		'cs.result.odds.attacker': 'Attacker',
+		'cs.result.odds.draw': 'Draw',
+		'cs.result.odds.defender': 'Defender',
+		'cs.result.rounds': '{rounds} rounds on average',
+		'cs.result.units': 'Units lost (average)',
+		'cs.result.recyclersShort': '{count} recyclers',
+		'cs.result.nextWave': 'Next wave',
+		'cs.result.nextWave.help':
+			"Sends the attacker's surviving ships against what is left on the planet: survivors, rebuilt defenses and resources not carried away.",
 		'cs.result.rebuilt': '{count} rebuilt',
 		'cs.result.resources': 'Resources (average)',
 		'cs.result.row.attackerLosses': 'Attacker losses',
@@ -798,13 +843,12 @@ export const translations = {
 		'cs.result.balance': 'Attacker balance',
 		'cs.result.balance.help':
 			'Loot and debris field, minus the attacker losses. The deuterium burned on the flight is not counted.',
-		'cs.result.recyclers': 'Recyclers for the debris field',
 		'cs.result.moon': 'Moon chance',
 		'cs.result.for':
 			'Universe {universe}: ship debris {debris}%, defense debris {defenseDebris}%, defenses rebuilt {repair}%.',
 		'cs.result.forDefault': 'No universe picked: ship debris {debris}%, defenses rebuilt {repair}%.',
 
-		'cs.error.attacker': 'Add at least one ship to the attacker to run the simulation.',
+		'cs.error.attacker': 'Add at least one ship to the attacker: the battle simulates itself as soon as both sides are filled.',
 		'cs.error.defender': 'Add at least one ship or defense to the defender to run the simulation.',
 		'cs.error.tech': 'Technology levels go from 0 to 40.',
 		'cs.error.count': 'Ship and defense counts must be whole numbers.',

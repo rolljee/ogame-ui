@@ -2,10 +2,12 @@ import { describe, it, expect } from 'vitest';
 import {
 	buildBattle,
 	describeOutcome,
+	nextWave,
 	parseCount,
 	readUniverse,
 	runBattles,
 	summariseBattles,
+	typedCount,
 } from './formulas';
 
 const SIDE = { techs: {}, ships: {}, defenses: {} };
@@ -29,6 +31,20 @@ describe('parseCount', () => {
 		expect(parseCount('1.500')).toBe(1500);
 		expect(parseCount('2 000')).toBe(2000);
 		expect(parseCount('12a')).toBeNull();
+	});
+});
+
+describe('typedCount', () => {
+	it('keeps the digits of what is typed', () => {
+		expect(typedCount('1 500')).toBe('1500');
+		expect(typedCount('12a')).toBe('12');
+	});
+
+	it('expands the k and m shorthands', () => {
+		expect(typedCount('5k')).toBe('5000');
+		expect(typedCount('1,5m')).toBe('1500000');
+		expect(typedCount('2.5K')).toBe('2500');
+		expect(typedCount('1.000k')).toBe('1000000');
 	});
 });
 
@@ -122,5 +138,29 @@ describe('a simulated battle', () => {
 	it('is reproducible for a given seed', () => {
 		const { battle: plain } = battle({ attacker: { ...SIDE, ships: { 1: '300' } } });
 		expect(runBattles(plain, 7, 0, 3)).toEqual(runBattles(plain, 7, 0, 3));
+	});
+});
+
+describe('nextWave', () => {
+	it('sends the survivors against what is left on the planet', () => {
+		const form = {
+			attacker: { techs: { weapons: '10' }, ships: { 8: '10', 1: '5' } },
+			defender: { techs: {}, ships: { 1: '4' }, defenses: { 201: '100' } },
+			resources: { metal: '1000', crystal: '', deuterium: '300' },
+		};
+		const outcome = {
+			attacker: { survivors: [{ id: 8, count: 10 }, { id: 1, count: 2.6 }] },
+			defender: {
+				survivors: [{ id: 1, count: 0.4 }],
+				rebuilt: [{ id: 201, count: 69.6 }],
+			},
+			plunder: { metal: 500, crystal: 0, deuterium: 300 },
+		};
+
+		expect(nextWave(form, outcome)).toEqual({
+			attacker: { techs: { weapons: '10' }, ships: { 8: '10', 1: '3' } },
+			defender: { techs: {}, ships: {}, defenses: { 201: '70' } },
+			resources: { metal: '500', crystal: '', deuterium: '' },
+		});
 	});
 });
