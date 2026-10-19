@@ -54,13 +54,15 @@
 	--st-outlaw: #c49bff;
 	--st-admin: #5fd4cf;
 
-	// Galaxy heatmap, empty to crowded.
+	// Galaxy heatmap, empty to crowded. Hue turns as well as value rises
+	// (violet, blue, teal, green, pale yellow): a single blue ramp read as blue
+	// on the night-blue sheet.
 	--heat-0: #172034;
-	--heat-1: #304068;
-	--heat-2: #4b5e90;
-	--heat-3: #7186b4;
-	--heat-4: #b1bcd6;
-	--heat-5: #f2ede0;
+	--heat-1: #55348f;
+	--heat-2: #2a6aa0;
+	--heat-3: #16967d;
+	--heat-4: #78ca4c;
+	--heat-5: #f8f08c;
 
 	--radius: 3px;
 
@@ -2016,7 +2018,7 @@ input::placeholder {
 	white-space: nowrap;
 }
 
-// One hue, rising in value: the crowded systems are the bright ones.
+// Rising in value through several hues: the crowded systems are the bright ones.
 .gm-level-0 {
 	background: var(--heat-0);
 }

@@ -32,11 +32,11 @@ colors:
   st-outlaw: "#c49bff"
   st-admin: "#5fd4cf"
   heat-0: "#172034"
-  heat-1: "#304068"
-  heat-2: "#4b5e90"
-  heat-3: "#7186b4"
-  heat-4: "#b1bcd6"
-  heat-5: "#f2ede0"
+  heat-1: "#55348f"
+  heat-2: "#2a6aa0"
+  heat-3: "#16967d"
+  heat-4: "#78ca4c"
+  heat-5: "#f8f08c"
 typography:
   display:
     fontFamily: "Atkinson Hyperlegible Next, Segoe UI, system-ui, sans-serif"
@@ -299,7 +299,7 @@ A night-blue desk with a warm off-white ink and one brass accent; every other hu
 - **Paper Ink** (ink): primary text, the primary button fill and the curve line. **Bright Paper** (ink-bright) is only the primary button's hover.
 - **Ink Two** (ink-2): secondary text, labels, inactive controls.
 - **Ink Three** (ink-3): metadata, placeholders, ticks, column heads.
-- **Heat ramp** (heat-0 to heat-5): six steps from night blue to sand, rising in value, so crowded systems on the galaxy map are the bright ones.
+- **Heat ramp** (heat-0 to heat-5): night blue for empty, then violet, blue, teal, green and pale yellow, rising in value, so crowded systems on the galaxy map are the bright ones. The hue turns because a single blue ramp read as blue on blue against the night-blue sheet.
 
 ### Named Rules
 **The Brass Reservation Rule.** Brass means "this is the answer, this has focus, or this is where you are." It marks the verdict figures that have no meaning ink, focus, the open tool, the selected heatmap cell, the curve's current point and the wash under the curve. Never use it for decoration, hover or headings.
@@ -312,7 +312,7 @@ A night-blue desk with a warm off-white ink and one brass accent; every other hu
 
 **The Never Colour Alone Rule.** No status is told by colour alone. Every status stamp carries its icon and its word; filter chips and breakdown items carry the icon in the status ink beside the word.
 
-**The Heat Step Rule.** The heat ramp is one family from night blue to sand, and adjacent steps aim for at least 1.5:1 contrast so neighbouring levels stay apart.
+**The Heat Step Rule.** The heat ramp runs from night blue through violet, blue, teal and green to pale yellow, and adjacent steps aim for at least 1.5:1 contrast so neighbouring levels stay apart.
 
 ## Typography
 
@@ -422,7 +422,7 @@ Rectangular, ruled, never pills: 2px corners, 12px bold text with a 13px lucide 
 Players, alliances, planets, ships, waves and server settings are all ruled lists: rows with 1px hairlines, a label in ink-2 on the left, a tabular value on the right. In the players and alliances lists, an open row takes sheet-3 with an inset ink-3 outline while the other rows dim to ink-2.
 
 ### Galaxy Heatmap
-A grid of 12 by 18px cells (2px gap, 1px corners) on a ruled sheet, with a sticky mono row label. Cell value runs up the night-blue-to-sand heat ramp, one shade per fifth of the occupied systems (not a share of the maximum, which left most of the map in the first shade). The legend names the range of values each shade covers, after a ruled "empty" swatch. Hover draws a 1px ink border; the selected cell is filled and outlined in brass.
+A grid of 12 by 18px cells (2px gap, 1px corners) on a ruled sheet, with a sticky mono row label. Cell value runs up the violet-to-yellow heat ramp, one shade per fifth of the occupied systems (not a share of the maximum, which left most of the map in the first shade). The legend names the range of values each shade covers, after a ruled "empty" swatch. Hover draws a 1px ink border; the selected cell is filled and outlined in brass.
 
 ### Moonbreak Verdict and Curve
 The probability is the display figure, coloured by its odds band (ok from 95%, loss under 50%, brass in between). The curve is an SVG chart on hairline gridlines with mono 9px ticks: the area under it is washed in signal-soft, the line is a 1.75px paper-ink stroke, the target is a dashed strong rule, and the current point is a brass dot ringed in sheet colour with a brass 10px mono label.
@@ -442,7 +442,7 @@ When a verdict figure changes, a 2px brass stroke sweeps under it from left to r
 - **Do** set compared or copied numbers tabular, and in the mono face when they sit in rows, tables, ticks or stamps.
 - **Do** pick font sizes from the type ramp.
 - **Do** make status marks rectangular stamps with 2px corners and a 1px border.
-- **Do** colour the galaxy heatmap with the single night-blue-to-sand ramp (heat-0 to heat-5), keeping adjacent steps at least 1.5:1 apart.
+- **Do** colour the galaxy heatmap with the violet-to-yellow heat ramp (heat-0 to heat-5), keeping adjacent steps at least 1.5:1 apart.
 - **Do** keep the report beside the settings and sticky on wide screens so the verdict is read without scrolling.
 
 ### Don't:
