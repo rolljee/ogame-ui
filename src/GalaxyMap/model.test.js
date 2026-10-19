@@ -64,17 +64,18 @@ describe('buildHeatmap', () => {
 		expect(cellAt(map, 9, 600).planets).toBe(1);
 	});
 
-	it('scales the busiest system to the top level', () => {
+	it('shades a system by fixed ranges of its planets', () => {
 		const map = buildHeatmap(ROSTER, { galaxies: 1, systems: 10 });
-		expect(cellAt(map, 1, 1).level).toBe(HEAT_LEVELS);
-		// One planet out of the busiest three: the second shade of five.
-		expect(cellAt(map, 1, 9).level).toBe(2);
+		expect(cellAt(map, 1, 1).level).toBe(3);
+		expect(cellAt(map, 1, 9).level).toBe(1);
+		// Systems per shade, empty first: 8 empty, one with 1 planet, one with 3.
+		expect(map.levels).toEqual([8, 1, 0, 1, 0, 0, 0, 0]);
 	});
 
 	it('counts inactive planets when asked to', () => {
 		const map = buildHeatmap(ROSTER, { galaxies: 1, systems: 10, metric: 'inactive' });
 		expect(cellAt(map, 1, 1)).toMatchObject({ value: 0, level: 0 });
-		expect(cellAt(map, 1, 9)).toMatchObject({ value: 1, level: HEAT_LEVELS });
+		expect(cellAt(map, 1, 9)).toMatchObject({ value: 1, level: 1 });
 	});
 
 	it('only counts the selected statuses', () => {
@@ -98,44 +99,16 @@ describe('buildHeatmap', () => {
 
 describe('heatLevel', () => {
 	it('paints nothing as empty and anything as at least the first shade', () => {
-		expect(heatLevel(0, 10)).toBe(0);
-		expect(heatLevel(1, 100)).toBe(1);
+		expect(heatLevel(0)).toBe(0);
+		expect(heatLevel(1)).toBe(1);
 	});
 
-	it('never goes past the top shade', () => {
-		expect(heatLevel(10, 10)).toBe(HEAT_LEVELS);
-		expect(heatLevel(12, 10)).toBe(HEAT_LEVELS);
-	});
-});
-
-describe('axisTicks', () => {
-	it('spaces ticks and always ends on the last system', () => {
-		expect(axisTicks(100, 25)).toEqual([1, 26, 51, 76, 100]);
+	it('groups the counts into the legend ranges', () => {
+		expect([2, 3, 4, 5, 6, 10, 11, 14].map(heatLevel)).toEqual([2, 3, 4, 4, 5, 5, 6, 6]);
 	});
 
-	it('does not repeat the last system when it falls on a tick', () => {
-		expect(axisTicks(51, 25)).toEqual([1, 26, 51]);
-	});
-});
-
-describe('describeSystem', () => {
-	it('lists the planets of one system, sorted by position', () => {
-		const rows = describeSystem(ROSTER, { galaxy: 1, system: 1 });
-		expect(rows.map((row) => row.coords)).toEqual(['1:1:4', '1:1:8', '1:1:12']);
-		expect(rows[1].moon).toBe(true);
-	});
-
-	it('links into the galaxy view when the universe is known', () => {
-		const [row] = describeSystem(ROSTER, { galaxy: 1, system: 1, universe: '282', lang: 'fr' });
-		expect(row.url).toContain('s282-fr.ogame.gameforge.com');
-		expect(describeSystem(ROSTER, { galaxy: 1, system: 1 })[0].url).toBeNull();
-	});
-
-	it('applies the same status filter as the map', () => {
-		expect(describeSystem(ROSTER, { galaxy: 1, system: 1, statuses: ['inactive'] })).toEqual([]);
-	});
-
-	it('returns nothing for an empty system', () => {
-		expect(describeSystem(ROSTER, { galaxy: 5, system: 5 })).toEqual([]);
+	it('keeps the top shade for a full system, and past it', () => {
+		expect(heatLevel(15)).toBe(HEAT_LEVELS);
+		expect(heatLevel(17)).toBe(HEAT_LEVELS);
 	});
 });

@@ -18,9 +18,21 @@ export const METRICS = [
 	{ key: 'inactive', labelKey: 'gm.metric.inactive' },
 ];
 
-// Shades of the scale, empty excluded. Five is enough to read a gradient at a
-// glance and few enough to label in a legend.
-export const HEAT_LEVELS = 5;
+// The shades, empty excluded, as fixed ranges of a system's 15 positions. Fixed
+// rather than fitted to the universe: the same colour always means the same
+// count, and a full system (15) gets a shade of its own so it stands out —
+// that is the first thing a player looking for a slot wants to rule out.
+export const HEAT_BINS = [
+	{ level: 1, min: 1, max: 1 },
+	{ level: 2, min: 2, max: 2 },
+	{ level: 3, min: 3, max: 3 },
+	{ level: 4, min: 4, max: 5 },
+	{ level: 5, min: 6, max: 10 },
+	{ level: 6, min: 11, max: 14 },
+	{ level: 7, min: 15, max: 15 },
+];
+
+export const HEAT_LEVELS = HEAT_BINS.length;
 
 // A player counts as a farm target once Gameforge has flagged them inactive,
 // whichever of the two thresholds.
@@ -43,12 +55,11 @@ function cellValue(cell, metric) {
 	return metric === 'inactive' ? cell.inactive : cell.planets;
 }
 
-// Level 0 is "nothing here", so an occupied system is never painted as empty:
-// levels 1..HEAT_LEVELS split the range above zero.
-export function heatLevel(value, max) {
+// Level 0 is "nothing here", so an occupied system is never painted as empty.
+// Past 15 (a merge can leave odd data) still reads as full.
+export function heatLevel(value) {
 	if (!value || value <= 0) return 0;
-	if (max <= 0) return 0;
-	return Math.max(1, Math.min(HEAT_LEVELS, Math.ceil((value / max) * HEAT_LEVELS)));
+	return (HEAT_BINS.find(({ max }) => value <= max) ?? HEAT_BINS[HEAT_BINS.length - 1]).level;
 }
 
 // The grid, ready to render: one row per galaxy, one cell per system.
@@ -90,6 +101,8 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 
 	let max = 0;
 	for (const cell of counts.values()) max = Math.max(max, cellValue(cell, metric));
+	// Systems per shade, empty included, for the legend.
+	const levels = Array(HEAT_LEVELS + 1).fill(0);
 
 	const rows = [];
 	for (let galaxy = 1; galaxy <= size.galaxies; galaxy += 1) {
@@ -105,13 +118,14 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 				inactive: cell?.inactive ?? 0,
 				players: cell?.players.size ?? 0,
 				value,
-				level: heatLevel(value, max),
+				level: heatLevel(value),
 			});
+			levels[heatLevel(value)] += 1;
 		}
 		rows.push({ galaxy, cells });
 	}
 
-	return { rows, max, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
+	return { rows, max, levels, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
 }
 
 function countPositioned(players) {

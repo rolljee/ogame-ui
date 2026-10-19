@@ -23,6 +23,8 @@ function GalaxyMap() {
 	const [metric, setMetric] = useState('planets');
 	const [statuses, setStatuses] = useState([]);
 	const [system, setSystem] = useState(null);
+	// Shades picked in the legend; none means every system is shown.
+	const [shown, setShown] = useState([]);
 
 	const roster = useApiData(
 		selection.universe ? (signal) => fetchRoster(selection, { signal }) : null,
@@ -37,6 +39,12 @@ function GalaxyMap() {
 	);
 
 	useEffect(() => setSystem(null), [selection.universe, selection.lang]);
+
+	function handleToggleLevel(level) {
+		setShown((prev) =>
+			prev.includes(level) ? prev.filter((value) => value !== level) : [...prev, level],
+		);
+	}
 
 	function handleToggleStatus(key) {
 		setStatuses((prev) =>
@@ -103,6 +111,8 @@ function GalaxyMap() {
 									metric={metric}
 									selected={system}
 									onSelect={setSystem}
+									shown={shown}
+									onToggleLevel={handleToggleLevel}
 								/>
 								<p className="help gm-summary">
 									{t('gm.summary', {
@@ -110,6 +120,17 @@ function GalaxyMap() {
 										galaxies: map.galaxies,
 										systems: map.systems,
 									})}
+									{shown.length > 0 && (
+										<>
+											{' '}
+											{t('gm.legend.shown', {
+												count: shown.reduce((total, level) => total + map.levels[level], 0),
+											})}{' '}
+											<button type="button" className="btn-text" onClick={() => setShown([])}>
+												{t('gm.legend.reset')}
+											</button>
+										</>
+									)}
 								</p>
 							</>
 						)}
