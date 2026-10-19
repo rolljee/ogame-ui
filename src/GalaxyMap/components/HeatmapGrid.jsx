@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useI18n } from '../../i18n/I18nContext';
-import { axisTicks, HEAT_LEVELS } from '../model';
+import { axisTicks } from '../model';
 
 // The map itself: one row per galaxy, one cell per system, coloured by density.
 //
@@ -72,12 +72,19 @@ function HeatmapGrid({ map, metric, selected, onSelect }) {
 				</div>
 			</div>
 
+			{/* Each shade covers its own range of values, so the legend names them. */}
 			<div className="gm-legend">
-				<span className="gm-legend-label">{t('gm.legend.less')}</span>
-				{Array.from({ length: HEAT_LEVELS + 1 }, (_, level) => (
-					<span key={level} className={`gm-legend-swatch gm-level-${level}`} />
+				<span className="gm-legend-item">
+					<span className="gm-legend-swatch gm-level-0" />
+					{t('gm.legend.empty')}
+				</span>
+				{map.bins.map(({ level, min, max }) => (
+					<span key={level} className="gm-legend-item">
+						<span className={`gm-legend-swatch gm-level-${level}`} />
+						{min === max ? min : `${min}–${max}`}
+					</span>
 				))}
-				<span className="gm-legend-label">{t('gm.legend.more', { max: map.max })}</span>
+				<span className="gm-legend-unit">{t(`gm.legend.unit.${metric}`)}</span>
 			</div>
 		</div>
 	);

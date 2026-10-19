@@ -43,12 +43,43 @@ function cellValue(cell, metric) {
 	return metric === 'inactive' ? cell.inactive : cell.planets;
 }
 
-// Level 0 is "nothing here", so an occupied system is never painted as empty:
-// levels 1..HEAT_LEVELS split the range above zero.
-export function heatLevel(value, max) {
-	if (!value || value <= 0) return 0;
-	if (max <= 0) return 0;
-	return Math.max(1, Math.min(HEAT_LEVELS, Math.ceil((value / max) * HEAT_LEVELS)));
+// The shades follow how the occupied systems actually spread, not a straight
+// share of the busiest one. A universe has a few packed systems and a long tail
+// of systems with one or two planets: scaled against the maximum, two thirds of
+// the map fell in the first shade and read as one dark mass. Each shade now
+// holds about a fifth of the occupied systems instead.
+//
+// Returns the bins, lowest first, each with its shade and its range of values.
+// A range starts at the smallest value actually seen above the previous one, so
+// the legend never names a count nobody has. When there are fewer distinct ranges than shades, they spread over the ramp so the
+// busiest systems are always the brightest.
+export function heatBins(values) {
+	const sorted = values.filter((value) => value > 0).sort((a, b) => a - b);
+	if (sorted.length === 0) return [];
+
+	const top = sorted[sorted.length - 1];
+	const uppers = [];
+	for (let step = 1; step < HEAT_LEVELS; step += 1) {
+		const upper = sorted[Math.ceil((sorted.length * step) / HEAT_LEVELS) - 1];
+		if (upper < top && !uppers.includes(upper)) uppers.push(upper);
+	}
+	uppers.push(top);
+
+	return uppers.map((max, index) => ({
+		level:
+			uppers.length === 1
+				? HEAT_LEVELS
+				: Math.round(1 + (index * (HEAT_LEVELS - 1)) / (uppers.length - 1)),
+		min: index === 0 ? sorted[0] : sorted.find((value) => value > uppers[index - 1]),
+		max,
+	}));
+}
+
+// Level 0 is "nothing here", so an occupied system is never painted as empty.
+export function heatLevel(value, bins) {
+	if (!value || value <= 0 || bins.length === 0) return 0;
+	const bin = bins.find(({ max }) => value <= max) ?? bins[bins.length - 1];
+	return bin.level;
 }
 
 // The grid, ready to render: one row per galaxy, one cell per system.
@@ -88,8 +119,9 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 
 	const size = gridSize({ galaxies, systems }, maxGalaxy, maxSystem);
 
-	let max = 0;
-	for (const cell of counts.values()) max = Math.max(max, cellValue(cell, metric));
+	const values = [...counts.values()].map((cell) => cellValue(cell, metric));
+	const bins = heatBins(values);
+	const max = bins.length ? bins[bins.length - 1].max : 0;
 
 	const rows = [];
 	for (let galaxy = 1; galaxy <= size.galaxies; galaxy += 1) {
@@ -105,13 +137,13 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 				inactive: cell?.inactive ?? 0,
 				players: cell?.players.size ?? 0,
 				value,
-				level: heatLevel(value, max),
+				level: heatLevel(value, bins),
 			});
 		}
 		rows.push({ galaxy, cells });
 	}
 
-	return { rows, max, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
+	return { rows, max, bins, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
 }
 
 function countPositioned(players) {

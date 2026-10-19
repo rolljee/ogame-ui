@@ -88,8 +88,16 @@ describe('<GalaxyMap />', () => {
 		await screen.findByLabelText(/^1:1 —/);
 
 		expect(cell('1:1')).toHaveClass('gm-level-5');
-		expect(cell('2:3')).toHaveClass('gm-level-2');
+		expect(cell('2:3')).toHaveClass('gm-level-1');
 		expect(cell('1:2')).toHaveClass('gm-level-0');
+	});
+
+	it('names the range each shade covers', async () => {
+		renderView(<GalaxyMap />, { lang: 'en' });
+		await screen.findByLabelText(/^1:1 —/);
+
+		expect(screen.getByText('Empty')).toBeInTheDocument();
+		expect(screen.getByText('planets per system')).toBeInTheDocument();
 	});
 
 	it('recolours for inactives without another request', async () => {

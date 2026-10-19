@@ -244,8 +244,9 @@ export const translations = {
 		'gm.cell.inactive':
 			'{coords} — {inactive} planète(s) inactive(s) sur {planets}, {players} joueur(s)',
 
-		'gm.legend.less': 'Vide',
-		'gm.legend.more': 'Max : {max}',
+		'gm.legend.empty': 'Vide',
+		'gm.legend.unit.planets': 'planètes par système',
+		'gm.legend.unit.inactive': 'planètes inactives par système',
 
 		'gm.summary':
 			'{planets} planète(s) placée(s) sur {galaxies} galaxie(s) × {systems} systèmes.',
@@ -676,8 +677,9 @@ export const translations = {
 		'gm.cell.inactive':
 			'{coords} — {inactive} inactive planet(s) out of {planets}, {players} player(s)',
 
-		'gm.legend.less': 'Empty',
-		'gm.legend.more': 'Max: {max}',
+		'gm.legend.empty': 'Empty',
+		'gm.legend.unit.planets': 'planets per system',
+		'gm.legend.unit.inactive': 'inactive planets per system',
 
 		'gm.summary': '{planets} placed planet(s) across {galaxies} galaxy(ies) × {systems} systems.',
 

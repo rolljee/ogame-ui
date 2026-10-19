@@ -2038,20 +2038,33 @@ input::placeholder {
 
 .gm-legend {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	gap: 4px;
+	gap: 6px 14px;
 	font-size: 13px;
-	color: var(--ink-3);
+	color: var(--ink-2);
 }
 
-.gm-legend-label {
-	margin: 0 6px;
+.gm-legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var(--font-figure);
+}
+
+.gm-legend-unit {
+	color: var(--ink-3);
 }
 
 .gm-legend-swatch {
 	width: 18px;
 	height: 12px;
 	border-radius: 1px;
+
+	// The empty shade is barely off the page: a rule keeps its swatch findable.
+	&.gm-level-0 {
+		box-shadow: inset 0 0 0 1px var(--rule-strong);
+	}
 }
 
 .gm-summary {

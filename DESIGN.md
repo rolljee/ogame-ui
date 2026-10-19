@@ -422,7 +422,7 @@ Rectangular, ruled, never pills: 2px corners, 12px bold text with a 13px lucide 
 Players, alliances, planets, ships, waves and server settings are all ruled lists: rows with 1px hairlines, a label in ink-2 on the left, a tabular value on the right. In the players and alliances lists, an open row takes sheet-3 with an inset ink-3 outline while the other rows dim to ink-2.
 
 ### Galaxy Heatmap
-A grid of 12 by 18px cells (2px gap, 1px corners) on a ruled sheet, with a sticky mono row label. Cell value runs up the night-blue-to-sand heat ramp. Hover draws a 1px ink border; the selected cell is filled and outlined in brass.
+A grid of 12 by 18px cells (2px gap, 1px corners) on a ruled sheet, with a sticky mono row label. Cell value runs up the night-blue-to-sand heat ramp, one shade per fifth of the occupied systems (not a share of the maximum, which left most of the map in the first shade). The legend names the range of values each shade covers, after a ruled "empty" swatch. Hover draws a 1px ink border; the selected cell is filled and outlined in brass.
 
 ### Moonbreak Verdict and Curve
 The probability is the display figure, coloured by its odds band (ok from 95%, loss under 50%, brass in between). The curve is an SVG chart on hairline gridlines with mono 9px ticks: the area under it is washed in signal-soft, the line is a 1.75px paper-ink stroke, the target is a dashed strong rule, and the current point is a brass dot ringed in sheet colour with a brass 10px mono label.

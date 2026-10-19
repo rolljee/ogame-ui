@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { axisTicks, buildHeatmap, describeSystem, heatLevel, HEAT_LEVELS } from './model';
+import { axisTicks, buildHeatmap, describeSystem, heatBins, heatLevel, HEAT_LEVELS } from './model';
 
 const status = (over = {}) => ({
 	raw: '',
@@ -67,8 +67,12 @@ describe('buildHeatmap', () => {
 	it('scales the busiest system to the top level', () => {
 		const map = buildHeatmap(ROSTER, { galaxies: 1, systems: 10 });
 		expect(cellAt(map, 1, 1).level).toBe(HEAT_LEVELS);
-		// One planet out of the busiest three: the second shade of five.
-		expect(cellAt(map, 1, 9).level).toBe(2);
+		// Two ranges only (1 and 3): they take the two ends of the ramp.
+		expect(cellAt(map, 1, 9).level).toBe(1);
+		expect(map.bins).toEqual([
+			{ level: 1, min: 1, max: 1 },
+			{ level: HEAT_LEVELS, min: 3, max: 3 },
+		]);
 	});
 
 	it('counts inactive planets when asked to', () => {
@@ -96,15 +100,51 @@ describe('buildHeatmap', () => {
 	});
 });
 
+describe('heatBins', () => {
+	it('gives each shade about a fifth of the occupied systems', () => {
+		// The shape of a real universe: a long tail of near-empty systems.
+		const values = [
+			...Array(35).fill(1),
+			...Array(20).fill(2),
+			...Array(14).fill(3),
+			...Array(10).fill(4),
+			...Array(8).fill(5),
+			...Array(13).fill(9),
+		];
+		expect(heatBins(values)).toEqual([
+			{ level: 1, min: 1, max: 1 },
+			{ level: 2, min: 2, max: 2 },
+			{ level: 3, min: 3, max: 3 },
+			{ level: 4, min: 4, max: 5 },
+			{ level: 5, min: 9, max: 9 },
+		]);
+	});
+
+	it('keeps the top shade for the busiest systems when values are few', () => {
+		expect(heatBins([2, 2, 2])).toEqual([{ level: HEAT_LEVELS, min: 2, max: 2 }]);
+		expect(heatBins([1, 1, 2, 4]).map(({ level }) => level)).toEqual([1, 3, 5]);
+	});
+
+	it('ignores empty systems', () => {
+		expect(heatBins([0, 0])).toEqual([]);
+	});
+});
+
 describe('heatLevel', () => {
+	const bins = heatBins([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
 	it('paints nothing as empty and anything as at least the first shade', () => {
-		expect(heatLevel(0, 10)).toBe(0);
-		expect(heatLevel(1, 100)).toBe(1);
+		expect(heatLevel(0, bins)).toBe(0);
+		expect(heatLevel(1, bins)).toBe(1);
 	});
 
 	it('never goes past the top shade', () => {
-		expect(heatLevel(10, 10)).toBe(HEAT_LEVELS);
-		expect(heatLevel(12, 10)).toBe(HEAT_LEVELS);
+		expect(heatLevel(10, bins)).toBe(HEAT_LEVELS);
+		expect(heatLevel(12, bins)).toBe(HEAT_LEVELS);
+	});
+
+	it('paints nothing when there is no scale', () => {
+		expect(heatLevel(3, [])).toBe(0);
 	});
 });
 
