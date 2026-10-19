@@ -83,11 +83,11 @@ describe('<GalaxyMap />', () => {
 		expect(screen.getByText('4 placed planet(s) across 2 galaxy(ies) × 4 systems.')).toBeInTheDocument();
 	});
 
-	it('shades the busiest system the brightest', async () => {
+	it('shades a system by how many planets it holds', async () => {
 		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
-		expect(cell('1:1')).toHaveClass('gm-level-5');
+		expect(cell('1:1')).toHaveClass('gm-level-3');
 		expect(cell('2:3')).toHaveClass('gm-level-1');
 		expect(cell('1:2')).toHaveClass('gm-level-0');
 	});
@@ -96,8 +96,27 @@ describe('<GalaxyMap />', () => {
 		renderView(<GalaxyMap />, { lang: 'en' });
 		await screen.findByLabelText(/^1:1 —/);
 
-		expect(screen.getByText('Empty')).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Empty' })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: '6–10' })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: '15' })).toBeInTheDocument();
 		expect(screen.getByText('planets per system')).toBeInTheDocument();
+	});
+
+	it('fades the systems outside the shades picked in the legend', async () => {
+		const user = userEvent.setup();
+		renderView(<GalaxyMap />, { lang: 'en' });
+		await screen.findByLabelText(/^1:1 —/);
+
+		await user.click(screen.getByRole('button', { name: '3' }));
+
+		expect(screen.getByRole('button', { name: '3' })).toHaveAttribute('aria-pressed', 'true');
+		expect(cell('1:1')).not.toHaveClass('is-dimmed');
+		expect(cell('2:3')).toHaveClass('is-dimmed');
+		expect(screen.getByText(/1 system\(s\) highlighted\./)).toBeInTheDocument();
+
+		await user.click(screen.getByRole('button', { name: 'Show all' }));
+
+		expect(cell('2:3')).not.toHaveClass('is-dimmed');
 	});
 
 	it('recolours for inactives without another request', async () => {
@@ -107,7 +126,7 @@ describe('<GalaxyMap />', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Inactives' }));
 
-		expect(cell('2:3')).toHaveClass('gm-level-5');
+		expect(cell('2:3')).toHaveClass('gm-level-1');
 		expect(cell('1:1')).toHaveClass('gm-level-0');
 		expect(fetchRoster).toHaveBeenCalledTimes(1);
 	});

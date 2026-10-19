@@ -18,9 +18,21 @@ export const METRICS = [
 	{ key: 'inactive', labelKey: 'gm.metric.inactive' },
 ];
 
-// Shades of the scale, empty excluded. Five is enough to read a gradient at a
-// glance and few enough to label in a legend.
-export const HEAT_LEVELS = 5;
+// The shades, empty excluded, as fixed ranges of a system's 15 positions. Fixed
+// rather than fitted to the universe: the same colour always means the same
+// count, and a full system (15) gets a shade of its own so it stands out —
+// that is the first thing a player looking for a slot wants to rule out.
+export const HEAT_BINS = [
+	{ level: 1, min: 1, max: 1 },
+	{ level: 2, min: 2, max: 2 },
+	{ level: 3, min: 3, max: 3 },
+	{ level: 4, min: 4, max: 5 },
+	{ level: 5, min: 6, max: 10 },
+	{ level: 6, min: 11, max: 14 },
+	{ level: 7, min: 15, max: 15 },
+];
+
+export const HEAT_LEVELS = HEAT_BINS.length;
 
 // A player counts as a farm target once Gameforge has flagged them inactive,
 // whichever of the two thresholds.
@@ -43,43 +55,11 @@ function cellValue(cell, metric) {
 	return metric === 'inactive' ? cell.inactive : cell.planets;
 }
 
-// The shades follow how the occupied systems actually spread, not a straight
-// share of the busiest one. A universe has a few packed systems and a long tail
-// of systems with one or two planets: scaled against the maximum, two thirds of
-// the map fell in the first shade and read as one dark mass. Each shade now
-// holds about a fifth of the occupied systems instead.
-//
-// Returns the bins, lowest first, each with its shade and its range of values.
-// A range starts at the smallest value actually seen above the previous one, so
-// the legend never names a count nobody has. When there are fewer distinct ranges than shades, they spread over the ramp so the
-// busiest systems are always the brightest.
-export function heatBins(values) {
-	const sorted = values.filter((value) => value > 0).sort((a, b) => a - b);
-	if (sorted.length === 0) return [];
-
-	const top = sorted[sorted.length - 1];
-	const uppers = [];
-	for (let step = 1; step < HEAT_LEVELS; step += 1) {
-		const upper = sorted[Math.ceil((sorted.length * step) / HEAT_LEVELS) - 1];
-		if (upper < top && !uppers.includes(upper)) uppers.push(upper);
-	}
-	uppers.push(top);
-
-	return uppers.map((max, index) => ({
-		level:
-			uppers.length === 1
-				? HEAT_LEVELS
-				: Math.round(1 + (index * (HEAT_LEVELS - 1)) / (uppers.length - 1)),
-		min: index === 0 ? sorted[0] : sorted.find((value) => value > uppers[index - 1]),
-		max,
-	}));
-}
-
 // Level 0 is "nothing here", so an occupied system is never painted as empty.
-export function heatLevel(value, bins) {
-	if (!value || value <= 0 || bins.length === 0) return 0;
-	const bin = bins.find(({ max }) => value <= max) ?? bins[bins.length - 1];
-	return bin.level;
+// Past 15 (a merge can leave odd data) still reads as full.
+export function heatLevel(value) {
+	if (!value || value <= 0) return 0;
+	return (HEAT_BINS.find(({ max }) => value <= max) ?? HEAT_BINS[HEAT_BINS.length - 1]).level;
 }
 
 // The grid, ready to render: one row per galaxy, one cell per system.
@@ -119,9 +99,10 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 
 	const size = gridSize({ galaxies, systems }, maxGalaxy, maxSystem);
 
-	const values = [...counts.values()].map((cell) => cellValue(cell, metric));
-	const bins = heatBins(values);
-	const max = bins.length ? bins[bins.length - 1].max : 0;
+	let max = 0;
+	for (const cell of counts.values()) max = Math.max(max, cellValue(cell, metric));
+	// Systems per shade, empty included, for the legend.
+	const levels = Array(HEAT_LEVELS + 1).fill(0);
 
 	const rows = [];
 	for (let galaxy = 1; galaxy <= size.galaxies; galaxy += 1) {
@@ -137,13 +118,14 @@ export function buildHeatmap(players, { galaxies, systems, statuses = [], metric
 				inactive: cell?.inactive ?? 0,
 				players: cell?.players.size ?? 0,
 				value,
-				level: heatLevel(value, bins),
+				level: heatLevel(value),
 			});
+			levels[heatLevel(value)] += 1;
 		}
 		rows.push({ galaxy, cells });
 	}
 
-	return { rows, max, bins, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
+	return { rows, max, levels, galaxies: size.galaxies, systems: size.systems, positioned: countPositioned(kept) };
 }
 
 function countPositioned(players) {

@@ -245,6 +245,10 @@ export const translations = {
 			'{coords} — {inactive} planète(s) inactive(s) sur {planets}, {players} joueur(s)',
 
 		'gm.legend.empty': 'Vide',
+		'gm.legend.label': 'Légende : choisir les teintes à montrer',
+		'gm.legend.count': '{count} système(s)',
+		'gm.legend.shown': '{count} système(s) mis en avant.',
+		'gm.legend.reset': 'Tout montrer',
 		'gm.legend.unit.planets': 'planètes par système',
 		'gm.legend.unit.inactive': 'planètes inactives par système',
 
@@ -678,6 +682,10 @@ export const translations = {
 			'{coords} — {inactive} inactive planet(s) out of {planets}, {players} player(s)',
 
 		'gm.legend.empty': 'Empty',
+		'gm.legend.label': 'Legend: pick the shades to show',
+		'gm.legend.count': '{count} system(s)',
+		'gm.legend.shown': '{count} system(s) highlighted.',
+		'gm.legend.reset': 'Show all',
 		'gm.legend.unit.planets': 'planets per system',
 		'gm.legend.unit.inactive': 'inactive planets per system',
 

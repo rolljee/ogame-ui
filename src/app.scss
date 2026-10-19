@@ -54,15 +54,17 @@
 	--st-outlaw: #c49bff;
 	--st-admin: #5fd4cf;
 
-	// Galaxy heatmap, empty to crowded. Hue turns as well as value rises
-	// (violet, blue, teal, green, pale yellow): a single blue ramp read as blue
-	// on the night-blue sheet.
+	// Galaxy heatmap, empty to full. Hue turns as well as value rises (violet,
+	// blue, teal, green, lime, sand, then white for a full system): a single blue
+	// ramp read as blue on the night-blue sheet.
 	--heat-0: #172034;
-	--heat-1: #55348f;
-	--heat-2: #2a6aa0;
-	--heat-3: #16967d;
-	--heat-4: #78ca4c;
-	--heat-5: #f8f08c;
+	--heat-1: #4f2b81;
+	--heat-2: #255b92;
+	--heat-3: #178270;
+	--heat-4: #37a540;
+	--heat-5: #89c339;
+	--heat-6: #ebda70;
+	--heat-7: #ffffff;
 
 	--radius: 3px;
 
@@ -2037,21 +2039,52 @@ input::placeholder {
 .gm-level-5 {
 	background: var(--heat-5);
 }
+.gm-level-6 {
+	background: var(--heat-6);
+}
+.gm-level-7 {
+	background: var(--heat-7);
+}
+
+// Systems left out by the legend filter: still drawn, so the map keeps its
+// shape, but faded back towards the sheet.
+.gm-cell.is-dimmed:not(.is-selected) {
+	opacity: 0.12;
+}
 
 .gm-legend {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 6px 14px;
+	gap: 4px 6px;
 	font-size: 13px;
 	color: var(--ink-2);
 }
 
 .gm-legend-item {
+	appearance: none;
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
+	padding: 3px 8px;
+	border: 1px solid transparent;
+	border-radius: var(--radius);
+	background: transparent;
+	color: inherit;
+	font: inherit;
 	font-family: var(--font-figure);
+	cursor: pointer;
+
+	&:hover {
+		border-color: var(--rule-strong);
+		color: var(--ink);
+	}
+
+	&.is-active {
+		border-color: var(--ink);
+		background: var(--sheet-3);
+		color: var(--ink);
+	}
 }
 
 .gm-legend-unit {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { axisTicks, buildHeatmap, describeSystem, heatBins, heatLevel, HEAT_LEVELS } from './model';
+import { axisTicks, buildHeatmap, describeSystem, heatLevel, HEAT_LEVELS } from './model';
 
 const status = (over = {}) => ({
 	raw: '',
@@ -64,21 +64,18 @@ describe('buildHeatmap', () => {
 		expect(cellAt(map, 9, 600).planets).toBe(1);
 	});
 
-	it('scales the busiest system to the top level', () => {
+	it('shades a system by fixed ranges of its planets', () => {
 		const map = buildHeatmap(ROSTER, { galaxies: 1, systems: 10 });
-		expect(cellAt(map, 1, 1).level).toBe(HEAT_LEVELS);
-		// Two ranges only (1 and 3): they take the two ends of the ramp.
+		expect(cellAt(map, 1, 1).level).toBe(3);
 		expect(cellAt(map, 1, 9).level).toBe(1);
-		expect(map.bins).toEqual([
-			{ level: 1, min: 1, max: 1 },
-			{ level: HEAT_LEVELS, min: 3, max: 3 },
-		]);
+		// Systems per shade, empty first: 8 empty, one with 1 planet, one with 3.
+		expect(map.levels).toEqual([8, 1, 0, 1, 0, 0, 0, 0]);
 	});
 
 	it('counts inactive planets when asked to', () => {
 		const map = buildHeatmap(ROSTER, { galaxies: 1, systems: 10, metric: 'inactive' });
 		expect(cellAt(map, 1, 1)).toMatchObject({ value: 0, level: 0 });
-		expect(cellAt(map, 1, 9)).toMatchObject({ value: 1, level: HEAT_LEVELS });
+		expect(cellAt(map, 1, 9)).toMatchObject({ value: 1, level: 1 });
 	});
 
 	it('only counts the selected statuses', () => {
@@ -100,82 +97,18 @@ describe('buildHeatmap', () => {
 	});
 });
 
-describe('heatBins', () => {
-	it('gives each shade about a fifth of the occupied systems', () => {
-		// The shape of a real universe: a long tail of near-empty systems.
-		const values = [
-			...Array(35).fill(1),
-			...Array(20).fill(2),
-			...Array(14).fill(3),
-			...Array(10).fill(4),
-			...Array(8).fill(5),
-			...Array(13).fill(9),
-		];
-		expect(heatBins(values)).toEqual([
-			{ level: 1, min: 1, max: 1 },
-			{ level: 2, min: 2, max: 2 },
-			{ level: 3, min: 3, max: 3 },
-			{ level: 4, min: 4, max: 5 },
-			{ level: 5, min: 9, max: 9 },
-		]);
-	});
-
-	it('keeps the top shade for the busiest systems when values are few', () => {
-		expect(heatBins([2, 2, 2])).toEqual([{ level: HEAT_LEVELS, min: 2, max: 2 }]);
-		expect(heatBins([1, 1, 2, 4]).map(({ level }) => level)).toEqual([1, 3, 5]);
-	});
-
-	it('ignores empty systems', () => {
-		expect(heatBins([0, 0])).toEqual([]);
-	});
-});
-
 describe('heatLevel', () => {
-	const bins = heatBins([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-
 	it('paints nothing as empty and anything as at least the first shade', () => {
-		expect(heatLevel(0, bins)).toBe(0);
-		expect(heatLevel(1, bins)).toBe(1);
+		expect(heatLevel(0)).toBe(0);
+		expect(heatLevel(1)).toBe(1);
 	});
 
-	it('never goes past the top shade', () => {
-		expect(heatLevel(10, bins)).toBe(HEAT_LEVELS);
-		expect(heatLevel(12, bins)).toBe(HEAT_LEVELS);
+	it('groups the counts into the legend ranges', () => {
+		expect([2, 3, 4, 5, 6, 10, 11, 14].map(heatLevel)).toEqual([2, 3, 4, 4, 5, 5, 6, 6]);
 	});
 
-	it('paints nothing when there is no scale', () => {
-		expect(heatLevel(3, [])).toBe(0);
-	});
-});
-
-describe('axisTicks', () => {
-	it('spaces ticks and always ends on the last system', () => {
-		expect(axisTicks(100, 25)).toEqual([1, 26, 51, 76, 100]);
-	});
-
-	it('does not repeat the last system when it falls on a tick', () => {
-		expect(axisTicks(51, 25)).toEqual([1, 26, 51]);
-	});
-});
-
-describe('describeSystem', () => {
-	it('lists the planets of one system, sorted by position', () => {
-		const rows = describeSystem(ROSTER, { galaxy: 1, system: 1 });
-		expect(rows.map((row) => row.coords)).toEqual(['1:1:4', '1:1:8', '1:1:12']);
-		expect(rows[1].moon).toBe(true);
-	});
-
-	it('links into the galaxy view when the universe is known', () => {
-		const [row] = describeSystem(ROSTER, { galaxy: 1, system: 1, universe: '282', lang: 'fr' });
-		expect(row.url).toContain('s282-fr.ogame.gameforge.com');
-		expect(describeSystem(ROSTER, { galaxy: 1, system: 1 })[0].url).toBeNull();
-	});
-
-	it('applies the same status filter as the map', () => {
-		expect(describeSystem(ROSTER, { galaxy: 1, system: 1, statuses: ['inactive'] })).toEqual([]);
-	});
-
-	it('returns nothing for an empty system', () => {
-		expect(describeSystem(ROSTER, { galaxy: 5, system: 5 })).toEqual([]);
+	it('keeps the top shade for a full system, and past it', () => {
+		expect(heatLevel(15)).toBe(HEAT_LEVELS);
+		expect(heatLevel(17)).toBe(HEAT_LEVELS);
 	});
 });

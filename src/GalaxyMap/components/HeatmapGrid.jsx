@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useI18n } from '../../i18n/I18nContext';
-import { axisTicks } from '../model';
+import { axisTicks, HEAT_BINS } from '../model';
 
 // The map itself: one row per galaxy, one cell per system, coloured by density.
 //
@@ -11,7 +11,7 @@ import { axisTicks } from '../model';
 // also makes it reachable with the keyboard. The label doubles as the tooltip
 // so hovering and screen-reading say the same thing without a second DOM node
 // per cell, which matters at a few thousand of them.
-function HeatmapGrid({ map, metric, selected, onSelect }) {
+function HeatmapGrid({ map, metric, selected, onSelect, shown = [], onToggleLevel }) {
 	const { t } = useI18n();
 	const ticks = axisTicks(map.systems);
 
@@ -39,7 +39,9 @@ function HeatmapGrid({ map, metric, selected, onSelect }) {
 										<button
 											key={cell.system}
 											type="button"
-											className={`gm-cell gm-level-${cell.level}${isSelected ? ' is-selected' : ''}`}
+											className={`gm-cell gm-level-${cell.level}${isSelected ? ' is-selected' : ''}${
+												shown.length && !shown.includes(cell.level) ? ' is-dimmed' : ''
+											}`}
 											aria-pressed={Boolean(isSelected)}
 											aria-label={label}
 											title={label}
@@ -72,17 +74,25 @@ function HeatmapGrid({ map, metric, selected, onSelect }) {
 				</div>
 			</div>
 
-			{/* Each shade covers its own range of values, so the legend names them. */}
-			<div className="gm-legend">
-				<span className="gm-legend-item">
-					<span className="gm-legend-swatch gm-level-0" />
-					{t('gm.legend.empty')}
-				</span>
-				{map.bins.map(({ level, min, max }) => (
-					<span key={level} className="gm-legend-item">
+			{/* Each shade covers its own range of values, so the legend names them.
+			    Its entries double as a filter: picking some fades every other
+			    system, so the map keeps its shape. */}
+			<div className="gm-legend" role="group" aria-label={t('gm.legend.label')}>
+				{[{ level: 0, label: t('gm.legend.empty') }, ...HEAT_BINS.map(({ level, min, max }) => ({
+					level,
+					label: min === max ? String(min) : `${min}–${max}`,
+				}))].map(({ level, label }) => (
+					<button
+						key={level}
+						type="button"
+						className={`gm-legend-item${shown.includes(level) ? ' is-active' : ''}`}
+						aria-pressed={shown.includes(level)}
+						title={t('gm.legend.count', { count: map.levels[level] })}
+						onClick={() => onToggleLevel?.(level)}
+					>
 						<span className={`gm-legend-swatch gm-level-${level}`} />
-						{min === max ? min : `${min}–${max}`}
-					</span>
+						{label}
+					</button>
 				))}
 				<span className="gm-legend-unit">{t(`gm.legend.unit.${metric}`)}</span>
 			</div>
