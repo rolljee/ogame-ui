@@ -87,6 +87,17 @@ describe('<App />', () => {
 		);
 	});
 
+	it('announces the combat simulator without opening it', async () => {
+		const user = userEvent.setup();
+		renderWithI18n(<App />);
+
+		await user.click(screen.getByRole('link', { name: /Combat simulator/ }));
+
+		expect(screen.getAllByText('Soon')).toHaveLength(2);
+		expect(screen.getByText(/The combat simulator is coming soon/)).toBeInTheDocument();
+		expect(screen.queryByText('Attacker')).not.toBeInTheDocument();
+	});
+
 	it('links to the support page in a new tab', () => {
 		renderWithI18n(<App />);
 
